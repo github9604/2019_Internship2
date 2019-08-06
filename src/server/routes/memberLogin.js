@@ -36,6 +36,23 @@ const MemberLogin = sequelize.define(
     }
 );
 
+router.post('/logout', (req, res) => {
+    console.log("destroy session 로그아웃");
+    req.session.destroy(err => { if(err) throw err; });
+    return res.json({ sucess: true });
+});
+
+
+router.get('/getinfo', (req, res) => {
+    if(typeof req.session.user_id === "undefined"){
+        return res.status(401).json({
+            error: "THERE IS NO LOGIN DATA",
+            code: 1
+        });
+    }
+    res.json({info: req.session.user_id});
+});
+
 router.post('/signin', (req, res) => {
     const memberData = {
         user_id: req.body.user_id,
@@ -55,10 +72,7 @@ router.post('/signin', (req, res) => {
             }
             if (req.body.user_pw === memberLogin.user_pw) {
                 console.log("express 로그인 성공");
-                // let session = req.session;
-                // session.loginInfo = {
-                //    user_id = memberLogin.user_id
-                // };
+                req.session.user_id = req.body.user_id;
                 return res.json({
                     success: true
                 });

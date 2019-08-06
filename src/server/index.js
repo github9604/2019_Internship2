@@ -18,8 +18,12 @@ const connection  = mysql.createConnection({
 connection.connect();
 
 app.use(session({
+    key: 'kt',
     secret: '@#@$MYSIGN#@$#$',
     resave: false,
+    cookie: {
+        expires:  600000
+    },
     saveUninitialized: true
 }));
 

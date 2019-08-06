@@ -15,7 +15,7 @@ class Login extends Component {
                         user_id: user_id
                     };
                     document.cookie = 'key=' + btoa(JSON.stringify(loginData));
-                    this.props.history.push('/landing');
+                    this.props.history.push('/searchpage');
                     return true;
                 }else{
                     console.log("react login 실패");

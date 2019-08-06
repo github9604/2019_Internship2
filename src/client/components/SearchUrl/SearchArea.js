@@ -7,6 +7,7 @@ const SearchArea = (props) => {
                 <form action="" onSubmit={props.handleSubmit}>
                     <div>
                         <input placeholder="url input" type="text" onChange={props.handleChange}/>
+                        <button onclick={props.handleSubmit}> 입력 </button>
                     </div>
                 </form>
             </section>

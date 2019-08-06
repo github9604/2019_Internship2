@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SearchArea } from '../components/SearchUrl';
+import { SearchArea, SearchResultList} from '../components/SearchUrl';
 import axios from 'axios';
 
 class SearchPage extends Component {
@@ -48,6 +48,7 @@ class SearchPage extends Component {
                 <h3> hellooooo </h3>
                 <h3> {this.state.results.map(result => <div> result : {result.title} </div>)} </h3>
                 <SearchArea handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
+                <SearchResultList results={this.state.results}/>
             </div>
         );
     }
