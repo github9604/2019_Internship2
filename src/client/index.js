@@ -9,7 +9,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 
-import {Login, Register, Main, App} from '../client/containers';
+import {Login, Register, Main, App, SearchPage} from '../client/containers';
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
@@ -20,6 +20,7 @@ ReactDOM.render(
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register}/>
         <Route path="/Main" component={Main} />
+        <Route path="/SearchPage" component={SearchPage} />
       </Router>
     </Provider>,
     document.getElementById('root')
