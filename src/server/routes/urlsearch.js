@@ -17,8 +17,8 @@ const sequelize = new Sequelize('kt_intern', 'min9604', '!zpdlxl9604', {
     }
 });
 
-const BoardArticle = sequelize.define(
-    'BoardArticle',
+const BoardFeed = sequelize.define(
+    'BoardFeed',
     {
         post_id: {
             type: Sequelize.INTEGER,
@@ -34,7 +34,7 @@ const BoardArticle = sequelize.define(
     },
     {
         timestamps: false,
-        tableName: 'board_article'
+        tableName: 'board_feed'
     }
 );
 
@@ -60,10 +60,10 @@ router.post('/insertFeed', function(req, res, next) {
 
     console.log(inputData);
 
-    BoardArticle.create(inputData)
+    BoardFeed.create(inputData)
     .then(articleInput => {
         console.log(articleInput);
-        console.log("article input success");
+        console.log("Feed input success");
     }).catch(err => {
         return res.send('error' + err)
     })

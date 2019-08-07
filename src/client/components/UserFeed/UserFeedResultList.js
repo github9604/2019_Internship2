@@ -1,16 +1,18 @@
 import React from 'react';
 import UserFeedResult from './UserFeedResult';
 
-const UserFeedResult = (props) => {
-    return(
+const UserFeedResultList = (props) => {
+    return (
         <div>
             {
                 props.results.map((result, i) => {
-                    return(
-                        <UserFeedResult key={i} />
-                    );
+                    return (
+                        <UserFeedResult dirlists = {props.dirlists} title={result.title} />
+                    )
                 })
             }
         </div>
-    )
+    );
 }
+
+export default UserFeedResultList;

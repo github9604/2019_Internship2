@@ -1,3 +1,5 @@
+import UserFeedResultList from './UserFeedResultList';
 import UserFeedResult from './UserFeedResult';
+import ReactSelect from './ReactSelect';
 
-export {UserFeedResult};
+export {UserFeedResultList, UserFeedResult, ReactSelect};
