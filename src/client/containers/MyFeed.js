@@ -61,6 +61,19 @@ class MyFeed extends Component {
         console.log("handleDirInput");
     }
 
+    addtoDirectory = (selectdir) => {
+        console.log("parsed selectdir data: " + selectdir.dirId);
+        let tmp = selectdir.articleId.split('/');
+        console.log("changed: " + tmp[0]);
+        console.log(tmp[1]);
+        let dirId = selectdir.dirId;
+        let articleId = tmp[0] + tmp[1];
+        axios.post('/api/showTodayFeed/diratriclemap', {dirId, articleId})
+        .then((response) => {
+            console.log("article and directory mapping success");
+        })
+    }
+
     render() {
         return (
             <div>
@@ -69,7 +82,7 @@ class MyFeed extends Component {
                     {
                         (this.state.loading)
                         ? <p> loading... </p>
-                        : <div> <UserFeedResultList showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists = {this.state.dirlists} results={this.state.results} /> </div>
+                        : <div> <UserFeedResultList addtoDirectory={this.addtoDirectory} showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists = {this.state.dirlists} results={this.state.results} /> </div>
                     }
                 </div>
                 

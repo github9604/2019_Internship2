@@ -61,6 +61,27 @@ const BoardDirectory = sequelize.define(
     }
 );
 
+const ArticleToDirectory = sequelize.define(
+    'ArticleToDirectory',
+    {
+        idx: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        post_urlid: {
+            type: Sequelize.TEXT
+        },
+        dir_name: {
+            type: Sequelize.STRING
+        }
+    },
+    {
+        timestamps: false,
+        tableName: 'article_to_directory'
+    }
+);
+
 router.get('/', function (req, res, next) {
     BoardFeed.findOne({
         where: { user_id: req.session.user_id },
@@ -88,6 +109,24 @@ router.get('/dirlist', function (req, res, next) {
         .then(boardDirectory => {
             res.json(boardDirectory);
         })
+});
+
+router.post('/diratriclemap', function (req, res, next) {
+    const inputData = {
+        post_urlid: req.body.articleId,
+        dir_name: req.body.dirId
+    };
+
+    console.log(inputData);
+
+    ArticleToDirectory.create(inputData)
+    .then(artdirmap => {
+        console.log(artdirmap);
+        console.log("dir article map success");
+    })
+    .catch(err => {
+        return res.send('error', err)
+    })
 });
 
 export default router;

@@ -7,24 +7,38 @@ class UserFeedResult extends Component {
 
   state = {
     visible: false,
-    selectedOption: null
+    selectdir: ''
   }
 
   hide = () => {
     this.setState({
-      visible: false,
-      selectdir: ''
+      visible: false
     });
   };
 
+  setData = () => {
+    console.log("selected directory name parsing");
+    let sendData = {
+      dirId: this.state.selectdir,
+      articleId: this.props.articleId
+    }
+    this.props.addtoDirectory(sendData);
+  }
 
   handleVisibleChange = visible => {
     this.setState({ visible });
   };
 
+  onChangeValue = (dir) => {
+    console.log(dir);
+    console.log(dir.name);
+    this.setState({selectdir: dir.name});
+    console.log(this.state.selectdir);
+  }
+
   render() {
     console.log("dirlists: " + this.props.dirlists)
-    let friends = this.props.dirlists;
+    let dirs = this.props.dirlists;
     // const friends = [
     //   {
     //     name: "Annie Cruz",
@@ -56,7 +70,7 @@ class UserFeedResult extends Component {
       <div>
         <h3> {this.props.title} </h3>
         <Popover
-          content={<div><SelectSearch options={friends} placeholder="폴더를 입력하세요" /> <button> 폴더에 추가 </button></div>} 
+          content={<div><SelectSearch options={dirs} value={this.state.selectdir ? this.state.selectdir : ''} onChange={(dir) => this.onChangeValue(dir)} placeholder="폴더를 입력하세요" /> <button onClick={this.setData}> 폴더에 추가 </button></div>} 
           placement="bottom"
           trigger="click"
           visible={this.state.visible}
