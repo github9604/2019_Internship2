@@ -15,8 +15,7 @@ const sequelize = new Sequelize('kt_intern', 'min9604', '!zpdlxl9604', {
         acquire: 30000,
         idle: 10000
     }
-}
-);
+});
 
 const MemberJoin = sequelize.define(
     'memberJoin',
@@ -31,7 +30,7 @@ const MemberJoin = sequelize.define(
     },
     {
         timestamps: false,
-        tableName: 'member'
+        tableName: 'board_user'
     }
 );
 

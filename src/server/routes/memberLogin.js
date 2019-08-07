@@ -3,6 +3,7 @@ import Sequelize from 'sequelize';
 
 const router = express.Router();
 const cors = require("cors");
+router.use(cors());
 
 const sequelize = new Sequelize('kt_intern', 'min9604', '!zpdlxl9604', {
     host: 'localhost',
@@ -32,7 +33,7 @@ const MemberLogin = sequelize.define(
     },
     {
         timestamps: false,
-        tableName: 'member'
+        tableName: 'board_user'
     }
 );
 

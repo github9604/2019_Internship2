@@ -7,8 +7,18 @@ class SearchPage extends Component {
         super();
         this.state = {
             results: [],
-            searchTerm: ''
+            searchTerm: '',
+            inputArticle: ''
         };
+    }
+    
+    insertFeed = (feedId) => {
+        console.log(feedId);
+        let feedInput = feedId;
+        axios.post('/api/urlsearch/insertFeed', {feedInput})
+        .then((response) => {
+            console.log("insert feed to current member success");
+        })
     }
 
     handleSubmit = (e) => {
@@ -48,7 +58,7 @@ class SearchPage extends Component {
                 <h3> hellooooo </h3>
                 <h3> {this.state.results.map(result => <div> result : {result.title} </div>)} </h3>
                 <SearchArea handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
-                <SearchResultList results={this.state.results}/>
+                <SearchResultList insertFeed={this.insertFeed} results={this.state.results}/>
             </div>
         );
     }

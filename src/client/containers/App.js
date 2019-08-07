@@ -62,7 +62,7 @@ class App extends Component {
 
     render() {
 
-        let re = /(login|register)/;
+        let re = /(login|register|searchpage|myfeed)/;
         let isAuth = re.test(this.props.location.pathname);
 
         return (
