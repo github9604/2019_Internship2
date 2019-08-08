@@ -32,6 +32,9 @@ const BoardFeed = sequelize.define(
         },
         user_id: {
             type: Sequelize.STRING
+        },
+        websiteTitle: {
+            type: Sequelize.STRING
         }
     },
     {

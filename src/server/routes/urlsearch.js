@@ -30,6 +30,9 @@ const BoardFeed = sequelize.define(
         },
         user_id: {
             type: Sequelize.STRING
+        },
+        websiteTitle: {
+            type: Sequelize.STRING
         }
     },
     {
@@ -49,13 +52,10 @@ router.post('/', function (req, res, next) {
 });
 
 router.post('/insertFeed', function(req, res, next) {
-    console.log("insert article into db");
-    console.log(req.session.user_id);
-    console.log(req.body.feedInput);
-
     const inputData = {
         post_feedid: req.body.feedInput,
-        user_id: req.session.user_id
+        user_id: req.session.user_id,
+        websiteTitle: req.body.titleInput
     };
 
     console.log(inputData);

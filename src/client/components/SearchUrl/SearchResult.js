@@ -5,9 +5,18 @@ import "antd/dist/antd.css";
 
 class SearchResult extends Component {
 
+    state = {
+        feedId: '',
+        websiteTitle: ''
+    }
+
     setData = () => {
         console.log("insert article to db btn clicked");
-        this.props.insertFeed(this.props.feedId);
+        let insert_results = {
+            feedId: this.props.feedId,
+            websiteTitle: this.props.websiteTitle
+          }
+        this.props.insertFeed(insert_results);
     }
     // state = {
     //     visible: false
@@ -28,11 +37,11 @@ class SearchResult extends Component {
     render() {
         return (
             <div>
-                <h3>{this.props.title}</h3>
+                <h3>{this.props.websiteTitle}</h3>
                 <img src={this.props.iconUrl} />
                 <h3> {this.props.topics[0]} /></h3>
                 <h5> {this.props.description} </h5>
-                <Button type="primary" onClick={this.setData}> click me </Button>
+                <Button type="primary" onClick={this.setData}> Feed 구독 </Button>
                 {/* <Popover
                     content={<div> <div>{AddDirForm}</div> <div> {DirList} </div> <a onClick={this.hide}>Close</a> </div>}
                     title="Title"

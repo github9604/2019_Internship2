@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {UserFeedResultList} from '../components/UserFeed';
+import {Select} from 'react-select';
 
 class MyFeed extends Component {
 
@@ -58,12 +59,21 @@ class MyFeed extends Component {
         });
     }
 
+    showFeedList = () => {
+        axios.get('/api/showtodayfeed/feedlist')
+        .then((response) => {
+            console.log("feedlist response: " + response);
+            console.log("feedlist response data: " + response.data);
+        })
+    }
+
     handleDirInput = () => {
         console.log("handleDirInput");
     }
 
     addtoDirectory = (selectdir) => {
         console.log("parsed selectdir data: " + selectdir.dirId);
+        console.log("origin: " + selectdir.articleId);
         let tmp = selectdir.articleId.split('/');
         console.log("changed: " + tmp[0]);
         console.log(tmp[1]);
@@ -84,7 +94,7 @@ class MyFeed extends Component {
                     {
                         (this.state.loading)
                         ? <p> loading... </p>
-                        : <div> <UserFeedResultList addtoDirectory={this.addtoDirectory} showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists = {this.state.dirlists} results={this.state.results} /> </div>
+                        : <div> <Select options={friends}/> <UserFeedResultList addtoDirectory={this.addtoDirectory} showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists = {this.state.dirlists} results={this.state.results} /> </div>
                     }
                 </div>
                 </div>

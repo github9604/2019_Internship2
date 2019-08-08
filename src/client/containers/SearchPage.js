@@ -12,10 +12,10 @@ class SearchPage extends Component {
         };
     }
     
-    insertFeed = (feedId) => {
-        console.log(feedId);
-        let feedInput = feedId;
-        axios.post('/api/urlsearch/insertFeed', {feedInput})
+    insertFeed = (insert_results) => {
+        let feedInput = insert_results.feedId;
+        let titleInput = insert_results.websiteTitle;
+        axios.post('/api/urlsearch/insertFeed', {feedInput, titleInput})
         .then((response) => {
             console.log("insert feed to current member success");
         })
@@ -55,7 +55,6 @@ class SearchPage extends Component {
     render() {
         return (
             <div>
-                <h3> hellooooo </h3>
                 <h3> {this.state.results.map(result => <div> result : {result.title} </div>)} </h3>
                 <SearchArea handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
                 <SearchResultList insertFeed={this.insertFeed} results={this.state.results}/>
