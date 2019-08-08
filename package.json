@@ -4,7 +4,7 @@
   "private": true,
   "proxy": "http://localhost:4000",
   "scripts": {
-    "start": "babel-node src/server/index.js",
+    "start": "nodemon --exec babel-node src/server/index.js",
     "build": "webpack --mode production",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "nodemon --exec babel-node src/server/index.js",

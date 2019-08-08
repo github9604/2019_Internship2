@@ -46,7 +46,8 @@ class MyFeed extends Component {
     showTodayFeed = () => {
         axios.get('/api/showtodayfeed')
         .then((response) => {
-            console.log(response.data);
+            console.log("response: " + response);
+            console.log("response data: " + response.data);
             this.setState({
                 results: response.data,
                 loading: false
@@ -76,7 +77,8 @@ class MyFeed extends Component {
 
     render() {
         return (
-            <div>
+            <div class="main-panel">
+                <div class="content-wrapper">
                 <div> my feed page </div>
                 <div>
                     {
@@ -85,7 +87,7 @@ class MyFeed extends Component {
                         : <div> <UserFeedResultList addtoDirectory={this.addtoDirectory} showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists = {this.state.dirlists} results={this.state.results} /> </div>
                     }
                 </div>
-                
+                </div>
             </div>
         );
     }

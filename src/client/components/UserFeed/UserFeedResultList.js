@@ -8,7 +8,7 @@ const UserFeedResultList = (props) => {
             {
                 props.results.map((result, i) => {
                     return (
-                        <UserFeedResult addtoDirectory={props.addtoDirectory}  articleId = {result.id} dirlists = {props.dirlists} title={result.title} />
+                        <UserFeedResult addtoDirectory={props.addtoDirectory} author={result.author} articleId = {result.id} dirlists = {props.dirlists} visualUrl = {result.visual} title={result.title} />
                     )
                 })
             }

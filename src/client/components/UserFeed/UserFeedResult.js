@@ -66,9 +66,13 @@ class UserFeedResult extends Component {
     //     photo: "https://randomuser.me/api/portraits/women/71.jpg"
     //   }
     // ];
+    console.log(this.props.visualUrl);
+    console.log(this.props.visualUrl.url);
     return (
-      <div>
+      <div border="1px">
         <h3> {this.props.title} </h3>
+        <h5> {this.props.author} </h5>
+        <img height="100px" src={this.props.visualUrl.url }/>
         <Popover
           content={<div><SelectSearch options={dirs} value={this.state.selectdir ? this.state.selectdir : ''} onChange={(dir) => this.onChangeValue(dir)} placeholder="폴더를 입력하세요" /> <button onClick={this.setData}> 폴더에 추가 </button></div>} 
           placement="bottom"

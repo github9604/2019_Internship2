@@ -83,19 +83,47 @@ const ArticleToDirectory = sequelize.define(
 );
 
 router.get('/', function (req, res, next) {
-    BoardFeed.findOne({
+    BoardFeed.findAll({
         where: { user_id: req.session.user_id },
         attributes: [
             'post_feedid'
         ]
     })
         .then(boardFeed => {
-            console.log(boardFeed.post_feedid);
-            let base_url = 'http://cloud.feedly.com//v3/streams/contents?streamId=' + boardFeed.post_feedid;
-            console.log(base_url);
-            axios.get(base_url)
-                .then(response => res.json(response.data.items))
-                .catch(error => console.log(error))
+            let arrayOfPromises = [];
+            boardFeed.map((result, i) => {
+                console.log("result: " + result.post_feedid);
+                let base_url = 'http://cloud.feedly.com//v3/streams/contents?streamId=' + result.post_feedid;
+                arrayOfPromises.push(
+                    axios.get(base_url)
+                    .then(response => (response.data.items))
+                    .catch(error => console.log(error))
+                );
+            });
+            
+            Promise.all(arrayOfPromises).then(
+                function (values) {
+                    console.log(values[0]);
+                    // let targetvalues_0 = JSON.parse(JSON.stringify(values[0]));
+                    // let targetvalues_1 = JSON.parse(JSON.stringify(values[1]));
+                    // let result = Object.assign(targetvalues_0, targetvalues_1);
+                    for(let i=0; i<values.length-1; i++){
+                        Array.prototype.push.apply(values[0], values[i+1]);
+                    }
+                    console.log("result: " + values[0]);
+                    let sortedvalues = values[0];
+                    sortedvalues.sort(function(b, a){
+                        return a["published"] - b["published"];
+                    });
+                    res.json(sortedvalues);
+                }
+            );
+            // console.log(boardFeed.post_feedid);
+            // let base_url = 'http://cloud.feedly.com//v3/streams/contents?streamId=' + boardFeed.post_feedid;
+            // console.log(base_url);
+            // axios.get(base_url)
+            //     .then(response => res.json(response.data.items))
+            //     .catch(error => console.log(error))
         })
 });
 
@@ -120,13 +148,13 @@ router.post('/diratriclemap', function (req, res, next) {
     console.log(inputData);
 
     ArticleToDirectory.create(inputData)
-    .then(artdirmap => {
-        console.log(artdirmap);
-        console.log("dir article map success");
-    })
-    .catch(err => {
-        return res.send('error', err)
-    })
+        .then(artdirmap => {
+            console.log(artdirmap);
+            console.log("dir article map success");
+        })
+        .catch(err => {
+            return res.send('error', err)
+        })
 });
 
 export default router;
