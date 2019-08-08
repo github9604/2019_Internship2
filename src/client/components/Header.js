@@ -1,10 +1,33 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Button, Popover } from 'antd';
 
 class Header extends Component {
 
-  render() {
+  state = {
+    visible: false,
+    inputDir: ''
+  }
 
+  hide = () => {
+    this.setState({
+      visible: false
+    });
+  };
+
+  handleVisibleChange = visible => {
+    this.setState({ visible });
+  };
+
+  handleChange = (e) => {
+    this.setState({inputDir: e.target.value});
+  };
+
+  handleSubmit = () => {
+    this.props.insertDirlist(this.state.inputDir);
+  }
+
+  render() {
     const logoutButton = (
       <li>
         <a onClick={this.props.onLogout}>
@@ -13,94 +36,74 @@ class Header extends Component {
       </li>
     );
 
-    const side_bar = (
-      <div className="sidebar">
-        <div className="scrollbar-inner sidebar-wrapper">
-          <ul className="nav">
-            <li className="nav-item">
-              <a href="/settings">
-                <i className="la la-hand-o-up"></i>
-                <p>My Settings</p>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="/personalpage">
-                <i className="la la-bookmark-o">
-                </i>
-                <p>Scrapped Recipe</p>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="/personalgraph">
-                <i className="la la-check-circle-o">
-                </i>
-                <p>Nutritional Status</p>
-              </a>
-            </li>
-            <li className="nav-item update-pro">
-              <a href="/login">
-                <button data-toggle="modal" data-target="#modalUpdate">
-                  <i className="la la-reply">
-                  </i>
-                  <p>Logout</p>
-                </button>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+    let side_bar = (
+      this.props.dirlists.map((result, i) => {
+        return (
+          <a class="nav_a" color="white"> {result.dir_name} </a> 
+        )
+      })
     );
 
+    // const side_bar = (
+    //   <div class="sidenav">
+    //     <a href="#about">About</a>
+    //     <a href="#services">Services</a>
+    //     <a href="#clients">Clients</a>
+    //     <a href="#contact">Contact</a>
+    //     <a><Button >
+    //       <p>dir 추가</p>
+    //     </Button></a>
+
+    //   </div>
+    // );
+
     const header = (
-      <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="images/logo.svg" class="mr-2" alt="logo" /></a>
-          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo" /></a>
-        </div>
-        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-            <span class="ti-view-list"></span>
-          </button>
-          <ul class="navbar-nav mr-lg-2">
-            <li class="nav-item nav-search d-none d-lg-block">
-              <div class="input-group">
-                <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
-                  <span class="input-group-text" id="search">
-                    <i class="ti-search"></i>
-                  </span>
-                </div>
-                <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search" />
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+            </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
               </div>
             </li>
           </ul>
-          <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item nav-profile dropdown">
-              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                <img src="images/faces/face28.jpg" alt="profile" />
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item">
-                  <i class="ti-settings text-primary"></i>
-                  Settings
-              </a>
-                <a class="dropdown-item">
-                  <i class="ti-power-off text-primary"></i>
-                  Logout
-              </a>
-              </div>
-            </li>
-          </ul>
-          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-            <span class="ti-view-list"></span>
-          </button>
         </div>
       </nav>
     );
 
     return (
-      <div>
+      <div id="wrapper">
+        <div class="sidenav" background-color="#d2d2d4">
+          {side_bar}
+          <a>
+            <input placeholder="폴더명을 입력하세요" onChange={this.handleChange} />
+          </a>
+          <a>
+          <Button onClick={this.handleSubmit}>
+            <p>dir 추가</p>
+          </Button>
+         </a>
+        </div>
         {/* {side_bar} */}
-        {header}
+        {/* {header} */}
         {/* <div className="right">
           <ul>
             {this.props.isLoggedIn ? logoutButton : <div> <h3> lolololognotnontonto </h3> </div>}

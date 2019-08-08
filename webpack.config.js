@@ -7,7 +7,7 @@ module.exports = {
     entry: [
         'react-hot-loader/patch',
         './src/client/index.js',
-        './src/client/style.css'
+        './src/client/navbar.css'
         ],
     output: {
         path: path.join(__dirname, outputDirectory),
@@ -81,7 +81,7 @@ module.exports = {
           },
       
         proxy: {
-            "/api": "http://localhost:4000"
+            "/api": "http://localhost:7000"
         }
     },
     plugins: [

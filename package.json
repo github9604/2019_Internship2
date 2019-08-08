@@ -2,7 +2,7 @@
   "name": "chaesong",
   "version": "0.0.0",
   "private": true,
-  "proxy": "http://localhost:4000",
+  "proxy": "http://localhost:7000",
   "scripts": {
     "start": "nodemon --exec babel-node src/server/index.js",
     "build": "webpack --mode production",

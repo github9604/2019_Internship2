@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { getStatusRequest, logoutRequest } from '../actions/authentication';
 
 class App extends Component {
+    constructor() {
+        super();
+        this.state = {
+            dirlist_results: []
+        };
+    }
 
     handleLogout = () => {
         this.props.logoutRequest().then(
@@ -58,7 +65,43 @@ class App extends Component {
                 }
             }
         );
+        this.performDirList();
     }
+
+    performDirList = () => {
+        axios.get('/api/dirlist')
+            .then(response => {
+                console.log(response);
+                console.log(response.data);
+                this.setState({
+                    dirlist_results: response.data
+                });
+            })
+            .catch(error => {
+                console.log('Error fetching and parsing data', error);
+            })
+    }
+
+    insertDirlist = (insertDir) => {
+        let insertDirinput = insertDir;
+        axios.post('/api/dirlist/insertDir', {insertDirinput})
+        .then((response) => {
+            if(response.data === "success")
+            {
+                axios.get('/api/dirlist')
+                .then((response) => {
+                    this.setState({dirlist_results: response.data});
+                })
+                .catch(error => {
+                    console.log('error fetching and parsing data', error);
+                })
+            }
+        })
+        .catch(error => {
+            console.log('error fetching and parsing data', error);
+        })
+    }
+
 
     render() {
 
@@ -66,9 +109,11 @@ class App extends Component {
         let isAuth = re.test(this.props.location.pathname);
 
         return (
-            <div>
-                {isAuth ? undefined : <Header isLoggedIn={this.props.status.isLoggedIn}
+            <div class="d-flex" id="wrapper">
+                {isAuth ? undefined : <Header insertDirlist={this.insertDirlist} dirlists={this.state.dirlist_results} isLoggedIn={this.props.status.isLoggedIn}
                     onLogout={this.handleLogout} />}
+                <script src="../src/asset/vendor/jquery/jquery.min.js"></script>
+                <script src="../src/asset/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
             </div>
         );
     }
