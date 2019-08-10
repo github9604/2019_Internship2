@@ -9,7 +9,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 
-import { Login, Register, Main, App, SearchPage, MyFeed } from '../client/containers';
+import { Login, Register, Main, App, SearchPage, MyFeed, MyDirectory } from '../client/containers';
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
@@ -21,6 +21,7 @@ ReactDOM.render(
       <Route path="/register" component={Register} />
       <Route path="/Main" component={Main} />
       <Route path="/SearchPage" component={SearchPage} />
+      <Route path="/MyDirectory" component={MyDirectory} />
       {/* <Switch>
         <Route path="/MyFeed/:name" component={MyFeed} /> */}
       <Route path="/MyFeed" component={MyFeed} />

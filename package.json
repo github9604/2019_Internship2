@@ -63,7 +63,7 @@
     "redux-thunk": "^2.3.0",
     "rss-parser": "^3.7.2",
     "sass-loader": "^7.1.0",
-    "sequelize": "^5.8.6"
+    "sequelize": "^5.13.0"
   },
   "main": "app.js",
   "devDependencies": {

@@ -94,7 +94,7 @@ class MyFeed extends Component {
                     {
                         (this.state.loading)
                         ? <p> loading... </p>
-                        : <div> <Select options={friends}/> <UserFeedResultList addtoDirectory={this.addtoDirectory} showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists = {this.state.dirlists} results={this.state.results} /> </div>
+                        : <div> <UserFeedResultList addtoDirectory={this.addtoDirectory} showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists = {this.state.dirlists} results={this.state.results} /> </div>
                     }
                 </div>
                 </div>
