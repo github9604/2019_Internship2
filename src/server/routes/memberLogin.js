@@ -29,11 +29,14 @@ const MemberLogin = sequelize.define(
         },
         user_pw: {
             type: Sequelize.STRING
+        },
+        group_id: {
+            type: Sequelize.INTEGER
         }
     },
     {
         timestamps: false,
-        tableName: 'board_user'
+        tableName: 'tbl_user'
     }
 );
 

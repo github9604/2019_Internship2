@@ -33,7 +33,7 @@ app.use(function(req, res, next) {
     next();
   });
 
-app.use(express.static("public"));
+app.use(express.static("dist"));
 app.use(cors({
     'allowedHeaders': ['sessionId', 'Content-Type'],
     'exposedHeaders': ['sessionId'],

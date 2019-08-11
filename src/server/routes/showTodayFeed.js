@@ -43,8 +43,8 @@ const BoardFeed = sequelize.define(
     }
 );
 
-const BoardDirectory = sequelize.define(
-    'BoardDirectory',
+const TableDirectory = sequelize.define(
+    'TableDirectory',
     {
         dir_id: {
             type: Sequelize.INTEGER,
@@ -54,13 +54,16 @@ const BoardDirectory = sequelize.define(
         dir_name: {
             type: Sequelize.STRING
         },
-        user_id: {
-            type: Sequelize.STRING
+        owner_id: {
+            type: Sequelize.INTEGER
+        },
+        share_group_id: {
+            type: Sequelize.INTEGER
         }
     },
     {
         timestamps: false,
-        tableName: 'board_directory'
+        tableName: 'tbl_directory'
     }
 );
 
@@ -131,14 +134,14 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/dirlist', function (req, res, next) {
-    BoardDirectory.findAll({
-        where: { user_id: req.session.user_id },
+    TableDirectory.findAll({
+        where: { owner_id: req.session.user_id },
         attributes: [
             'dir_name'
         ]
     })
-        .then(boardDirectory => {
-            res.json(boardDirectory);
+        .then(TableDirectory => {
+            res.json(TableDirectory);
         })
 });
 

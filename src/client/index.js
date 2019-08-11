@@ -21,7 +21,7 @@ ReactDOM.render(
       <Route path="/register" component={Register} />
       <Route path="/Main" component={Main} />
       <Route path="/SearchPage" component={SearchPage} />
-      <Route path="/MyDirectory" component={MyDirectory} />
+        <Route path="/MyDirectory/:dir_name" component={MyDirectory} />
       {/* <Switch>
         <Route path="/MyFeed/:name" component={MyFeed} /> */}
       <Route path="/MyFeed" component={MyFeed} />

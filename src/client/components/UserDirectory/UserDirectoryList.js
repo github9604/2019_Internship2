@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DirEach from './DirEach';
+import UserDirEach from './UserDirEach';
 import { Button } from 'antd';
 
 
@@ -22,7 +22,7 @@ class UserDirectoryList extends Component {
                 {
                     this.props.dirlists.map((result, i) => {
                         return (
-                            <DirEach dir_name={result.dir_name} />
+                            <UserDirEach showArticleInDir={this.props.showArticleInDir} dir_name={result.dir_name} />
                         )
                     })
                 }

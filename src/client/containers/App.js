@@ -84,22 +84,21 @@ class App extends Component {
 
     insertDirlist = (insertDir) => {
         let insertDirinput = insertDir;
-        axios.post('/api/dirlist/insertDir', {insertDirinput})
-        .then((response) => {
-            if(response.data === "success")
-            {
-                axios.get('/api/dirlist')
-                .then((response) => {
-                    this.setState({dirlist_results: response.data});
-                })
-                .catch(error => {
-                    console.log('error fetching and parsing data', error);
-                })
-            }
-        })
-        .catch(error => {
-            console.log('error fetching and parsing data', error);
-        })
+        axios.post('/api/dirlist/insertDir', { insertDirinput })
+            .then((response) => {
+                if (response.data === "success") {
+                    axios.get('/api/dirlist')
+                        .then((response) => {
+                            this.setState({ dirlist_results: response.data });
+                        })
+                        .catch(error => {
+                            console.log('error fetching and parsing data', error);
+                        })
+                }
+            })
+            .catch(error => {
+                console.log('error fetching and parsing data', error);
+            })
     }
 
 
@@ -109,11 +108,14 @@ class App extends Component {
         let isAuth = re.test(this.props.location.pathname);
 
         return (
-            <div class="d-flex" id="wrapper">
-                {isAuth ? undefined : <Header insertDirlist={this.insertDirlist} dirlists={this.state.dirlist_results} isLoggedIn={this.props.status.isLoggedIn}
-                    onLogout={this.handleLogout} />}
-                <script src="../src/asset/vendor/jquery/jquery.min.js"></script>
-                <script src="../src/asset/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <div>
+                <a href="/mydirectory"> hello </a> 
+                <div class="d-flex" id="wrapper">
+                    {isAuth ? undefined : <Header insertDirlist={this.insertDirlist} dirlists={this.state.dirlist_results} isLoggedIn={this.props.status.isLoggedIn}
+                        onLogout={this.handleLogout} />}
+                    <script src="../src/asset/vendor/jquery/jquery.min.js"></script>
+                    <script src="../src/asset/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                </div>
             </div>
         );
     }

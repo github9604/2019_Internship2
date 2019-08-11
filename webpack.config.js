@@ -1,14 +1,16 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const outputDirectory = "public";
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const outputDirectory = "dist";
 const webpack = require('webpack');
 
 module.exports = {
     entry: [
+        'babel-polyfill',
         'react-hot-loader/patch',
         './src/client/index.js',
         './src/client/navbar.css'
-        ],
+    ],
     output: {
         path: path.join(__dirname, outputDirectory),
         filename: "bundle.js",
@@ -64,30 +66,39 @@ module.exports = {
             {
                 test: /\.scss$/,
                 loaders: [
-                    require.resolve( 'style-loader' ),
-                    require.resolve( 'css-loader' ),
-                    require.resolve( 'sass-loader' )
+                    require.resolve('style-loader'),
+                    require.resolve('css-loader'),
+                    require.resolve('sass-loader')
                 ]
             },
         ]
     },
+    devtool: 'inline-source-map',
     devServer: {
         port: 3000,
         open: true,
-        hot: true, 
+        hot: true,
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Headers': '*',
-          },
-      
+        },
+
         proxy: {
-            "/api": "http://localhost:7000"
-        }
+            "/api": {
+                target: "http://localhost:7000",
+                changeOrigin: true
+            }
+        },
+        historyApiFallback: true
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            template: "./public/index.html"
+        })
     ],
-    node:{
+    node: {
         fs: 'empty',
         net: 'empty'
     }

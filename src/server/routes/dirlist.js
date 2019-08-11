@@ -19,8 +19,8 @@ const sequelize = new Sequelize('kt_intern', 'min9604', '!zpdlxl9604', {
     }
 });
 
-const BoardDirectory = sequelize.define(
-    'BoardDirectory',
+const TableDirectory = sequelize.define(
+    'TableDirectory',
     {
         dir_id: {
             type: Sequelize.INTEGER,
@@ -30,40 +30,88 @@ const BoardDirectory = sequelize.define(
         dir_name: {
             type: Sequelize.STRING
         },
-        user_id: {
+        owner_id: {
+            type: Sequelize.INTEGER
+        },
+        share_group_id: {
+            type: Sequelize.INTEGER
+        }
+    },
+    {
+        timestamps: false,
+        tableName: 'tbl_directory'
+    }
+);
+
+const TableGroup = sequelize.define(
+    'TableGroup',
+    {
+        group_id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true
+        },
+        group_name: {
             type: Sequelize.STRING
         }
     },
     {
         timestamps: false,
-        tableName: 'board_directory'
+        tableName: 'tbl_group'
     }
 );
 
 router.get('/', (req, res, next) => {
-    BoardDirectory.findAll({
-        where: {user_id: req.session.user_id}
+    TableDirectory.findAll({
+        where: { owner_id: req.session.user_id }
     })
-    .then(BoardDirectory=>{
-        res.json(BoardDirectory);
-    })
+        .then(TableDirectory => {
+            res.json(TableDirectory);
+        })
+})
+
+router.post('/grouplist', (req, res, next) => {
+    TableGroup.findAll()
+        .then(TableGroup => {
+            // console.log(JSON.stringify(TableGroup));
+            let results = [{ value: 0, text: req.session.user_id }];
+            TableGroup.map((result, i) => {
+                results.push({ value: result.group_id, text: result.group_name });
+                console.log(results);
+            })
+            // console.log("now: " + results);
+            res.json(results);
+        })
 })
 
 router.post('/insertDir', (req, res, next) => {
     const inputData = {
         dir_name: req.body.insertDirinput,
-        user_id: req.session.user_id
+        owner_id: req.session.user_id
     };
-    console.log(inputData);
+    // console.log(inputData);
 
-    BoardDirectory.create(inputData)
-    .then(dirInput => {
-        res.send("success");
-    })
-    .catch(err => {
-        return res.send('error' + err)
-    })
+    TableDirectory.create(inputData)
+        .then(dirInput => {
+            res.send("success");
+        })
+        .catch(err => {
+            return res.send('error' + err)
+        })
 });
+
+router.post('/groupAuth', (req, res, next) => {
+    let group_auth = req.body.group_auth;
+    console.log("grou???: " + group_auth);
+    TableDirectory.update({
+        share_group_id: req.body.group_auth
+    }, {
+        where: {owner_id: req.session.user_id, dir_name: req.body.now_dir}
+    })
+    .then(console.log("success"))
+    .catch(err => {
+        return res.send('error' + err);
+    })
+})
 
 
 export default router;

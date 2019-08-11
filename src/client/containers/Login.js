@@ -27,6 +27,7 @@ class Login extends Component {
     render(){
         return (
             <div>
+                <h2> hello </h2>
                 <Authentication mode={true}
                 onLogin = {this.handleLogin} />
             </div>
