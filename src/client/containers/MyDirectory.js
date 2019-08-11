@@ -15,13 +15,21 @@ class MyDirectory extends Component {
             now_dir: '',
             group_auth: ''
         };
-        this.performDirList();
-        this.performGroupList();
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.match.params.dir_name !== this.props.match.params.dir_name){
+            console.log("Next: " + nextProps.match.params.dir_name);
+            console.log("NOw: " + this.props.match.params.dir_name);
+            this.performDirList();
+            this.performGroupList();
+            this.showArticleInDir(nextProps.match.params.dir_name);
+        }
+    }
     componentDidMount() {
-        // this.performDirList();
-        // this.performGroupList();
+        this.performDirList();
+        this.performGroupList();
+        this.showArticleInDir();
     }
 
     performDirList = () => {
@@ -71,9 +79,14 @@ class MyDirectory extends Component {
             })
     }
 
-    showArticleInDir = (sendDirName) => {
+    showArticleInDir = (now_dir_name) => {
         // console.log(sendDirName);
-        let now_dir = sendDirName.dirName
+        
+        let now_dir = this.props.match.params.dir_name;
+        if(now_dir != now_dir_name){
+            now_dir = now_dir_name;
+        }
+        console.log(now_dir_name);
         axios.post('/api/matchDirArticle', { now_dir })
             .then((response) => {
                 this.setState({ match_results: response.data, now_dir: now_dir });
@@ -100,7 +113,7 @@ class MyDirectory extends Component {
                 <GroupList groupSubmit={this.groupSubmit} options={this.state.group_results}/>
                 <div class="d-flex" id="wrapper">
                     <div class="sidenav" background-color="#d2d2d4">
-                        <UserDirectoryList showArticleInDir={this.showArticleInDir} insertDirlist={this.insertDirlist} dirlists={this.state.dirlist_results} />
+                        <UserDirectoryList insertDirlist={this.insertDirlist} dirlists={this.state.dirlist_results} />
                         <script src="../src/asset/vendor/jquery/jquery.min.js"></script>
                         <script src="../src/asset/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
                     </div>
