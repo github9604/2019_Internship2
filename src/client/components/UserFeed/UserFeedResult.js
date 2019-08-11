@@ -36,6 +36,11 @@ class UserFeedResult extends Component {
     console.log(this.state.selectdir);
   }
 
+  openWindow = () => {
+    console.log(this.props.originlink);
+    window.open(this.props.originlink);
+  }
+
   render() {
     console.log("dirlists: " + this.props.dirlists)
     let dirs = this.props.dirlists;
@@ -69,7 +74,10 @@ class UserFeedResult extends Component {
     return (
       <div border="1px">
         <h3> {this.props.title} </h3>
-        <h5> {this.props.author} </h5>
+        <h4> {this.props.author} </h4>
+        <div dangerouslySetInnerHTML={{__html: this.props.summary}}></div>
+        <h5> {this.props.summary} </h5>
+        <Button onClick={this.openWindow}> 해당 페이지로 이동 </Button>
         <Popover
           content={<div><SelectSearch options={dirs} value={this.state.selectdir ? this.state.selectdir : ''} onChange={(dir) => this.onChangeValue(dir)} placeholder="폴더를 입력하세요" /> <button onClick={this.setData}> 폴더에 추가 </button></div>} 
           placement="bottom"
@@ -77,7 +85,7 @@ class UserFeedResult extends Component {
           visible={this.state.visible}
           onVisibleChange={this.handleVisibleChange}
         >
-          <Button type="primary"> click me </Button>
+          <Button type="primary"> 스크랩 </Button>
         </Popover>
       </div>
     );

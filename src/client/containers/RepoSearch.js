@@ -3,7 +3,7 @@ import axios from 'axios';
 import RepoList from '../components/GitRepo/RepoList';
 import SearchForm from '../components/GitRepo/SearchForm';
 
-class Main extends Component {
+class RepoSearch extends Component {
   constructor() {
     super();
     this.state = {
@@ -51,4 +51,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default RepoSearch;

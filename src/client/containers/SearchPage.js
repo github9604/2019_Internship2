@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { SearchArea, SearchResultList} from '../components/SearchUrl';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 class SearchPage extends Component {
     constructor() {
@@ -55,6 +56,7 @@ class SearchPage extends Component {
     render() {
         return (
             <div className="searchpage">
+                <Link exact to={`/MyDirectory/asdf`}>asdf</Link>
                 <SearchArea handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
                 <SearchResultList insertFeed={this.insertFeed} results={this.state.results}/>
             </div>

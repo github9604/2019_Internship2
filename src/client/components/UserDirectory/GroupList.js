@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dropdown, Icon, Button } from 'semantic-ui-react';
+import { Form, Dropdown, Icon, Button } from 'semantic-ui-react';
 
 class GroupList extends Component {
 
@@ -18,23 +18,24 @@ class GroupList extends Component {
         let sendData = {
             group_auth: this.state.group_auth
         }
-        // this.props.changeDirAuth(sendData);
+        this.props.changeDirAuth(sendData);
     }
 
     render() {
+        console.log("dlsdkfj? : " + this.props.selected_auth);
         return (
             <div>
                 <section>
                         <div>
-                            <Dropdown
+                            <Form.Dropdown
                                 onChange={this.groupChange}
+                                onClick={this.groupChange}
+                                defaultValue={this.props.selected_auth}
                                 placeholder="공개 그룹을 선택하세요"
-                                fluid
-                                search
-                                selection
+                                fluid search selection
                                 options={this.props.options}
                             />
-                            <button onclick={this.setGroup}> 변경 </button>
+                            <button onClick={this.setGroup}> 변경 </button>
                         </div>
                 </section>
             </div>

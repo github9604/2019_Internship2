@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { getStatusRequest, logoutRequest } from '../actions/authentication';
+import {ToastProvider, useToasts} from 'react-toast-notifications';
 
 class App extends Component {
     constructor() {
@@ -21,7 +22,10 @@ class App extends Component {
                     isLoggedIn: false,
                     username: ''
                 };
+
                 document.cookie = 'key=' + btoa(JSON.stringify(loginData));
+                alert("로그아웃 됐습니다");
+                document.location.href="/login";
             }
         );
     }
@@ -60,8 +64,8 @@ class App extends Component {
                     document.cookie = 'key=' + btoa(JSON.stringify(loginData));
 
                     // and notify
-                    let $toastContent = $('<span style="color: #FFB4BA">Your session is expired, please log in again</span>');
-                    Materialize.toast($toastContent, 4000);
+                    alert("비로그인 상태입니다.\n로그인 화면으로 이동합니다.");
+                    document.location.href="/login";
                 }
             }
         );
@@ -104,13 +108,15 @@ class App extends Component {
 
     render() {
 
-        let re = /(login|register|searchpage|myfeed)/;
+        let re = /(login|register)/;
         let isAuth = re.test(this.props.location.pathname);
 
         return (
             <div>
-                <div class="d-flex" id="wrapper">
-                    {isAuth ? undefined : <Header insertDirlist={this.insertDirlist} dirlists={this.state.dirlist_results} isLoggedIn={this.props.status.isLoggedIn}
+                <div >
+                    {isAuth ? undefined : <Header insertDirlist={this.insertDirlist}
+                        dirlists={this.state.dirlist_results}
+                        isLoggedIn={this.props.status.isLoggedIn}
                         onLogout={this.handleLogout} />}
                     <script src="../src/asset/vendor/jquery/jquery.min.js"></script>
                     <script src="../src/asset/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

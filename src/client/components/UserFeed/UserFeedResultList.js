@@ -7,8 +7,13 @@ const UserFeedResultList = (props) => {
         <div>
             {
                 props.results.map((result, i) => {
+                    // console.log(result.summary);
+                    // console.log(result);
+                    let sum_content = result && result.summary ? result.summary.content : null;
+                    let originlink = result.canonicalUrl ? result.canonicalUrl : result.origin.htmlUrl;
+                    // console.log(sum_content);
                     return (
-                        <UserFeedResult addtoDirectory={props.addtoDirectory} author={result.author} articleId = {result.id} dirlists = {props.dirlists} visualUrl = {result.visual} title={result.title} />
+                        <UserFeedResult addtoDirectory={props.addtoDirectory} originlink={originlink} summary={sum_content} author={result.author} articleId = {result.id} dirlists = {props.dirlists} visualUrl = {result.visual} title={result.title} />
                     )
                 })
             }

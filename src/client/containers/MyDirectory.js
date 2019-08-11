@@ -3,6 +3,7 @@ import { UserDirectoryList, MatchResultList, GroupList } from '../components/Use
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Dropdown, Icon, Button } from 'semantic-ui-react';
+import { string } from 'prop-types';
 
 class MyDirectory extends Component {
 
@@ -13,7 +14,8 @@ class MyDirectory extends Component {
             match_results: [],
             group_results: [],
             now_dir: '',
-            group_auth: ''
+            group_auth: '',
+            selected_auth: '1'
         };
     }
 
@@ -35,8 +37,8 @@ class MyDirectory extends Component {
     performDirList = () => {
         axios.get('/api/dirlist')
             .then(response => {
-                // console.log(response);
-                // console.log(response.data);
+                console.log(response);
+                // console.log("dirlist: " + response.data[0].share_group_id);
                 this.setState({
                     dirlist_results: response.data
                 });
@@ -53,7 +55,7 @@ class MyDirectory extends Component {
                 console.log(response.data);
                 this.setState({
                     group_results: response.data
-                })
+                });
             })
             .catch(error => {
                 console.log('Error fetching and parsing data', error);
@@ -93,24 +95,34 @@ class MyDirectory extends Component {
             })
     }
 
-    groupSubmit = (e) => {
-        e.preventDefault();
-        console.log("working");
-        console.log(this.state.group_auth);
-        // let group_auth = this.state.group_auth;
-        // let now_dir = this.state.now_dir;
-        // axios.post('/api/dirlist/groupAuth', {group_auth, now_dir})
-        // .then((response) => {
-        //     console.log(response.data);
-        // })
+    changeDirAuth = (dirauth) => {
+        console.log(dirauth.group_auth);
+        let group_auth = dirauth.group_auth;
+        let now_dir = this.state.now_dir;
+        axios.post('/api/dirlist/groupAuth', {group_auth, now_dir})
+        .then((response) => {
+            console.log(response.data);
+        })
     }
+
+    // groupSubmit = (e) => {
+    //     e.preventDefault();
+    //     console.log("working");
+    //     console.log(this.state.group_auth);
+    //     // let group_auth = this.state.group_auth;
+    //     // let now_dir = this.state.now_dir;
+    //     // axios.post('/api/dirlist/groupAuth', {group_auth, now_dir})
+    //     // .then((response) => {
+    //     //     console.log(response.data);
+    //     // })
+    // }
 
     render() {
         return (
             <div>
                 <h2> 공개 범위 설정 </h2>
                 <h2> hello? </h2>
-                <GroupList groupSubmit={this.groupSubmit} options={this.state.group_results}/>
+                <GroupList changeDirAuth={this.changeDirAuth} options={this.state.group_results} selected_auth={this.state.selected_auth}/>
                 <div class="d-flex" id="wrapper">
                     <div class="sidenav" background-color="#d2d2d4">
                         <UserDirectoryList insertDirlist={this.insertDirlist} dirlists={this.state.dirlist_results} />

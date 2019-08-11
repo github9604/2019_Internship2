@@ -79,8 +79,7 @@ class Authentication extends Component {
                         name="user_pw"
                         type="password"
                         className="validate"
-                        onChange={this.handleChange}
-                        onKeyPress={this.handleKeyPress} />
+                        onChange={this.handleChange}/>
                 </div>
                 <div className="register-row">
                     <h3 className="register-title">

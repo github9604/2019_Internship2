@@ -98,7 +98,7 @@ router.get('/', function (req, res, next) {
         .then(boardFeed => {
             let arrayOfPromises = [];
             boardFeed.map((result, i) => {
-                console.log("result: " + result.post_feedid);
+                // console.log("result: " + result.post_feedid);
                 let base_url = 'http://cloud.feedly.com//v3/streams/contents?streamId=' + result.post_feedid;
                 arrayOfPromises.push(
                     axios.get(base_url)
