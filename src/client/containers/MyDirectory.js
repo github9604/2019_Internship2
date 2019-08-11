@@ -15,11 +15,13 @@ class MyDirectory extends Component {
             now_dir: '',
             group_auth: ''
         };
+        this.performDirList();
+        this.performGroupList();
     }
 
     componentDidMount() {
-        this.performDirList();
-        this.performGroupList();
+        // this.performDirList();
+        // this.performGroupList();
     }
 
     performDirList = () => {
@@ -94,6 +96,7 @@ class MyDirectory extends Component {
         return (
             <div>
                 <h2> 공개 범위 설정 </h2>
+                <h2> hello? </h2>
                 <GroupList groupSubmit={this.groupSubmit} options={this.state.group_results}/>
                 <div class="d-flex" id="wrapper">
                     <div class="sidenav" background-color="#d2d2d4">

@@ -2,6 +2,15 @@ body {
     font-family: "Lato", sans-serif;
   }
   
+body, html{
+    height: 100%
+}
+
+*{
+  margin: 0px;
+  padding: 0px;
+ }
+
   .sidenav {
     height: 100%;
     width: 160px;
@@ -36,4 +45,119 @@ body {
   @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
+  }
+
+  /*로그인 페이지 */
+  .login-page {
+    width: 360px;
+    padding: 15% 0 0;
+    margin: auto;
+  }
+  
+  .register-title{
+    text-align: left;
+    font-family: 'Noto Sans KR', "Roboto", sans-serif;
+    font-size: 12px;
+    font-style: extra bold;
+    margin-bottom: 1px;
+  }
+
+  .form {
+    border-radius: 3px;
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 360px;
+    margin: 0 auto 100px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    margin-top: 18%;
+  }
+
+  .form input {
+    border-radius: 3px;
+    font-family: 'Noto Sans KR', "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+
+  .form input:focus {
+    border: 1px solid #329e5e; }
+
+  .form button {
+    border-radius: 3px;
+    font-family: 'Noto Sans KR', "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #4CAF50;
+    width: 100%;
+    margin-top: 20px;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+  }
+  .form .message {
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 12px;
+  }
+  .form .message a {
+    color: #4CAF50;
+    text-decoration: none;
+  }
+  
+  .form .register-form {
+    display: none;
+  }
+
+  /* 검색 */
+/*   
+  .searchpage {
+    width: 50%;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .searchform {
+    width: 100%;
+    position: relative;
+    display: flex;
+  } */
+
+  .searchform input{
+    border-radius: 3px;
+    font-family: 'Noto Sans KR', "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 80%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+
+  .searchform button{
+    width: 20%;
+    border-radius: 3px;
+    font-family: 'Noto Sans KR', "Roboto", sans-serif;
+    outline: 0;
+    text-align: center;
+  }
+
+
+  .searchform input:focus{
+    border: 1px solid #329e5e;
   }

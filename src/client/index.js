@@ -6,7 +6,6 @@ import { createStore, applyMiddleware } from 'redux';
 import reducers from '../client/reducers';
 import thunk from 'redux-thunk';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 
 import { Login, Register, Main, App, SearchPage, MyFeed, MyDirectory } from '../client/containers';

@@ -54,9 +54,7 @@ class SearchPage extends Component {
     // }
     render() {
         return (
-            <div>
-                <h2> wow sdf asdfasdddd</h2>
-                <h3> {this.state.results.map(result => <div> result : {result.title} </div>)} </h3>
+            <div className="searchpage">
                 <SearchArea handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
                 <SearchResultList insertFeed={this.insertFeed} results={this.state.results}/>
             </div>

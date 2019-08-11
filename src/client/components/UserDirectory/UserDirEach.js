@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, withRouter} from 'react-router-dom';
 
 class UserDirEach extends Component {
 
@@ -12,9 +12,9 @@ class UserDirEach extends Component {
     }
     render() {
         return(
-            <a class="nav_a" onClick={this.setDirName}> <NavLink exact to={`/MyDirectory/${this.props.dir_name}`}>{this.props.dir_name}</NavLink> </a>
+            <a class="nav_a" onClick={this.setDirName}> <Link exact to={`/MyDirectory/${this.props.dir_name}`}>{this.props.dir_name}</Link> </a>
         );
     }
 }
 
-export default UserDirEach;
+export default withRouter(UserDirEach);

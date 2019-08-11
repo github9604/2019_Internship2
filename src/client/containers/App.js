@@ -109,7 +109,6 @@ class App extends Component {
 
         return (
             <div>
-                <a href="/mydirectory"> hello </a> 
                 <div class="d-flex" id="wrapper">
                     {isAuth ? undefined : <Header insertDirlist={this.insertDirlist} dirlists={this.state.dirlist_results} isLoggedIn={this.props.status.isLoggedIn}
                         onLogout={this.handleLogout} />}
