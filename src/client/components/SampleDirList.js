@@ -5,12 +5,14 @@ import PropTypes from 'prop-types';
 class SampleDirList extends Component {
     render() {
         const mapToComponents = data => {
-            console.log("????: " + data);
+            // console.log("????: " + data);
             return data.map((result, i) => {
-                console.log("::::: " + result);
+                // console.log("::::: " + result);
                 return (
                     <SampleDir
                         data={result}
+                        index={i}
+                        onRemove={this.props.onRemove}
                     />
                 );
             })
@@ -24,11 +26,15 @@ class SampleDirList extends Component {
 }
 
 SampleDirList.propTypes = {
-    data: PropTypes.array
+    data: PropTypes.array,
+    onRemove: PropTypes.func
 };
 
 SampleDirList.defaultProps = {
-    data: []
+    data: [],
+    onRemove: (deleteDirInput, index) => {
+        console.error('remove function not defined');
+    }
 }
 
 export default SampleDirList;

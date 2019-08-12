@@ -80,11 +80,12 @@ export function dirListFailure() {
 export function dirRemoveRequest(deleteDirInput, index){
     return (dispatch) => {
         dispatch(dirRemove());
-        return axios.delete('/api/memo/', {deleteDirInput})
+        return axios.delete('/api/dirlist/delete', { data: {deleteDirInput: deleteDirInput}})
         .then((response) => {
+            // console.log("index: " + index);
             dispatch(dirRemoveSuccess(index));
         }).catch((error) => {
-            dispatch(dirRemoveFailure(error.response.data.code));
+            // dispatch(dirRemoveFailure(error.response.data.code));
         })
     };
 }

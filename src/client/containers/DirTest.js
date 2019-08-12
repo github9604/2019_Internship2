@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { SampleWrite, SampleDirList } from '../components';
 import { connect } from 'react-redux';
-import { dirPostRequest, dirListRequest } from '../actions/dirList';
+import { dirPostRequest, dirListRequest, dirRemoveRequest, dirRemove } from '../actions/dirList';
 // import { useToasts } from "react-toast-notifications";
 
 class DirTest extends Component {
@@ -22,37 +22,47 @@ class DirTest extends Component {
     componentDidMount() {
         this.props.dirListRequest(true);
     }
-    
-    handlePost = (insertDirinput) => {
-        // const {addToast} = useToasts();
-        return this.props.dirPostRequest(insertDirinput).then(
-            () => {
-                if (this.props.postStatus.status === "SUCCESS") {
-                    this.loadNewDir().then(
-                        () => {
-                            console.log("성공");
-                        }
-                    );
-                    // addToast('성공적으로 디렉토리가 추가됐습니다', {appearance: 'success'})
-                } else {
-                    switch (this.props.postStatus.error) {
-                        case 3:
-                            console.log("실패");
-                        // addToast('디렉토리 이름을 지정해주세요', {appearance: 'error'})
+
+    handleRemove = (deleteDirInput, index) => {
+        console.log("doiing: " + index);
+        this.props.dirRemoveRequest(deleteDirInput, index).then(() => {
+            console.log("wonder: " + this.props.dirListData);
+
+            this.props.dirListRequest(true);
+
+        });
+}
+
+handlePost = (insertDirinput) => {
+    // const {addToast} = useToasts();
+    return this.props.dirPostRequest(insertDirinput).then(
+        () => {
+            if (this.props.postStatus.status === "SUCCESS") {
+                this.loadNewDir().then(
+                    () => {
+                        console.log("성공");
                     }
+                );
+                // addToast('성공적으로 디렉토리가 추가됐습니다', {appearance: 'success'})
+            } else {
+                switch (this.props.postStatus.error) {
+                    case 3:
+                        console.log("실패");
+                    // addToast('디렉토리 이름을 지정해주세요', {appearance: 'error'})
                 }
             }
-        )
-    }
+        }
+    )
+}
 
-    render() {
-        return (
-            <div>
-                <SampleWrite onPost={this.handlePost} />
-                <SampleDirList data={this.props.dirListData} />
-            </div>
-        );
-    }
+render() {
+    return (
+        <div>
+            <SampleWrite onPost={this.handlePost} />
+            <SampleDirList data={this.props.dirListData} onRemove={this.handleRemove} />
+        </div >
+    );
+}
 }
 
 const mapStateToProps = (state) => {
@@ -60,7 +70,8 @@ const mapStateToProps = (state) => {
         isLoggedIn: state.authentication.status.isLoggedIn,
         postStatus: state.dirList.post,
         dirListData: state.dirList.list.data,
-        listStatus: state.dirList.list.status
+        listStatus: state.dirList.list.status,
+        removeStatus: state.dirList.remove
     };
 };
 
@@ -71,6 +82,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         dirListRequest: (isInitial) => {
             return dispatch(dirListRequest(isInitial));
+        },
+        dirRemoveRequest: (deleteDirInput, index) => {
+            return dispatch(dirRemoveRequest(deleteDirInput, index));
         }
     };
 };

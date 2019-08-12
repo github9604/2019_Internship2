@@ -52,26 +52,60 @@ export default function dirList(state = initialState, action) {
           status: 'WAITING'
         }
       };
-      case types.DIR_LIST_SUCCESS:
-        if(action.isInitial){
-          return{
-            ...state,
-            list: {
-              ...state.list,
-              status: 'SUCCESS',
-              data: action.data
-            }
-          }
-        } else{
-          return{
-            ...state,
-            list: {
-              ...state.list,
-              status:'SUCCESS',
-              data: [...action.data]
-            }
+    case types.DIR_LIST_SUCCESS:
+      if (action.isInitial) {
+        return {
+          ...state,
+          list: {
+            ...state.list,
+            status: 'SUCCESS',
+            data: action.data
           }
         }
+      } else {
+        return {
+          ...state,
+          list: {
+            ...state.list,
+            status: 'SUCCESS',
+            data: [...action.data]
+          }
+        }
+      }
+    case types.DIR_REMOVE:
+      return {
+        ...state,
+        remove: {
+          ...state.remove,
+          status: 'WAITING',
+          error: -1
+        }
+      };
+    case types.DIR_REMOVE_SUCCESS:
+      let removeBefore = state.list.data.slice(0, action.index);
+      let removeAfter = state.list.data.slice(action.index + 1);
+      console.log("removeBefore" + removeBefore);
+      return {
+        ...state,
+        remove: {
+          ...state.remove,
+          statsu: 'SUCCESS'
+        },
+        list: {
+          ...state.list,
+          data: [...removeBefore, ...removeAfter]
+        }
+      };
+    case types.DIR_REMOVE_FAILURE:
+      return {
+        ...state,
+        remove: {
+          ...state.remove,
+          status: 'FAILURE',
+          error: action.error
+        }
+      }
+      return state;
     default:
       return state;
   }
