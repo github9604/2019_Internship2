@@ -17,27 +17,36 @@ const sequelize = new Sequelize('kt_intern', 'min9604', '!zpdlxl9604', {
     }
 });
 
-const BoardFeed = sequelize.define(
-    'BoardFeed',
+const TableFeed = sequelize.define(
+    'TableFeed',
     {
-        post_id: {
+        feed_id_AI: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        post_feedid: {
-            type: Sequelize.INTEGER,
-        },
-        user_id: {
+        feed_id: {
             type: Sequelize.STRING
         },
-        websiteTitle: {
+        feed_icon: {
+            type: Sequelize.STRING
+        },
+        feed_description: {
+            type: Sequelize.STRING
+        },
+        feed_name: {
+            type: Sequelize.STRING
+        },
+        feed_reader_id: {
+            type: Sequelize.INTEGER
+        },
+        feed_topic: {
             type: Sequelize.STRING
         }
     },
     {
         timestamps: false,
-        tableName: 'board_feed'
+        tableName: 'tbl_feed'
     }
 );
 
@@ -52,21 +61,41 @@ router.post('/', function (req, res, next) {
 });
 
 router.post('/insertFeed', function(req, res, next) {
+    console.log(req.body.insert_results);
+    let inputResult = req.body.insert_results;
     const inputData = {
-        post_feedid: req.body.feedInput,
-        user_id: req.session.user_id,
-        websiteTitle: req.body.titleInput
+        feed_id: inputResult.feedId,
+        feed_icon: inputResult.iconUrl,
+        feed_description: inputResult.description,
+        feed_name: inputResult.websiteTitle,
+        feed_topics: inputResult.topics,
+        feed_reader_id: req.session.user_id
     };
-
-    console.log(inputData);
-
-    BoardFeed.create(inputData)
-    .then(articleInput => {
-        console.log(articleInput);
-        console.log("Feed input success");
-    }).catch(err => {
-        return res.send('error' + err)
+    // console.log(inputData);
+    TableFeed.findOne({
+        where: {feed_id: inputResult.feedId, feed_reader_id: req.session.user_id}
+    }).then(tableFeed => {
+        if(!tableFeed){
+            TableFeed.create(inputData)
+            .then(articleInput => {
+                // console.log(articleInput);
+                res.json({'has_scrapped': !tableFeed});
+                console.log("Feed input success");
+            }).catch(err => {
+                return res.send('error' + err)
+            })
+        }
+        else{
+            TableFeed.destroy({
+                where: {feed_id: inputResult.feedId, feed_reader_id: req.session.user_id}
+            })
+            .then(response => {
+                res.json({has_scrapped: !tableFeed});
+            })
+            .catch(err => console.log("error" + err));
+        }
     })
+   
 });
 
 router.post('/scrap', function (req, res) {

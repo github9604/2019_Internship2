@@ -7,7 +7,7 @@ const SearchResultList = (props) => {
            {
                 props.results.map((result, i) => {
                     return(
-                        <SearchResult insertFeed={props.insertFeed} key={i} feedId = {result.feedId} websiteTitle={result.websiteTitle} description = {result.description} iconUrl={result.iconUrl} topics={result.topics} />
+                        <SearchResult  defaultFeed={props.defaultFeed} insertFeed={props.insertFeed} key={i} feedId = {result.feedId} websiteTitle={result.websiteTitle} description = {result.description} iconUrl={result.iconUrl} topics={result.topics} />
                     )
                 })   
             }

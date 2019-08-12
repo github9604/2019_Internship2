@@ -161,3 +161,41 @@ body, html{
   .searchform input:focus{
     border: 1px solid #329e5e;
   }
+
+
+  /* header */
+
+  .header{
+    position:fixed;
+  }
+  
+#navbar-primary { 
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar-nav{
+    width:100%;
+    text-align: center;
+    display: inline-block;
+  }
+
+#header_li {
+  display: inline-block;
+  float: none;
+}
+
+#header_a {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.ant-layout-content {
+  -webkit-box-flex: 1;
+  -ms-flex: auto;
+  flex: auto;
+  min-height: 0;
+  margin-top: 10%;
+  margin-left: 15%;
+  margin-right: 15%
+}

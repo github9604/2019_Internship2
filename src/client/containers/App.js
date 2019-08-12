@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from '../components/Header';
+import FixedHeader from '../components/FixedHeader';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { getStatusRequest, logoutRequest } from '../actions/authentication';
@@ -114,7 +114,7 @@ class App extends Component {
         return (
             <div>
                 <div >
-                    {isAuth ? undefined : <Header insertDirlist={this.insertDirlist}
+                    {isAuth ? undefined : <FixedHeader insertDirlist={this.insertDirlist}
                         dirlists={this.state.dirlist_results}
                         isLoggedIn={this.props.status.isLoggedIn}
                         onLogout={this.handleLogout} />}

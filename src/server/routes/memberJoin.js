@@ -43,7 +43,8 @@ router.post('/signup', (req, res) => {
 
     const memberData = {
         user_id: req.body.user_id,
-        user_pw: req.body.user_pw
+        user_pw: req.body.user_pw,
+        group_id: req.body.group_id
     };
     console.log(memberData);
 
@@ -55,6 +56,9 @@ router.post('/signup', (req, res) => {
                 .then(memberJoin => {
                     console.log("회원가입 성공");
                     console.log(user_id);
+                    res.cookie("group_id", group_id, {
+                        expires: new Date(Date,now() + 900000)
+                    });
                     return res.json({success: true})
                 })
                 .catch(err => {

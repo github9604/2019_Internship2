@@ -22,7 +22,6 @@ class GroupList extends Component {
     }
 
     render() {
-        console.log("dlsdkfj? : " + this.props.selected_auth);
         return (
             <div>
                 <section>
@@ -30,7 +29,6 @@ class GroupList extends Component {
                             <Form.Dropdown
                                 onChange={this.groupChange}
                                 onClick={this.groupChange}
-                                defaultValue={this.props.selected_auth}
                                 placeholder="공개 그룹을 선택하세요"
                                 fluid search selection
                                 options={this.props.options}

@@ -1,20 +1,49 @@
 import React, { Component } from 'react';
-import { Popover, Button } from 'antd';
+import {Button} from 'antd';
 import axios from 'axios';
 import "antd/dist/antd.css";
 
 class SearchResult extends Component {
+    constructor() {
+        super();
+        this.state = {
+            feedId: '',
+            websiteTitle: '',
+            alreadyscrap: ''
+        };
+    }
 
-    state = {
-        feedId: '',
-        websiteTitle: ''
+    // setButton = () => {
+    //     let defaultFeed = this.props.defaultFeed;
+    //     for(let i=0; i<defaultFeed.length; i++){
+    //         if(defaultFeed[i].feed_id == this.props.feedId){
+    //             this.state.alreadyscrap = "true";
+    //             break;
+    //         }
+    //         else{
+    //             this.state.alreadyscrap = "false";
+    //             break;
+    //         }
+    //     }
+    // }
+
+    btnCheck = () => {
+        this.props.defaultFeed.map((result, i) => {
+            if(result.feed_id == this.props.feedId){
+                return "primary";
+            }
+        })
+        return "default";
     }
 
     setData = () => {
         console.log("insert article to db btn clicked");
         let insert_results = {
             feedId: this.props.feedId,
-            websiteTitle: this.props.websiteTitle
+            iconUrl: this.props.iconUrl,
+            websiteTitle: this.props.websiteTitle,
+            description: this.props.description,
+            topics: this.props.topics[0]
         }
         this.props.insertFeed(insert_results);
     }
@@ -32,8 +61,6 @@ class SearchResult extends Component {
     //     this.setState({ visible });
     // };
 
-
-
     render() {
         return (
             <div class="card">
@@ -48,7 +75,7 @@ class SearchResult extends Component {
                     {/* <img src={this.props.iconUrl} /> */}
                     {/* <h3> {this.props.topics[0]} /></h3> */}
                     {/* <h5> {this.props.description} </h5>*/}
-                <Button type="primary" onClick={this.setData}> Feed 구독 </Button> 
+                <Button onClick={this.setData}> Feed 구독 </Button> 
                     {/* <Popover
                     content={<div> <div>{AddDirForm}</div> <div> {DirList} </div> <a onClick={this.hide}>Close</a> </div>}
                     title="Title"

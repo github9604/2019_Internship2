@@ -72,7 +72,7 @@ router.post('/', function(req, res, next) {
                 // }
                 let sortedvalues = tmp;
                 // let sortedvalues = values[0];
-                console.log(JSON.stringify(sortedvalues));
+                // console.log(JSON.stringify(sortedvalues));
                 res.json(sortedvalues);
             }
         );

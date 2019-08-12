@@ -5,14 +5,15 @@ import { loginRequest } from '../actions/authentication';
 
 class Login extends Component {
 
-    handleLogin = (user_id, user_pw) => {
-        return this.props.loginRequest(user_id, user_pw).then(
+    handleLogin = (user_id, user_pw, group_id) => {
+        return this.props.loginRequest(user_id, user_pw, group_id).then(
             () => {
                 if (this.props.status === "SUCCESS") {
                     console.log("react login 성공");
                     let loginData = {
                         isLoggedIn: true,
-                        user_id: user_id
+                        user_id: user_id,
+                        group_id: group_id
                     };
                     document.cookie = 'key=' + btoa(JSON.stringify(loginData));
                     this.props.history.push('/searchpage');
@@ -42,8 +43,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loginRequest: (user_id, user_pw) => {
-            return dispatch(loginRequest(user_id, user_pw));
+        loginRequest: (user_id, user_pw, group_id) => {
+            return dispatch(loginRequest(user_id, user_pw, group_id));
         }
     };
 };

@@ -43,10 +43,10 @@ export function getStatusFailure() {
     };
 }
 
-export function registerRequest(user_id, user_pw){
+export function registerRequest(user_id, user_pw, group_id){
     return(dispatch) => {
         dispatch(register());
-        return axios.post('/api/memberJoin/signup', {user_id, user_pw})
+        return axios.post('/api/memberJoin/signup', {user_id, user_pw, group_id})
         .then((response) => {
             dispatch(registerSuccess());
         }).catch((error) => {

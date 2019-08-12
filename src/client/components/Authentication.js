@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 class Authentication extends Component {
     state = {
         user_id: "",
-        user_pw: ""
+        user_pw: "",
+        group_id: ""
     }
 
     handleChange = (e) => {
@@ -28,6 +29,12 @@ class Authentication extends Component {
         );
     }
 
+    groupChange = (e) => {
+        let nextState = {};
+        nextState[e.target.name] = e.target.value;
+        this.setState(nextState);
+    }
+
     handleKeyPress = (e) => {
         if (e.charCode == 13) {
             if (this.props.mode) {
@@ -41,15 +48,17 @@ class Authentication extends Component {
     handleRegister = () => {
         let user_id = this.state.user_id;
         let user_pw = this.state.user_pw;
+        let group_id = this.state.group_id;
         console.log("입력확인" + user_id);
         console.log("입력확인" + user_pw);
 
-        this.props.onRegister(user_id, user_pw).then(
+        this.props.onRegister(user_id, user_pw, group_id).then(
             (result) => {
                 if (!result) {
                     this.setState({
                         user_id: '',
-                        user_pw: ''
+                        user_pw: '',
+                        group_id: ''
                     });
                 }
             }
@@ -83,18 +92,18 @@ class Authentication extends Component {
                 </div>
                 <div className="register-row">
                     <h3 className="register-title">
-                        <label htmlFor="departtype"> 소속 부서 </label>
+                        <label htmlFor="group_id"> 소속 부서 </label>
                     </h3>
-                    <select className="form-control" name="departtype" id="departtype"
-                        value={this.state.departtype} onChange={this.departtypeChange}>
-                        <option selected>채식타입을 선택해주세요!</option>
-                        <option name="departtype"
+                    <select className="form-control" name="group_id" id="group_id"
+                        value={this.state.group_id} onChange={this.groupChange}>
+                        <option selected>소속 부서를 선택해주세요</option>
+                        <option name="group_id"
                             className="validate"
                             value="1">아키텍처TF</option>
-                        <option name="departtype"
+                        <option name="group_id"
                             className="validate"
                             value="2">클라우드TF</option>
-                        <option name="departtype"
+                        <option name="group_id"
                             className="validate"
                             value="3">GIS TF</option>
                     </select>
@@ -166,7 +175,7 @@ Authentication.PropTypes = {
 
 Authentication.defaultProps = {
     mode: true,
-    onRegister: (user_id, user_pw) => { console.error("register function is not defined"); },
+    onRegister: (user_id, user_pw, group_id) => { console.error("register function is not defined"); },
     onLogin: (user_id, user_pw) => { console.error("login function not defined"); }
 };
 

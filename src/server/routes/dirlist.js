@@ -60,6 +60,41 @@ const TableGroup = sequelize.define(
     }
 );
 
+
+const TableArticle = sequelize.define(
+    'TableArticle',
+    {
+        article_id_AI: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        article_originId: {
+            type: Sequelize.STRING
+        },
+        article_url: {
+            type: Sequelize.STRING
+        },
+        dir_id: {
+            type: Sequelize.INTEGER
+        },
+        article_author: {
+            type: Sequelize.STRING
+        },
+        article_content: {
+            type: Sequelize.STRING
+        },
+        article_title: {
+            type: Sequelize.STRING
+        }
+    },
+    {
+        timestamps: false,
+        tableName: 'tbl_group'
+    }
+);
+
+
 router.get('/', (req, res, next) => {
     TableDirectory.findAll({
         where: { owner_id: req.session.user_id }
@@ -97,6 +132,64 @@ router.post('/insertDir', (req, res, next) => {
         .catch(err => {
             return res.send('error' + err)
         })
+});
+
+router.delete('/delete', (req, res) => {
+    const dltdirname = req.body.deleteDirInput;
+    console.log(dltdirname);
+    TableDirectory.findOne({
+        where: {dir_name: req.body.deleteDirInput, owner_id: req.session.user_id}
+    })
+    .then(tableDirectory => {
+        if(!tableDirectory) {
+            return res.status(404).json({
+                error: "NO DIRECTORY",
+                code: 3
+            });
+        }
+        // let first_query = 'DELETE * FROM tbl_article INNER JOIN tbl_directory ON tbl_directory.dir_Id = tbl_article.dir_id WHERE tbl_directory.dir_name = :now_dir';
+        // let values = {
+        //    now_dir: req.body.deleteDirInput
+        // };
+        // sequelize.query(first_query, {replacements:values, model:TableArticle})
+        // .then(result => console.log(result));
+
+        TableDirectory.destroy({
+            where: {dir_name: req.body.deleteDirInput}
+        })
+        .then(response => {
+            res.json({success:true});
+        })
+        .catch(err => console.log("error" + err));
+    })
+    // TableDirectory.findOne({
+    //     where: {dir_name: req.body.deleteDirInput, owner_id: req.session.user_id}
+    // })
+    // .then(dir => {
+    //     console.log(dir);
+    //     if(!dir) {
+    //         return res.status(404).json({
+    //             error: "NO RESOURCE",
+    //             code : 3
+    //         });
+    //     }
+    //     if(dir.owner_id != req.session.user_id){
+    //         return res.status(403).json({
+    //             error: "PERMISSION FAILURE",
+    //             code : 4
+    //         });
+    //     }
+    //     console.log("wow?");
+    //     TableDirectory.destroy({
+    //         where: {dir_name: req.body.deleteDirInput}
+    //     }).then(dirresult => {
+    //             res.json({success:true});
+    //         })
+    //         .catch(err => console.log("error" + err))
+    //     })
+    // .catch(err => {
+    //     return res.send('error' + err);
+    // })
 });
 
 router.post('/groupAuth', (req, res, next) => {

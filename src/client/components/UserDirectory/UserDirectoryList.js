@@ -22,7 +22,7 @@ class UserDirectoryList extends Component {
                 {
                     this.props.dirlists.map((result, i) => {
                         return (
-                            <UserDirEach dir_name={result.dir_name} />
+                            <UserDirEach deleteDirectory={this.props.deleteDirectory} dir_name={result.dir_name} />
                         )
                     })
                 }
