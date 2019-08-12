@@ -15,3 +15,15 @@ export const AUTH_LOGOUT = "AUTH_LOGOUT";
 export const FEED_SCRAP = "FEED_SCRAP";
 export const FEED_SCRAP_SUCCESS = "FEED_SCRAP_SUCCESS";
 export const FEED_SCRAP_FAILURE = "FEED_SCRAP_FAILURE";
+
+export const DIR_POST = "DIR_POST";
+export const DIR_POST_SUCCESS = "DIR_POST_SUCCESS";
+export const DIR_POST_FAILURE = "DIR_POST_FAILURE";
+
+export const DIR_LIST = "DIR_LIST";
+export const DIR_LIST_SUCCESS = "DIR_LIST_SUCCESS";
+export const DIR_LIST_FAILURE = "DIR_LIST_FAILURE";
+
+export const DIR_REMOVE = "DIR_REMOVE";
+export const DIR_REMOVE_SUCCESS = "DIR_LIST_SUCCESS";
+export const DIR_REMOVE_FAILURE = "DIR_LIST_FAILURE";

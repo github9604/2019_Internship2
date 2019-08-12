@@ -97,7 +97,8 @@ const TableArticle = sequelize.define(
 
 router.get('/', (req, res, next) => {
     TableDirectory.findAll({
-        where: { owner_id: req.session.user_id }
+        where: { owner_id: req.session.user_id },
+        order: [['dir_id', 'DESC']]
     })
         .then(TableDirectory => {
             res.json(TableDirectory);
@@ -118,6 +119,17 @@ router.post('/grouplist', (req, res, next) => {
         })
 })
 
+router.get('/new', (req, res) => {
+    TableDirectory.findAll({
+        where: { owner_id: req.session.user_id },
+        order: [['dir_id', 'DESC']]
+    })
+        .then(TableDirectory => {
+            res.json(TableDirectory);
+        })
+
+})
+
 router.post('/insertDir', (req, res, next) => {
     const inputData = {
         dir_name: req.body.insertDirinput,
@@ -125,9 +137,23 @@ router.post('/insertDir', (req, res, next) => {
     };
     // console.log(inputData);
 
+    if(typeof req.session.user_id === 'undefined'){
+        return res.status(403).json({
+            error: "NOT LOGGED IN",
+            code: 1
+        });
+    }
+
+    if(req.body.insertDirinput === "" ){
+        return res.status(400).json({
+            error: "EMPTY CONTENTS",
+            code: 3
+        })
+    }
+
     TableDirectory.create(inputData)
         .then(dirInput => {
-            res.send("success");
+            return res.json({success: true});
         })
         .catch(err => {
             return res.send('error' + err)
