@@ -49,7 +49,7 @@ export function dirListRequest(isInitial) {
         url = isInitial ? url : '/api/dirlist/new';
         return axios.get(url)
         .then((response) => {
-            // console.log(response.data);
+            // console.log("whybb:" + response.data);
             dispatch(dirListSuccess(response.data, isInitial));
         }).catch((error) => {
             dispatch(dirListFailure());

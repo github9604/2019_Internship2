@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { SampleWrite, SampleDirList } from '../components';
 import { UserDirectoryList, MatchResultList, GroupList } from '../components/UserDirectory';
+import { Link } from 'react-router-dom';
+import { Layout } from 'antd';
+import { Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { dirPostRequest, dirListRequest, dirRemoveRequest, dirRemove } from '../actions/dirList';
-import { Layout } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 
 class UserDirectory extends Component {
@@ -23,7 +25,7 @@ class UserDirectory extends Component {
         if (nextProps.match.params.dir_name !== this.props.match.params.dir_name) {
             console.log("Next: " + nextProps.match.params.dir_name);
             console.log("Now: " + this.props.match.params.dir_name);
-            this.performGroupList();
+            // this.performGroupList();
             this.showArticleInDir(nextProps.match.params.dir_name);
         }
     }
@@ -31,7 +33,7 @@ class UserDirectory extends Component {
     componentDidMount() {
         this.props.dirListRequest(true);
         this.performGroupList();
-        this.showArticleInDir();
+        this.showArticleInDir(this.props.match.params.dir_name);
     }
 
     performGroupList = () => {
@@ -52,15 +54,15 @@ class UserDirectory extends Component {
         console.log(dirauth.group_auth);
         let group_auth = dirauth.group_auth;
         let now_dir = this.state.now_dir;
-        axios.post('/api/dirlist/groupAuth', {group_auth, now_dir})
-        .then((response) => {
-            console.log(response.data);
-        })
+        axios.post('/api/dirlist/groupAuth', { group_auth, now_dir })
+            .then((response) => {
+                console.log(response.data);
+            })
     }
 
     showArticleInDir = (now_dir_name) => {
-        // console.log(sendDirName);
-
+        console.log("wahta:" + now_dir_name);
+        //얘를 기준으로 생각하면 됨! 
         let now_dir = this.props.match.params.dir_name;
         if (now_dir != now_dir_name) {
             now_dir = now_dir_name;
@@ -121,6 +123,14 @@ class UserDirectory extends Component {
         return (
             <Layout>
                 <Content>
+                    <Row type="flex" justify="center" align="center">
+                        <Col span={6}> <img src="../src/asset/img/close_folder.png" width="50" alt="Logo Thing main logo"></img>
+                            <Link to="/AllDirectory" id="header_a"><p> 전체 폴더 </p></Link> </Col>
+                        <Col span={6}> <img src="../src/asset/img/mine_close_folder.png" width="50" alt="Logo Thing main logo"></img>
+                            <Link to="/UserDirectory" id="header_a"><p> 내 폴더 </p></Link> </Col>
+                        <Col span={6}> <img src="../src/asset/img/close_folder.png" width="50" alt="Logo Thing main logo"></img>
+                            <Link to="/GroupDirectory" id="header_a"><p> 공유 폴더 </p></Link></Col>
+                    </Row>
                     <GroupList changeDirAuth={this.changeDirAuth} options={this.state.group_results} />
                     <div class="sidenav" background-color="#d2d2d4">
                         <SampleWrite onPost={this.handlePost} />

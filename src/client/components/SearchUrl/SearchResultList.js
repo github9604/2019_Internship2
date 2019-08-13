@@ -13,6 +13,7 @@ const SearchResultList = (props) => {
                             key={i}
                             feedId={result.feedId}
                             websiteTitle={result.websiteTitle}
+                            website={result.website}
                             description={result.description}
                             iconUrl={result.iconUrl}
                             topics={result.topics} />

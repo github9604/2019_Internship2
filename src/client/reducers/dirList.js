@@ -10,23 +10,41 @@ const initialState = {
     data: [],
     isLast: false
   },
-  edit: {
-    status: 'INIT',
-    error: -1,
-  },
   remove: {
-    status: 'INIT',
-    error: -1
-  },
-  star: {
     status: 'INIT',
     error: -1
   }
 };
 
-export default function feedList(state = initialState, action) {
+export default function dirList(state = initialState, action) {
   switch (action.type) {
-    case types.FEED_LIST:
+    case types.DIR_POST:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          status: 'WAITING',
+          error: -1
+        }
+      };
+    case types.DIR_POST_SUCCESS:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          status: 'SUCCESS'
+        }
+      };
+    case types.DIR_POST_FAILURE:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          status: 'FAILURE',
+          error: action.error
+        }
+      };
+    case types.DIR_LIST:
       return {
         ...state,
         list: {
@@ -34,15 +52,14 @@ export default function feedList(state = initialState, action) {
           status: 'WAITING'
         }
       };
-    case types.FEED_LIST_SUCCESS:
+    case types.DIR_LIST_SUCCESS:
       if (action.isInitial) {
         return {
           ...state,
           list: {
             ...state.list,
             status: 'SUCCESS',
-            data: action.data,
-            isLast: action.data.length < 6
+            data: action.data
           }
         }
       } else {
@@ -55,15 +72,40 @@ export default function feedList(state = initialState, action) {
           }
         }
       }
-      return state;
-    case types.FEED_LIST_FAILURE:
+    case types.DIR_REMOVE:
       return {
         ...state,
-        list: {
-          ...state.list,
-          status: 'FAILURE'
+        remove: {
+          ...state.remove,
+          status: 'WAITING',
+          error: -1
         }
       };
+    case types.DIR_REMOVE_SUCCESS:
+      let removeBefore = state.list.data.slice(0, action.index);
+      let removeAfter = state.list.data.slice(action.index + 1);
+      console.log("removeBefore" + removeBefore);
+      return {
+        ...state,
+        remove: {
+          ...state.remove,
+          statsu: 'SUCCESS'
+        },
+        list: {
+          ...state.list,
+          data: [...removeBefore, ...removeAfter]
+        }
+      };
+    case types.DIR_REMOVE_FAILURE:
+      return {
+        ...state,
+        remove: {
+          ...state.remove,
+          status: 'FAILURE',
+          error: action.error
+        }
+      }
+      return state;
     default:
       return state;
   }

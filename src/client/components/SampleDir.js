@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Link, withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {Button} from 'antd';
+import {Button, Tag} from 'antd';
 
 class SampleDir extends Component {
 
@@ -15,6 +15,7 @@ class SampleDir extends Component {
         return(
              <a class="nav_a" > 
              <Link exact to={`/UserDirectory/${this.props.data.dir_name}`}>{this.props.data.dir_name}</Link> 
+             {/* <Link exact to={`/UserDirectory/${this.props.data.dir_name}`}><Tag closable color="#87d068" onClose={this.handleRemove}> {this.props.data.dir_name} </Tag> </Link> */}
              <Button type="danger" onClick={this.handleRemove}> 삭제 </Button> 
              </a>
         );

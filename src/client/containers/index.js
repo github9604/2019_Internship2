@@ -8,5 +8,6 @@ import MainPage from './MainPage';
 import UserDirectory from './UserDirectory';
 import GroupDirectory from './GroupDirectory';
 import SampleFeed from './SampleFeed';
+import AllDirectory from './AllDirectory';
 
-export {Login, Register, App, SearchPage, MyFeed, MyDirectory, MainPage, UserDirectory, GroupDirectory, SampleFeed};
+export {AllDirectory, Login, Register, App, SearchPage, MyFeed, MyDirectory, MainPage, UserDirectory, GroupDirectory, SampleFeed};

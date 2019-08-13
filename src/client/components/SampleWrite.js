@@ -29,7 +29,7 @@ class SampleWrite extends Component {
         return(
             <div>
                 <input placeholder="폴더 이름 입력" onChange={this.handleChange} value={this.state.insertDirinput} />
-                <a onClick={this.handlePost}>POST</a>
+                <a onClick={this.handlePost}> 폴더 추가 </a>
             </div>
         );
     }

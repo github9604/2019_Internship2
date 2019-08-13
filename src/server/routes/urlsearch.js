@@ -55,7 +55,7 @@ router.use(cors());
 router.post('/', function (req, res, next) {
     let name = req.body.obj;
     console.log(name);
-    let base_url = 'http://cloud.feedly.com/v3/search/feeds?query=' + name;
+    let base_url = 'http://cloud.feedly.com/v3/search/feeds?count=40&query=' + name;
     axios.get(base_url)
         .then(response => res.json(response.data.results))
 });

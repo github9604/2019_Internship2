@@ -37,7 +37,7 @@ class MyDirectory extends Component {
     performDirList = () => {
         axios.get('/api/dirlist')
             .then(response => {
-                console.log(response);
+                console.log("dirlist" + response);
                 // console.log("dirlist: " + response.data[0].share_group_id);
                 this.setState({
                     dirlist_results: response.data

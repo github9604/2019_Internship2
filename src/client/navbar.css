@@ -23,7 +23,8 @@ body, html{
     z-index: 1;
     top: 15%;
     left: 0;
-    background-color: #111;
+    background-color: #f0f2f5;
+    /* background-color: #111; */
     overflow-x: hidden;
     padding-top: 20px;
   }
@@ -37,7 +38,7 @@ body, html{
   }
   
   .sidenav a:hover {
-    color: #f1f1f1;
+    color: #000000;
   }
   
   .main {
@@ -205,4 +206,3 @@ body, html{
 }
 
 /* 메인 화면 분할 */
-

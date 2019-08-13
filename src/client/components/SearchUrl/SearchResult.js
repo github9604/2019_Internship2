@@ -14,6 +14,10 @@ class SearchResult extends Component {
         };
     }
 
+    openWindow = () => {
+        console.log(this.props.website);
+        window.open(this.props.website);
+      }
 
     // setButton = () => {
     //     let defaultFeed = this.props.defaultFeed;
@@ -59,7 +63,7 @@ class SearchResult extends Component {
     render() {
         return (
             <div>
-                <Card style={{ width: 600, marginTop: 16 }} loading={false}>
+                <Card onClick={this.openWindow} style={{ width: 600, marginTop: 16 }} loading={false}>
                     <Meta
                         avatar={
                             <img class="right floated mini ui image" src={this.props.iconUrl} />
