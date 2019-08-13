@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
+import { Link, withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {Button} from 'antd';
 
 class SampleDir extends Component {
 
@@ -11,10 +13,10 @@ class SampleDir extends Component {
     render(){
         // console.log("???: " + this.props.data);
         return(
-            <div>
-                <h3> {this.props.data.dir_name} </h3>
-                <h5> <a onClick={this.handleRemove}> Remove </a> </h5>
-            </div>
+             <a class="nav_a" > 
+             <Link exact to={`/DirTest/${this.props.data.dir_name}`}>{this.props.data.dir_name}</Link> 
+             <Button type="danger" onClick={this.handleRemove}> 삭제 </Button> 
+             </a>
         );
     }
 }

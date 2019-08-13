@@ -3,7 +3,6 @@ import FixedHeader from '../components/FixedHeader';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { getStatusRequest, logoutRequest } from '../actions/authentication';
-import {ToastProvider, useToasts} from 'react-toast-notifications';
 
 class App extends Component {
     constructor() {

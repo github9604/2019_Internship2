@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import {Button} from 'antd';
+import { Button } from 'antd';
 import axios from 'axios';
 import "antd/dist/antd.css";
+import { Skeleton, Switch, Card, Icon, Avatar } from 'antd';
+const { Meta } = Card;
 
 class SearchResult extends Component {
     constructor() {
@@ -29,7 +31,7 @@ class SearchResult extends Component {
 
     btnCheck = () => {
         this.props.defaultFeed.map((result, i) => {
-            if(result.feed_id == this.props.feedId){
+            if (result.feed_id == this.props.feedId) {
                 return "primary";
             }
         })
@@ -63,31 +65,43 @@ class SearchResult extends Component {
 
     render() {
         return (
-            <div class="card">
-                <div class="content">
-                    <img class="right floated mini ui image" src={this.props.iconUrl} />
-                    <div class="header"> {this.props.websiteTitle} </div>
-                    <div class="meta"> {this.props.topics[0]} /> </div>
-                    <div class="description">
-                        <h5> {this.props.description} </h5>
-                    </div>
-                    {/* <h3>{this.props.websiteTitle}</h3> */}
-                    {/* <img src={this.props.iconUrl} /> */}
-                    {/* <h3> {this.props.topics[0]} /></h3> */}
-                    {/* <h5> {this.props.description} </h5>*/}
-                <Button onClick={this.setData}> Feed 구독 </Button> 
-                    {/* <Popover
-                    content={<div> <div>{AddDirForm}</div> <div> {DirList} </div> <a onClick={this.hide}>Close</a> </div>}
-                    title="Title"
-                    trigger="click"
-                    visible={this.state.visible}
-                    onVisibleChange={this.handleVisibleChange}
-                    placement="bottom"
-                >
-                    <Button type="primary">Click me</Button>
-                </Popover> */}
-                </div>
+            <div>
+                <Card style={{ width: 600, marginTop: 16 }} loading={false}>
+                    <Meta
+                        avatar={
+                            <img class="right floated mini ui image" src={this.props.iconUrl} />
+                        }
+                        title={this.props.websiteTitle}
+                        description={this.props.description}
+                    />
+                </Card>
+                <Button onClick={this.setData}> Feed 구독 </Button>
             </div>
+            // <div class="card">
+            //     <div class="content">
+            //         <img class="right floated mini ui image" src={this.props.iconUrl} />
+            //         <div class="header"> {this.props.websiteTitle} </div>
+            //         <div class="meta"> {this.props.topics[0]} /> </div>
+            //         <div class="description">
+            //             <h5> {this.props.description} </h5>
+            //         </div>
+            //         {/* <h3>{this.props.websiteTitle}</h3> */}
+            //         {/* <img src={this.props.iconUrl} /> */}
+            //         {/* <h3> {this.props.topics[0]} /></h3> */}
+            //         {/* <h5> {this.props.description} </h5>*/}
+            //     <Button onClick={this.setData}> Feed 구독 </Button> 
+            //         {/* <Popover
+            //         content={<div> <div>{AddDirForm}</div> <div> {DirList} </div> <a onClick={this.hide}>Close</a> </div>}
+            //         title="Title"
+            //         trigger="click"
+            //         visible={this.state.visible}
+            //         onVisibleChange={this.handleVisibleChange}
+            //         placement="bottom"
+            //     >
+            //         <Button type="primary">Click me</Button>
+            //     </Popover> */}
+            //     </div>
+            // </div>
         );
     }
 }

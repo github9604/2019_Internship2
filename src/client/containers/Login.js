@@ -16,7 +16,7 @@ class Login extends Component {
                         group_id: group_id
                     };
                     document.cookie = 'key=' + btoa(JSON.stringify(loginData));
-                    this.props.history.push('/searchpage');
+                    this.props.history.push('/MainPage');
                     return true;
                 } else {
                     console.log("react login 실패");

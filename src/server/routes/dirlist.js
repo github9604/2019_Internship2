@@ -151,13 +151,26 @@ router.post('/insertDir', (req, res, next) => {
         })
     }
 
-    TableDirectory.create(inputData)
+    TableDirectory.findOne({
+        where: {dir_name: req.body.insertDirinput,
+        owner_id: req.session.user_id}
+    })
+    .then((response) => {
+        if(response){
+            return res.status(400).json({
+                error: " 동일한 이름의 디렉터리가 존재합니다",
+                code: 2
+            })
+        }
+        TableDirectory.create(inputData)
         .then(dirInput => {
             return res.json({success: true});
         })
         .catch(err => {
             return res.send('error' + err)
         })
+    })
+    
 });
 
 router.delete('/delete', (req, res) => {

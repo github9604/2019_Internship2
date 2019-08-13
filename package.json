@@ -61,7 +61,6 @@
     "react-select": "^3.0.4",
     "react-select-search": "^0.9.6",
     "react-timeago": "^4.4.0",
-    "react-toast-notifications": "^2.2.4",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "rss-parser": "^3.7.2",

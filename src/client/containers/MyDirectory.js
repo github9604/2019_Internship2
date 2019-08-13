@@ -124,23 +124,22 @@ class MyDirectory extends Component {
         })
     }
 
-    // groupSubmit = (e) => {
-    //     e.preventDefault();
-    //     console.log("working");
-    //     console.log(this.state.group_auth);
-    //     // let group_auth = this.state.group_auth;
-    //     // let now_dir = this.state.now_dir;
-    //     // axios.post('/api/dirlist/groupAuth', {group_auth, now_dir})
-    //     // .then((response) => {
-    //     //     console.log(response.data);
-    //     // })
-    // }
+    groupSubmit = (e) => {
+        e.preventDefault();
+        console.log("working");
+        console.log(this.state.group_auth);
+        // let group_auth = this.state.group_auth;
+        // let now_dir = this.state.now_dir;
+        // axios.post('/api/dirlist/groupAuth', {group_auth, now_dir})
+        // .then((response) => {
+        //     console.log(response.data);
+        // })
+    }
 
     render() {
         return (
             <div>
                 <h2> 공개 범위 설정 </h2>
-                <h2> hello? </h2>
                 <GroupList changeDirAuth={this.changeDirAuth} options={this.state.group_results}/>
                 <Button onClick={this.deleteDirectory} color='red'> 삭제 </Button>
                 <div class="d-flex" id="wrapper">

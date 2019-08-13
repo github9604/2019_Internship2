@@ -3,7 +3,6 @@ import axios from 'axios';
 import { UserFeedResultList } from '../components/UserFeed';
 import { Select } from 'react-select';
 import { Layout } from 'antd';
-
 const { Header, Footer, Sider, Content } = Layout;
 
 class MyFeed extends Component {
