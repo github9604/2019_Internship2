@@ -11,7 +11,7 @@ class SampleGroupDirList extends Component {
                     this.props.data.map((result, i) => {
                         return (
                             <a class="nav_a">
-                                <Link exact to={`/GroupDirectory/${result.dir_name}`}>{this.props.data.dir_name}</Link>
+                                <Link exact to={`/GroupDirectory/${result.dir_name}`}>{result.dir_name}</Link>
                             </a>
                         )
                     })

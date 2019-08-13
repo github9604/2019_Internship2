@@ -19,7 +19,7 @@ body, html{
   .sidenav {
     /* height: 100%; */
     width: 130px;
-    position: fixed;
+    /* position: fixed; */
     z-index: 1;
     top: 15%;
     left: 0;

@@ -19,7 +19,7 @@ class MyDirectory extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.match.params.dir_name !== this.props.match.params.dir_name){
+        if (nextProps.match.params.dir_name !== this.props.match.params.dir_name) {
             console.log("Next: " + nextProps.match.params.dir_name);
             console.log("Now: " + this.props.match.params.dir_name);
             this.performDirList();
@@ -84,27 +84,27 @@ class MyDirectory extends Component {
     deleteDirectory = (dirname) => {
         console.log(dirname);
         let deleteDirInput = dirname;
-        axios.delete('/api/dirlist/delete', { data: {deleteDirInput: deleteDirInput}})
-        .then((response => {
-            if (response.data === "success") {
-                axios.get('/api/dirlist')
-                    .then((response) => {
-                        console.log("sdf?: " + response.data);
-                        this.setState({ dirlist_results: response.data });
-                        // this.props.history.push('/MyDirectory/${this.props.match.params.dir_name}');
-                    })
-                    .catch(error => {
-                        console.log('error fetching and parsing data', error);
-                    })
-            }
-        }))
+        axios.delete('/api/dirlist/delete', { data: { deleteDirInput: deleteDirInput } })
+            .then((response => {
+                if (response.data === "success") {
+                    axios.get('/api/dirlist')
+                        .then((response) => {
+                            console.log("sdf?: " + response.data);
+                            this.setState({ dirlist_results: response.data });
+                            // this.props.history.push('/MyDirectory/${this.props.match.params.dir_name}');
+                        })
+                        .catch(error => {
+                            console.log('error fetching and parsing data', error);
+                        })
+                }
+            }))
     }
 
     showArticleInDir = (now_dir_name) => {
         // console.log(sendDirName);
-        
+
         let now_dir = this.props.match.params.dir_name;
-        if(now_dir != now_dir_name){
+        if (now_dir != now_dir_name) {
             now_dir = now_dir_name;
         }
         console.log(now_dir_name);
@@ -118,10 +118,10 @@ class MyDirectory extends Component {
         console.log(dirauth.group_auth);
         let group_auth = dirauth.group_auth;
         let now_dir = this.state.now_dir;
-        axios.post('/api/dirlist/groupAuth', {group_auth, now_dir})
-        .then((response) => {
-            console.log(response.data);
-        })
+        axios.post('/api/dirlist/groupAuth', { group_auth, now_dir })
+            .then((response) => {
+                console.log(response.data);
+            })
     }
 
     groupSubmit = (e) => {
@@ -140,14 +140,15 @@ class MyDirectory extends Component {
         return (
             <div>
                 <h2> 공개 범위 설정 </h2>
-                <GroupList changeDirAuth={this.changeDirAuth} options={this.state.group_results}/>
-                <Button onClick={this.deleteDirectory} color='red'> 삭제 </Button>
+
                 <div class="d-flex" id="wrapper">
                     <div class="sidenav" background-color="#d2d2d4">
                         <UserDirectoryList deleteDirectory={this.deleteDirectory} insertDirlist={this.insertDirlist} dirlists={this.state.dirlist_results} />
                         <script src="../src/asset/vendor/jquery/jquery.min.js"></script>
                         <script src="../src/asset/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
                     </div>
+                    <GroupList changeDirAuth={this.changeDirAuth} options={this.state.group_results} />
+                    <Button onClick={this.deleteDirectory} color='red'> 삭제 </Button>
                     <div class="matchdirart">
                         <MatchResultList match_results={this.state.match_results} now_dir={this.state.now_dir} />
                     </div>

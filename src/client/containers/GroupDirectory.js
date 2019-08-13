@@ -13,9 +13,9 @@ class GroupDirectory extends Component {
         super();
         this.state = {
             match_results: [],
-            group_results: [],
+            grp_dirlists: [],
             now_dir: '',
-            loading_group: true
+            loading_group: false
         };
     }
 
@@ -29,17 +29,16 @@ class GroupDirectory extends Component {
 
     componentDidMount() {
         this.groupDirList();
-        this.showArticleInDir();
+        this.showArticleInDir(this.props.match.params.dir_name);
     }
 
     groupDirList = () => {
         axios.get('/api/showtodayfeed/otherdirlist')
             .then((response) => {
-                console.log("working::" + response.data);
+                // console.log("working::" + response.data);
                 // console.log("response data[0]: " + response.data[0].dir_name);
                 this.setState({
-                    grp_dirlists: response.data,
-                    loading_public: false
+                    grp_dirlists: response.data
                 });
             })
             .catch(error => {
@@ -74,9 +73,10 @@ class GroupDirectory extends Component {
                         <Col span={6}> <img src="../src/asset/img/mine_close_folder.png" width="50" alt="Logo Thing main logo"></img>
                             <Link to="/GroupDirectory" id="header_a"><p> 공유 폴더 </p></Link></Col>
                     </Row>
-                    {/* <div class="sidenav" background-color="#d2d2d4">
-                        <SampleGroupDirList groupDirList={this.groupDirList} data={this.state.grp_dirlists} />
+                    <div class="sidenav" background-color="#d2d2d4">
+                        <SampleGroupDirList data={this.state.grp_dirlists} />
                     </div>
+                    {/*
                     <div class="matchdirart">
                         {
                             (this.state.loading_group)
