@@ -5,6 +5,8 @@ import SearchPage from './SearchPage';
 import MyFeed from './MyFeed';
 import MyDirectory from './MyDirectory';
 import MainPage from './MainPage';
-import DirTest from './DirTest';
+import UserDirectory from './UserDirectory';
+import GroupDirectory from './GroupDirectory';
+import SampleFeed from './SampleFeed';
 
-export {Login, Register, App, SearchPage, MyFeed, MyDirectory, MainPage, DirTest};
+export {Login, Register, App, SearchPage, MyFeed, MyDirectory, MainPage, UserDirectory, GroupDirectory, SampleFeed};

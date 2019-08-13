@@ -4,12 +4,20 @@ import SearchResult from './SearchResult';
 const SearchResultList = (props) => {
     return (
         <div>
-           {
+            {
                 props.results.map((result, i) => {
-                    return(
-                        <SearchResult  defaultFeed={props.defaultFeed} insertFeed={props.insertFeed} key={i} feedId = {result.feedId} websiteTitle={result.websiteTitle} description = {result.description} iconUrl={result.iconUrl} topics={result.topics} />
+                    return (
+                        <SearchResult
+                            defaultFeed={props.defaultFeed}
+                            insertFeed={props.insertFeed}
+                            key={i}
+                            feedId={result.feedId}
+                            websiteTitle={result.websiteTitle}
+                            description={result.description}
+                            iconUrl={result.iconUrl}
+                            topics={result.topics} />
                     )
-                })   
+                })
             }
         </div>
     );

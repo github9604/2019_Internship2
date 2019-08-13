@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ShortFeedResultList } from '../components/UserFeed';
 import { PublicDir } from '../components/MainPrint';
 import { Layout } from 'antd';
-const {Content } = Layout;
+const { Content } = Layout;
 
 class MainPage extends Component {
 
@@ -72,11 +72,12 @@ class MainPage extends Component {
                                 : <div> <ShortFeedResultList showTodayFeed={this.showTodayFeed} results={this.state.short_feed_results} /> </div>
                         }
                     </div>
-                    <div>{
-                        (this.state.loading_public)
-                            ? <p> loading... </p>
-                            : <div> <PublicDir showDirLists={this.showDirLists} dirlists={this.state.dirlists} /> </div>
-                    }
+                    <div>
+                        {
+                            (this.state.loading_public)
+                                ? <p> loading... </p>
+                                : <div> <PublicDir showDirLists={this.showDirLists} dirlists={this.state.dirlists} /> </div>
+                        }
 
                     </div>
                 </Content>

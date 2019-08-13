@@ -19,6 +19,39 @@ const sequelize = new Sequelize('kt_intern', 'min9604', '!zpdlxl9604', {
     }
 });
 
+const TableArticle = sequelize.define(
+    'TableArticle',
+    {
+        article_id_AI: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        article_originId: {
+            type: Sequelize.STRING
+        },
+        article_url: {
+            type: Sequelize.STRING
+        },
+        dir_id: {
+            type: Sequelize.INTEGER
+        },
+        article_author: {
+            type: Sequelize.STRING
+        },
+        article_content: {
+            type: Sequelize.STRING
+        },
+        article_title: {
+            type: Sequelize.STRING
+        }
+    },
+    {
+        timestamps: false,
+        tableName: 'tbl_group'
+    }
+);
+
 const ArticleToDirectory = sequelize.define(
     'ArticleToDirectory',
     {
@@ -43,6 +76,14 @@ const ArticleToDirectory = sequelize.define(
     }
 );
 
+router.post('/grp', function(req, res, next) {
+    TableArticle.findAll({
+        where: {dir_id: req.body.now_dir}
+    })
+    .then(tableArticle => {
+        res.json(tableArticle);
+    })
+})
 router.post('/', function(req, res, next) {
     ArticleToDirectory.findAll({
         where: {dir_owner: req.session.user_id, dir_name:req.body.now_dir}

@@ -121,12 +121,14 @@ const ArticleToDirectory = sequelize.define(
     }
 );
 
-router.get('/', function (req, res, next) {
+router.post('/', function (req, res, next) {
+    console.log("wow: " + req.body.results);
     TableFeed.findAll({
         where: { feed_reader_id: req.session.user_id },
         attributes: [
             'feed_id'
-        ]
+        ],
+        limit: 6
     })
         .then(tableFeed => {
             let arrayOfPromises = [];
@@ -135,25 +137,70 @@ router.get('/', function (req, res, next) {
                 let base_url = 'http://cloud.feedly.com//v3/streams/contents?streamId=' + result.feed_id;
                 arrayOfPromises.push(
                     axios.get(base_url)
-                    .then(response => (response.data.items))
-                    .catch(error => console.log(error))
+                        .then(response => (response.data.items))
+                        .catch(error => console.log(error))
                 );
             });
-            
+
             Promise.all(arrayOfPromises).then(
                 function (values) {
-                    console.log(values[0]);
+                    // console.log(values[0]);
                     // let targetvalues_0 = JSON.parse(JSON.stringify(values[0]));
                     // let targetvalues_1 = JSON.parse(JSON.stringify(values[1]));
                     // let result = Object.assign(targetvalues_0, targetvalues_1);
-                    for(let i=0; i<values.length-1; i++){
-                        Array.prototype.push.apply(values[0], values[i+1]);
+                    for (let i = 0; i < values.length - 1; i++) {
+                        Array.prototype.push.apply(values[0], values[i + 1]);
                     }
-                    console.log("result: " + values[0]);
+                    // console.log("result: " + values[0]);
                     let sortedvalues = values[0];
-                    sortedvalues.sort(function(b, a){
+                    sortedvalues.sort(function (b, a) {
                         return a["published"] - b["published"];
                     });
+                    console.log(sortedvalues.slice(0, 3));
+                    res.json(sortedvalues.slice(0, req.body.page + 6));
+                    // // res.json(sortedvalues.slice(0,3));
+                    // res.json(sortedvalues);
+                }
+            );
+        })
+});
+
+router.get('/', function (req, res, next) {
+    TableFeed.findAll({
+        where: { feed_reader_id: req.session.user_id },
+        attributes: [
+            'feed_id'
+        ],
+        limit: 6
+    })
+        .then(tableFeed => {
+            let arrayOfPromises = [];
+            tableFeed.map((result, i) => {
+                // console.log("result: " + result.post_feedid);
+                let base_url = 'http://cloud.feedly.com//v3/streams/contents?streamId=' + result.feed_id;
+                arrayOfPromises.push(
+                    axios.get(base_url)
+                        .then(response => (response.data.items))
+                        .catch(error => console.log(error))
+                );
+            });
+
+            Promise.all(arrayOfPromises).then(
+                function (values) {
+                    // console.log(values[0]);
+                    // let targetvalues_0 = JSON.parse(JSON.stringify(values[0]));
+                    // let targetvalues_1 = JSON.parse(JSON.stringify(values[1]));
+                    // let result = Object.assign(targetvalues_0, targetvalues_1);
+                    for (let i = 0; i < values.length - 1; i++) {
+                        Array.prototype.push.apply(values[0], values[i + 1]);
+                    }
+                    // console.log("result: " + values[0]);
+                    let sortedvalues = values[0];
+                    sortedvalues.sort(function (b, a) {
+                        return a["published"] - b["published"];
+                    });
+                    console.log(sortedvalues.slice(0, 3));
+                    // res.json(sortedvalues.slice(0,3));
                     res.json(sortedvalues);
                 }
             );
@@ -168,7 +215,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/feedlist', function (req, res, next) {
     TableFeed.findAll({
-        where: {  feed_reader_id: req.session.user_id },
+        where: { feed_reader_id: req.session.user_id },
         attributes: [
             `feed_id`
         ]
@@ -184,54 +231,54 @@ router.get('/short', function (req, res, next) {
             'feed_id'
         ]
     }).then(tableFeed => {
-            let arrayOfPromises = [];
-            tableFeed.slice(0,5).map((result, i) => {
-                // console.log("result: " + result.post_feedid);
-                let base_url = 'http://cloud.feedly.com//v3/streams/contents?streamId=' + result.feed_id;
-                arrayOfPromises.push(
-                    axios.get(base_url)
+        let arrayOfPromises = [];
+        tableFeed.slice(0, 5).map((result, i) => {
+            // console.log("result: " + result.post_feedid);
+            let base_url = 'http://cloud.feedly.com//v3/streams/contents?streamId=' + result.feed_id;
+            arrayOfPromises.push(
+                axios.get(base_url)
                     .then(response => (response.data.items))
                     .catch(error => console.log(error))
-                );
-            });
-            
-            Promise.all(arrayOfPromises).then(
-                function (values) {
-                    // console.log(values[0]);
-                    // let targetvalues_0 = JSON.parse(JSON.stringify(values[0]));
-                    // let targetvalues_1 = JSON.parse(JSON.stringify(values[1]));
-                    // let result = Object.assign(targetvalues_0, targetvalues_1);
-                    for(let i=0; i<values.length-1; i++){
-                        Array.prototype.push.apply(values[0], values[i+1]);
-                    }
-                    // console.log("result: " + values[0]);
-                    let sortedvalues = values[0];
-                    sortedvalues.sort(function(b, a){
-                        return a["published"] - b["published"];
-                    });
-                    res.json(sortedvalues);
-                }
             );
-            // console.log(boardFeed.post_feedid);
-            // let base_url = 'http://cloud.feedly.com//v3/streams/contents?streamId=' + boardFeed.post_feedid;
-            // console.log(base_url);
-            // axios.get(base_url)
-            //     .then(response => res.json(response.data.items))
-            //     .catch(error => console.log(error))
-        })
+        });
+
+        Promise.all(arrayOfPromises).then(
+            function (values) {
+                // console.log(values[0]);
+                // let targetvalues_0 = JSON.parse(JSON.stringify(values[0]));
+                // let targetvalues_1 = JSON.parse(JSON.stringify(values[1]));
+                // let result = Object.assign(targetvalues_0, targetvalues_1);
+                for (let i = 0; i < values.length - 1; i++) {
+                    Array.prototype.push.apply(values[0], values[i + 1]);
+                }
+                // console.log("result: " + values[0]);
+                let sortedvalues = values[0];
+                sortedvalues.sort(function (b, a) {
+                    return a["published"] - b["published"];
+                });
+                res.json(sortedvalues);
+            }
+        );
+        // console.log(boardFeed.post_feedid);
+        // let base_url = 'http://cloud.feedly.com//v3/streams/contents?streamId=' + boardFeed.post_feedid;
+        // console.log(base_url);
+        // axios.get(base_url)
+        //     .then(response => res.json(response.data.items))
+        //     .catch(error => console.log(error))
+    })
 });
 
-router.get('/otherdirlist', function(req, res, next) {
+router.get('/otherdirlist', function (req, res, next) {
     let new_query = 'SELECT * FROM tbl_directory WHERE tbl_directory.share_group_id = :now_group AND NOT (tbl_directory.owner_id = :now_user)'
     let values = {
         now_group: req.session.group_id,
         now_user: req.session.user_id
     };
-    sequelize.query(new_query, {replacements:values, model:TableDirectory})
-    .then(tableDirectory => {
-        console.log(JSON.stringify(tableDirectory));
-        res.json(tableDirectory);
-    })
+    sequelize.query(new_query, { replacements: values, model: TableDirectory })
+        .then(tableDirectory => {
+            console.log(JSON.stringify(tableDirectory));
+            res.json(tableDirectory);
+        })
 });
 
 router.get('/dirlist', function (req, res, next) {

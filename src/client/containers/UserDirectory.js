@@ -7,7 +7,7 @@ import { dirPostRequest, dirListRequest, dirRemoveRequest, dirRemove } from '../
 import { Layout } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 
-class DirTest extends Component {
+class UserDirectory extends Component {
 
     constructor() {
         super();
@@ -159,4 +159,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DirTest);
+export default connect(mapStateToProps, mapDispatchToProps)(UserDirectory);

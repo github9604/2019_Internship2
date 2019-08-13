@@ -14,7 +14,7 @@ class SampleDir extends Component {
         // console.log("???: " + this.props.data);
         return(
              <a class="nav_a" > 
-             <Link exact to={`/DirTest/${this.props.data.dir_name}`}>{this.props.data.dir_name}</Link> 
+             <Link exact to={`/UserDirectory/${this.props.data.dir_name}`}>{this.props.data.dir_name}</Link> 
              <Button type="danger" onClick={this.handleRemove}> 삭제 </Button> 
              </a>
         );

@@ -10,10 +10,10 @@ class SearchResult extends Component {
         super();
         this.state = {
             feedId: '',
-            websiteTitle: '',
-            alreadyscrap: ''
+            websiteTitle: ''
         };
     }
+
 
     // setButton = () => {
     //     let defaultFeed = this.props.defaultFeed;
@@ -29,14 +29,7 @@ class SearchResult extends Component {
     //     }
     // }
 
-    btnCheck = () => {
-        this.props.defaultFeed.map((result, i) => {
-            if (result.feed_id == this.props.feedId) {
-                return "primary";
-            }
-        })
-        return "default";
-    }
+
 
     setData = () => {
         console.log("insert article to db btn clicked");

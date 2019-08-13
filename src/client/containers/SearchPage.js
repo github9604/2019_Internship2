@@ -13,7 +13,7 @@ class SearchPage extends Component {
             results: [],
             searchTerm: '',
             inputArticle: '',
-            buttonStatus: '',
+            buttonStatus: [],
             user_feeds: []
         };
     }
@@ -47,7 +47,6 @@ class SearchPage extends Component {
     }
 
     loadUserFeeds = () => {
-        console.log("sdlkfjs");
         axios.get('/api/showtodayfeed/feedlist')
             .then((response) => {
                 // console.log(response.data);
@@ -79,7 +78,7 @@ class SearchPage extends Component {
                     <div className="searchpage">
                         <Link exact to={`/MyDirectory/asdf`}>asdf</Link>
                         <SearchArea handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
-                        <SearchResultList buttonStatus={this.state.buttonStatus} defaultFeed={this.state.user_feeds} insertFeed={this.insertFeed} results={this.state.results} />
+                        <SearchResultList defaultFeed={this.state.user_feeds} insertFeed={this.insertFeed} results={this.state.results} />
                     </div>
                 </Content>
             </Layout>
