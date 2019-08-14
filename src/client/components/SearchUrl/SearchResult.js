@@ -63,7 +63,7 @@ class SearchResult extends Component {
     render() {
         return (
             <div>
-                <Card onClick={this.openWindow} style={{ width: 600, marginTop: 16 }} loading={false}>
+                <Card hoverable={true} onClick={this.openWindow} style={{ width: 600, marginTop: 16 }} loading={false}>
                     <Meta
                         avatar={
                             <img class="right floated mini ui image" src={this.props.iconUrl} />

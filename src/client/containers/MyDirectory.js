@@ -108,7 +108,7 @@ class MyDirectory extends Component {
             now_dir = now_dir_name;
         }
         console.log(now_dir_name);
-        axios.post('/api/matchDirArticle', { now_dir })
+        axios.post('/api/matchDirArticle/mine', { now_dir })
             .then((response) => {
                 this.setState({ match_results: response.data, now_dir: now_dir });
             })

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { UserFeedResultList } from '../components/UserFeed';
 import { Select } from 'react-select';
 import { Layout } from 'antd';
+import { stringify } from 'querystring';
 const { Header, Footer, Sider, Content } = Layout;
 
 class MyFeed extends Component {
@@ -51,8 +52,8 @@ class MyFeed extends Component {
         this.setState({ wholeloading: true });
         axios.post('/api/showtodayfeed', { page, results})
             .then((response) => {
-                console.log("response: " + response);
-                console.log("response data: " + response.data);
+                // console.log("response: " + response);
+                // console.log("response data: " + response.data);
                 this.setState({
                     results: response.data,
                     wholeloading: false
@@ -92,21 +93,22 @@ class MyFeed extends Component {
     }
 
     addtoDirectory = (selectdir) => {
-        console.log("parsed selectdir data: " + selectdir.dirId);
-        console.log("origin: " + selectdir.articleId);
+        // console.log("parsed selectdir data: " + selectdir.dirId);
+        // console.log("origin: " + selectdir.articleId);
         let tmp = selectdir.articleId.split('/');
-        console.log("changed: " + tmp[0]);
-        console.log(tmp[1]);
+        // console.log("changed: " + tmp[0]);
+        // console.log(tmp[1]);
         let dirId = selectdir.dirId;
-        let articleId = tmp[0] + tmp[1];
-        axios.post('/api/showTodayFeed/diratriclemap', { dirId, articleId })
+        let articleId = selectdir.articleId;
+        let article_originId = selectdir.article_originId;
+        let article_author = selectdir.article_author;
+        let article_content = selectdir.article_content;
+        let article_title = selectdir.article_title;
+        
+        axios.post('/api/showTodayFeed/dirarticlemap', { dirId, articleId, article_originId, article_author, article_content, article_title })
             .then((response) => {
                 console.log("article and directory mapping success");
             })
-    }
-
-    nextPage = (pageNumber) => {
-
     }
 
     render() {

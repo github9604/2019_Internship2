@@ -20,7 +20,11 @@ class UserFeedResult extends Component {
     console.log("selected directory name parsing");
     let sendData = {
       dirId: this.state.selectdir,
-      articleId: this.props.articleId
+      articleId: this.props.articleId,
+      article_originId: this.props.originlink,
+      article_author: this.props.author,
+      article_content: this.props.summary,
+      article_title: this.props.title
     }
     this.props.addtoDirectory(sendData);
   }

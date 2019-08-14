@@ -76,7 +76,6 @@ class SearchPage extends Component {
             <Layout>
                 <Content>
                     <div className="searchpage">
-                        <Link exact to={`/MyDirectory/asdf`}>asdf</Link>
                         <SearchArea handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
                         <SearchResultList defaultFeed={this.state.user_feeds} insertFeed={this.insertFeed} results={this.state.results} />
                     </div>
