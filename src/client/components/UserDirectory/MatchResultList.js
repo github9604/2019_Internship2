@@ -9,9 +9,9 @@ const MatchResultList = (props) => {
                 props.match_results.map((result, i) => {
                     return (
                         <div>
-                            <h2>{result.title}</h2>
-                            <h3> {result.author} </h3>
-                            <h4> {result.summary.content} </h4>
+                            <h2>{result.article_title}</h2>
+                            <h3> {result.article_author} </h3>
+                            <h4> {result.article_content} </h4>
                         </div>
                         // <MatchResult title={result.title} author={result.author}/>
                     )
