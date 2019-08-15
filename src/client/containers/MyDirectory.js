@@ -141,8 +141,8 @@ class MyDirectory extends Component {
             <div>
                 <h2> 공개 범위 설정 </h2>
 
-                <div class="d-flex" id="wrapper">
-                    <div class="sidenav" background-color="#d2d2d4">
+                <div class="ant-row-flex ant-row-flex-center" id="wrapper">
+                    <div class="ant-row-flex ant-row-flex-center" background-color="#d2d2d4">
                         <UserDirectoryList deleteDirectory={this.deleteDirectory} insertDirlist={this.insertDirlist} dirlists={this.state.dirlist_results} />
                         <script src="../src/asset/vendor/jquery/jquery.min.js"></script>
                         <script src="../src/asset/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

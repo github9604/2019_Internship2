@@ -43,15 +43,15 @@ class FixedHeader extends Component {
         <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
           <div id="navbar-primary">
             <div >
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-primary-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+              <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#navbar-primary-collapse">
+                <span className="sr-only">Toggle navigation</span>
+                <span className="icon-bar"></span>
+                <span className="icon-bar"></span>
+                <span className="icon-bar"></span>
               </button>
             </div>
-            <div class="collapse navbar-collapse" id="navbar-primary-collapse">
-              <ul class="nav navbar-nav">
+            <div className="collapse navbar-collapse" id="navbar-primary-collapse">
+              <ul className="nav navbar-nav">
                 <li id="header_li" ><Link to="/searchpage" id="header_a"> 피드 추가 하기 </Link></li>
                 <li id="header_li" ><Link to="/MyFeed" id="header_a"> 오늘 피드 보기 </Link></li>
                 <li id="header_li" ><Link to="/MainPage" id="header_a"><img id="logo-navbar-middle" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/32877/logo-thing.png" width="200" alt="Logo Thing main logo" /></Link></li>

@@ -292,7 +292,7 @@ router.get('/short', function (req, res, next) {
                     sortedvalues.sort(function (b, a) {
                         return a["published"] - b["published"];
                     });
-                    console.log(sortedvalues.slice(0, 5));
+                    // console.log(sortedvalues.slice(0, 5));
                     // res.json(sortedvalues.slice(0,3));
                     res.json(sortedvalues);
                 }

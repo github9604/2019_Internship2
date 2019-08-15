@@ -54,13 +54,30 @@ router.use(cors());
 
 router.post('/', function (req, res, next) {
     let name = req.body.obj;
-    console.log(name);
+    let set_button = [];
+    // console.log(name);
     let base_url = 'http://cloud.feedly.com/v3/search/feeds?count=40&query=' + name;
     axios.get(base_url)
-        .then(response => res.json(response.data.results))
+        .then((response) => {
+            Promise.all(
+                response.data.results.map(
+                    async (result,i) => {
+                        await TableFeed.findOne({
+                            where: { feed_id: result.feedId }
+                        }).then((check) => {
+                            if (check) set_button[i] = '1';
+                            else set_button[i] = '0';
+                        })
+                        if(i==39) res.json({whole: response.data.results, btn: set_button})
+                    }
+                )
+            )
+        })
+    // axios.get(base_url)
+    //     .then(response => res.json(response.data.results))
 });
 
-router.post('/insertFeed', function(req, res, next) {
+router.post('/insertFeed', function (req, res, next) {
     console.log(req.body.insert_results);
     let inputResult = req.body.insert_results;
     const inputData = {
@@ -73,29 +90,29 @@ router.post('/insertFeed', function(req, res, next) {
     };
     // console.log(inputData);
     TableFeed.findOne({
-        where: {feed_id: inputResult.feedId, feed_reader_id: req.session.user_id}
+        where: { feed_id: inputResult.feedId, feed_reader_id: req.session.user_id }
     }).then(tableFeed => {
-        if(!tableFeed){
+        if (!tableFeed) {
             TableFeed.create(inputData)
-            .then(articleInput => {
-                // console.log(articleInput);
-                res.json({'has_scrapped': !tableFeed});
-                console.log("Feed input success");
-            }).catch(err => {
-                return res.send('error' + err)
-            })
+                .then(articleInput => {
+                    // console.log(articleInput);
+                    res.json({ 'has_scrapped': !tableFeed });
+                    console.log("Feed input success");
+                }).catch(err => {
+                    return res.send('error' + err)
+                })
         }
-        else{
+        else {
             TableFeed.destroy({
-                where: {feed_id: inputResult.feedId, feed_reader_id: req.session.user_id}
+                where: { feed_id: inputResult.feedId, feed_reader_id: req.session.user_id }
             })
-            .then(response => {
-                res.json({has_scrapped: !tableFeed});
-            })
-            .catch(err => console.log("error" + err));
+                .then(response => {
+                    res.json({ has_scrapped: !tableFeed });
+                })
+                .catch(err => console.log("error" + err));
         }
     })
-   
+
 });
 
 router.post('/scrap', function (req, res) {

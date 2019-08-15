@@ -16,7 +16,9 @@ const SearchResultList = (props) => {
                             website={result.website}
                             description={result.description}
                             iconUrl={result.iconUrl}
-                            topics={result.topics} />
+                            topics={result.topics}
+                            btnColor={props.btnSet[i]}
+                            />
                     )
                 })
             }

@@ -14,19 +14,20 @@ class SearchPage extends Component {
             searchTerm: '',
             inputArticle: '',
             buttonStatus: [],
-            user_feeds: []
+            user_feeds: [],
+            loading_result: ''
         };
     }
 
-    componentDidMount() {
-        this.loadUserFeeds();
-    }
+    // componentDidMount() {
+    //     this.loadUserFeeds();
+    // }
 
     insertFeed = (insert_results) => {
         axios.post('/api/urlsearch/insertFeed', { insert_results })
             .then((response) => {
-                console.log("insert feed to current member success");
-                console.log("wahtd: " + response.data.has_scrapped);
+                console.log("searchpage insertfeed");
+                console.log("스크랩 여부: " + response.data.has_scrapped);
                 this.setState({ buttonStatus: response.data.has_scrapped });
             })
     }
@@ -36,22 +37,18 @@ class SearchPage extends Component {
         let obj = this.state.searchTerm;
         axios.post('/api/urlsearch', { obj })
             .then((response) => {
-                console.log(response.data);
-                this.setState({ results: response.data });
-                this.loadUserFeeds();
+                console.log("searchpage handlesubmit");
+                // console.log(response);
+                // console.log("hello: " + response.data.whole);
+                console.log("bye : " + response.data.btn);
+                this.setState({ results: response.data.whole, buttonStatus: response.data.btn});
+                console.log("yes : " + this.state.buttonStatus);
+                // this.loadUserFeeds();
             })
     }
 
     handleChange = (e) => {
         this.setState({ searchTerm: e.target.value })
-    }
-
-    loadUserFeeds = () => {
-        axios.get('/api/showtodayfeed/feedlist')
-            .then((response) => {
-                // console.log(response.data);
-                this.setState({ user_feeds: response.data });
-            })
     }
 
     // componentDidMount() {
@@ -71,13 +68,14 @@ class SearchPage extends Component {
     //     //     this.setState({  results })
     //     // });
     // }
+
     render() {
         return (
             <Layout>
                 <Content>
                     <div className="searchpage">
                         <SearchArea handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
-                        <SearchResultList defaultFeed={this.state.user_feeds} insertFeed={this.insertFeed} results={this.state.results} />
+                        <SearchResultList btnSet={this.state.buttonStatus} insertFeed={this.insertFeed} results={this.state.results} />
                     </div>
                 </Content>
             </Layout>

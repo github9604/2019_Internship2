@@ -67,9 +67,9 @@ class Authentication extends Component {
 
     render() {
         const inputBoxes = (
-            <div class="login-form">
-                <div class="register-row">
-                    <h3 class="register-title">
+            <div className="login-form">
+                <div className="register-row">
+                    <h3 className="register-title">
                         <label for="user_id"> 아이디 </label>
                     </h3>
                     <input
@@ -79,8 +79,8 @@ class Authentication extends Component {
                         className="validate"
                         onChange={this.handleChange} />
                 </div>
-                <div class="register-row">
-                    <h3 class="register-title">
+                <div className="register-row">
+                    <h3 className="register-title">
                         <label for="user_pw"> 비밀번호 </label>
                     </h3>
                     <input
@@ -112,9 +112,9 @@ class Authentication extends Component {
         );
 
         const LoginBoxes = (
-            <div class="login-form">
-                <div class="register-row">
-                    <h3 class="register-title">
+            <div className="login-form">
+                <div className="register-row">
+                    <h3 className="register-title">
                         <label for="user_id"> 아이디 </label>
                     </h3>
                     <input
@@ -125,7 +125,7 @@ class Authentication extends Component {
                         onChange={this.handleChange} />
                 </div>
                 <div>
-                    <h3 class="register-title">
+                    <h3 className="register-title">
                         <label for="user_pw"> 비밀번호 </label>
                     </h3>
                     <input
@@ -159,7 +159,7 @@ class Authentication extends Component {
 
         return (
             <div>
-                {this.props.mode ? <h2> 로그인 </h2> : <h2> 회원가입 </h2> }
+                {/* {this.props.mode ? <h2> 로그인 </h2> : <h2> 회원가입 </h2> } */}
                 {this.props.mode ? loginView : registerView}
             </div>
         )

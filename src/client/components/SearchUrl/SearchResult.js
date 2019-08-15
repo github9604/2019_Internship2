@@ -33,8 +33,6 @@ class SearchResult extends Component {
     //     }
     // }
 
-
-
     setData = () => {
         console.log("insert article to db btn clicked");
         let insert_results = {
@@ -66,14 +64,21 @@ class SearchResult extends Component {
                 <Card hoverable={true} onClick={this.openWindow} style={{ width: 600, marginTop: 16 }} loading={false}>
                     <Meta
                         avatar={
-                            <img class="right floated mini ui image" src={this.props.iconUrl} />
+                            <img className="right floated mini ui image" src={this.props.iconUrl} />
                         }
                         title={this.props.websiteTitle}
                         description={this.props.description}
                     />
                 </Card>
-                <Button onClick={this.setData}> Feed 구독 </Button>
+                <h1> {this.props.btnColor} </h1>
+                {
+                    (this.props.btnColor === '1')
+                    ? <Button type="primary" onClick={this.setData}> 이미 구독중 </Button>
+                    : <Button type="default" onClick={this.setData}> Feed 구독 </Button>
+
+                }
             </div>
+
             // <div class="card">
             //     <div class="content">
             //         <img class="right floated mini ui image" src={this.props.iconUrl} />
