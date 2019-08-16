@@ -267,15 +267,29 @@ router.delete('/delete', (req, res) => {
 
 router.post('/groupAuth', (req, res, next) => {
     let group_auth = req.body.group_auth;
-    console.log("grou???: " + group_auth);
-    TableDirectory.update({
-        share_group_id: req.body.group_auth
-    }, {
-        where: {owner_id: req.session.user_id, dir_name: req.body.now_dir}
-    })
-    .then(console.log("success"))
-    .catch(err => {
-        return res.send('error' + err);
+    TableDirectory.findOne({
+        where: {owner_id: req.session.user_id, dir_name: req.body.now_dir},
+    }).then((response) => {
+        let tmp = response.dir_id;
+        TableDirAuth.destroy({
+            where: {dir_id: response.dir_id}
+        }).then((response) => {
+            console.log(tmp);
+            console.log(group_auth);
+            group_auth.map((now, i) => {
+                TableDirAuth.create({
+                    dir_id: tmp,
+                    dir_auth: now
+                })
+            })
+            // let inputData = [{dir_id, dir_auth}];
+            // for(let i=0; i<group_auth.length; i++){
+            //     inputData[i].dir_id = tmp;
+            //     inputData[i].dir_auth = group_auth[i];
+            // }
+            // console.log("after: " + inputData);
+            return res.send("success");
+        })
     })
 })
 

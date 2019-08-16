@@ -45,8 +45,7 @@ class GroupDirectory extends Component {
                 console.log('error fetching and parsing data in show dirlists');
             })
     }
-
-
+    
     showArticleInDir = (now_dir_name) => {
         // console.log(sendDirName);
 

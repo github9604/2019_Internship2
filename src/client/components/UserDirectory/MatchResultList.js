@@ -8,10 +8,10 @@ class MatchResultList extends Component {
         group_auth: [],
         default_auth: []
     }
-
-    onChange(checkedValues) {
-        console.log('checked = ', checkedValues);
-        this.setState({group_auth: checkedValues});
+    
+    groupChange = (checkedValues) => {
+        // console.log("value??: " + checkedValues);
+        this.setState({ group_auth: checkedValues });
     }
 
     setGroup = () => {
@@ -19,8 +19,7 @@ class MatchResultList extends Component {
         let sendData = {
             group_auth: this.state.group_auth
         }
-        console.log(sendData);
-        // this.props.changeDirAuth(sendData);
+        this.props.changeDirAuth(sendData);
     }
 
     render() {
@@ -29,7 +28,7 @@ class MatchResultList extends Component {
             
             <div>
                 <h2> {this.props.now_dir} </h2>
-                <Checkbox.Group options={this.props.options} onChange={this.onChange} defaultValue={arr} />
+                <Checkbox.Group options={this.props.options} onChange={this.groupChange} defaultValue={arr} />
                 <Button onClick={this.setGroup}> 변경 </Button>
                 {
                     this.props.match_results.map((result, i) => {
