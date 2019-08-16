@@ -7,7 +7,7 @@ class UserFeedResult extends Component {
 
   state = {
     visible: false,
-    selectdir: ''
+    selectdir: '',
   }
 
   hide = () => {
@@ -36,7 +36,7 @@ class UserFeedResult extends Component {
   onChangeValue = (dir) => {
     console.log(dir);
     console.log(dir.name);
-    this.setState({selectdir: dir.name});
+    this.setState({ selectdir: dir.name });
     console.log(this.state.selectdir);
   }
 
@@ -46,7 +46,7 @@ class UserFeedResult extends Component {
   }
 
   render() {
-    console.log("dirlists: " + this.props.dirlists)
+    // console.log("dirlists: " + this.props.dirlists)
     let dirs = this.props.dirlists;
     // const friends = [
     //   {
@@ -79,11 +79,12 @@ class UserFeedResult extends Component {
       <div border="1px">
         <h3> {this.props.title} </h3>
         <h4> {this.props.author} </h4>
-        <div dangerouslySetInnerHTML={{__html: this.props.summary}}></div>
+        <div dangerouslySetInnerHTML={{ __html: this.props.summary }}></div>
         <h5> {this.props.summary} </h5>
         <Button onClick={this.openWindow}> 해당 페이지로 이동 </Button>
         <Popover
-          content={<div><SelectSearch options={dirs} value={this.state.selectdir ? this.state.selectdir : ''} onChange={(dir) => this.onChangeValue(dir)} placeholder="폴더를 입력하세요" /> <button onClick={this.setData}> 폴더에 추가 </button></div>} 
+          content={<div><SelectSearch options={dirs} value={this.state.selectdir ? this.state.selectdir : ''} 
+          onChange={(dir) => this.onChangeValue(dir)} placeholder="폴더를 입력하세요" /> <Button onClick={this.setData}> 폴더에 추가 </Button></div>}
           placement="bottom"
           trigger="click"
           visible={this.state.visible}

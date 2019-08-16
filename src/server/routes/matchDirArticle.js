@@ -127,7 +127,6 @@ router.post('/grp', function(req, res, next) {
     })
 })
 
-
 router.post('/mine', function(req, res, next) {
     TableDirectory.findOne({
         where: {owner_id: req.session.user_id, dir_name: req.body.now_dir},

@@ -32,9 +32,6 @@ const TableDirectory = sequelize.define(
         },
         owner_id: {
             type: Sequelize.INTEGER
-        },
-        share_group_id: {
-            type: Sequelize.INTEGER
         }
     },
     {
@@ -94,6 +91,23 @@ const TableArticle = sequelize.define(
     }
 );
 
+const TableDirAuth = sequelize.define(
+    'TableDirAuth',
+    {
+        dir_id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true
+        },
+        dir_auth: {
+            type: Sequelize.INTEGER,
+            primaryKey: true
+        }
+    },
+    {
+        timestamps: false,
+        tableName: 'tbl_dir_auth'
+    }
+);
 
 router.get('/', (req, res, next) => {
     TableDirectory.findAll({
@@ -104,6 +118,19 @@ router.get('/', (req, res, next) => {
             res.json(TableDirectory);
         })
 })
+
+router.get('/otherdirlist', function (req, res, next) {
+    let new_query = 'SELECT * FROM tbl_directory WHERE tbl_directory.share_group_id = :now_group AND NOT (tbl_directory.owner_id = :now_user)'
+    let values = {
+        now_group: req.session.group_id,
+        now_user: req.session.user_id
+    };
+    sequelize.query(new_query, { replacements: values, model: TableDirectory })
+        .then(tableDirectory => {
+            // console.log(JSON.stringify(tableDirectory));
+            res.json(tableDirectory);
+        })
+});
 
 router.post('/grouplist', (req, res, next) => {
     TableGroup.findAll()
@@ -165,7 +192,13 @@ router.post('/insertDir', (req, res, next) => {
         }
         TableDirectory.create(inputData)
         .then(dirInput => {
-            return res.json({success: true});
+            const dirInputData = {
+                dir_id: dirInput.dir_id,
+                dir_auth: '0'
+            };
+
+            TableDirAuth.create(dirInputData)
+            .then(() => {return res.json({success: true});})
         })
         .catch(err => {
             return res.send('error' + err)
@@ -246,5 +279,15 @@ router.post('/groupAuth', (req, res, next) => {
     })
 })
 
+router.post('/setuserdefault', function(req, res, next) {
+    console.log("why notbb");
+    TableDirectory.findOne({
+        where: {owner_id: req.session.user_id, dir_name: req.body.now_dir_name}
+    }).then(response => {
+        TableDirAuth.findAll({
+            where: {dir_id: response.dir_id}
+        }).then((result) => res.json(result));
+    });
+})
 
 export default router;

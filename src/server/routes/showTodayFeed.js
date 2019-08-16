@@ -190,7 +190,7 @@ router.post('/', function (req, res, next) {
                     sortedvalues.sort(function (b, a) {
                         return a["published"] - b["published"];
                     });
-                    console.log(sortedvalues.slice(0, 3));
+                    // console.log(sortedvalues.slice(0, 3));
                     res.json(sortedvalues.slice(0, req.body.page + 6));
                     // // res.json(sortedvalues.slice(0,3));
                     // res.json(sortedvalues);
@@ -314,26 +314,15 @@ router.get('/otherdirlist', function (req, res, next) {
     };
     sequelize.query(new_query, { replacements: values, model: TableDirectory })
         .then(tableDirectory => {
-            console.log(JSON.stringify(tableDirectory));
+            // console.log(JSON.stringify(tableDirectory));
             res.json(tableDirectory);
         })
-});
-
-router.get('/dirlist', function (req, res, next) {
-    TableDirectory.findAll({
-        where: { owner_id: req.session.user_id },
-        attributes: [
-            'dir_name'
-        ]
-    }).then(TableDirectory => {
-        res.json(TableDirectory);
-    })
 });
 
 router.post('/dirarticlemap', function (req, res, next) {
     let dir_id;
 
-    console.log(req.body.article_author);
+    // console.log(req.body.article_author);
 
     TableDirectory.findOne({
         where: { dir_name: req.body.dirId, owner_id: req.session.user_id },
@@ -352,7 +341,7 @@ router.post('/dirarticlemap', function (req, res, next) {
             dir_id: response.dir_id
         }
 
-        console.log(inputData);
+        // console.log(inputData);
 
         TableArticle.findOne({
             where: { article_url: req.body.articleId, dir_id: req.body.dirId }

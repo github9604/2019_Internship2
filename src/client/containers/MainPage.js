@@ -64,7 +64,7 @@ class MainPage extends Component {
     }
 
     showDirLists = () => {
-        axios.get('/api/showtodayfeed/dirlist')
+        axios.get('/api/dirlist')
             .then((response) => {
                 console.log("Mainpage showdirlists");
                 // console.log("response data[0]: " + response.data[0].dir_name);

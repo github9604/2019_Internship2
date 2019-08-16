@@ -41,7 +41,7 @@ class MyFeed extends Component {
         if (this.state.prevY > y) {
             const lastUser = this.state.results[this.state.results.length - 1];
             const curPage = 6 + this.state.page;
-            console.log("changing: " + curPage);
+            // console.log("changing: " + curPage);
             this.showTodayFeed(curPage, this.state.results);
             this.setState({ page: curPage });
         }
@@ -52,6 +52,7 @@ class MyFeed extends Component {
         this.setState({ wholeloading: true });
         axios.post('/api/showtodayfeed', { page, results})
             .then((response) => {
+                console.log("my feed page: showtodayfeed");
                 // console.log("response: " + response);
                 // console.log("response data: " + response.data);
                 this.setState({
@@ -65,9 +66,9 @@ class MyFeed extends Component {
     }
 
     showDirLists = () => {
-        axios.get('/api/showtodayfeed/dirlist')
+        axios.get('/api/dirlist')
             .then((response) => {
-                console.log("response data[0]: " + response.data[0].dir_name);
+                // console.log("response data[0]: " + response.data[0].dir_name);
                 for (let i = 0; i < response.data.length; i++) {
                     let tmp = response.data[i].dir_name;
                     let tmplist = this.state.dirlists;
@@ -76,20 +77,16 @@ class MyFeed extends Component {
                         value: tmp
                     })
                     this.setState({ dirlists: tmplist });
-                    console.log("tmp: " + tmp);
+                    // console.log("tmp: " + tmp);
                 }
                 this.setState({
                     dirlist: tmpdirlists
                 });
+                console.log("my feed page: show dir lists");
             })
             .catch(error => {
                 console.log('error fetching and parsing data');
             })
-    }
-
-
-    handleDirInput = () => {
-        console.log("handleDirInput");
     }
 
     addtoDirectory = (selectdir) => {
@@ -107,7 +104,7 @@ class MyFeed extends Component {
         
         axios.post('/api/showTodayFeed/dirarticlemap', { dirId, articleId, article_originId, article_author, article_content, article_title })
             .then((response) => {
-                console.log("article and directory mapping success");
+                console.log("my feed page: add to directory");
             })
     }
 
@@ -120,9 +117,8 @@ class MyFeed extends Component {
         return (
             <Layout>
                 <Content>
-                    <div class="main-panel">
-                        <div class="content-wrapper">
-                            <div> my feed page </div>
+                    <div className="main-panel">
+                        <div className="content-wrapper">
                             <div>
                                 <div> <UserFeedResultList addtoDirectory={this.addtoDirectory} showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists={this.state.dirlists} results={this.state.results} /> </div>
                             </div>

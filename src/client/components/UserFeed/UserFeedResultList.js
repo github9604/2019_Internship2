@@ -16,7 +16,7 @@ const UserFeedResultList = (props) => {
                     let originlink = result.canonicalUrl ? result.canonicalUrl : result.origin.htmlUrl;
                     // console.log(sum_content);
                     return (
-                        <UserFeedResult addtoDirectory={props.addtoDirectory} originlink={originlink} summary={sum_content} author={result.author} articleId = {result.id} dirlists = {props.dirlists} visualUrl = {result.visual} title={result.title} />
+                        <UserFeedResult key={i} addtoDirectory={props.addtoDirectory} originlink={originlink} summary={sum_content} author={result.author} articleId = {result.id} dirlists = {props.dirlists} visualUrl = {result.visual} title={result.title} />
                     )
                 })
             }

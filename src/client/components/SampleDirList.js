@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { SampleDir } from '../components';
+import { Row} from 'antd';
 import PropTypes from 'prop-types';
 
 class SampleDirList extends Component {
@@ -10,6 +11,7 @@ class SampleDirList extends Component {
                 // console.log("::::: " + result);
                 return (
                     <SampleDir
+                        key={i}
                         data={result}
                         index={i}
                         onRemove={this.props.onRemove}
@@ -18,9 +20,9 @@ class SampleDirList extends Component {
             })
         }
         return (
-            <div>
+            <Row type="flex" gutter={16}>
                 {mapToComponents(this.props.data)}
-            </div>
+            </Row>
         );
     }
 }

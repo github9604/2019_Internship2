@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { SampleWrite, SampleDirList } from '../components';
-import { UserDirectoryList, MatchResultList, GroupList } from '../components/UserDirectory';
+import { UserDirectoryList, MatchResultList } from '../components/UserDirectory';
 import { Link } from 'react-router-dom';
-import { Layout } from 'antd';
-import { Row, Col } from 'antd';
+import { Layout, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { dirPostRequest, dirListRequest, dirRemoveRequest, dirRemove } from '../actions/dirList';
@@ -16,17 +15,21 @@ class UserDirectory extends Component {
         this.state = {
             match_results: [],
             group_results: [],
+            auth_results: [],
             now_dir: '',
-            group_auth: ''
+            group_auth: '',
+            auth_waiting: true
         };
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.match.params.dir_name !== this.props.match.params.dir_name) {
-            console.log("Next: " + nextProps.match.params.dir_name);
-            console.log("Now: " + this.props.match.params.dir_name);
+            // console.log("Next: " + nextProps.match.params.dir_name);
+            // console.log("Now: " + this.props.match.params.dir_name);
             // this.performGroupList();
             this.showArticleInDir(nextProps.match.params.dir_name);
+            this.setState({auth_waiting: true});
+            this.setDefault(nextProps.match.params.dir_name);
         }
     }
 
@@ -34,16 +37,33 @@ class UserDirectory extends Component {
         this.props.dirListRequest(true);
         this.performGroupList();
         this.showArticleInDir(this.props.match.params.dir_name);
+        this.setDefault(this.props.match.params.dir_name);
+    }
+
+    setDefault = (now_dir_name) => {
+        axios.post('/api/dirlist/setuserdefault', { now_dir_name })
+            .then(response => {
+                // console.log(response);
+                console.log(response.data);
+                let tmp = [];
+                for (let i = 0; i < response.data.length; i++) {
+                    tmp[i] = response.data[i].dir_auth;
+                    // tmp.push(response.data[i].dir_auth);
+                }
+                this.setState({ auth_results: tmp, auth_waiting: false });
+                // console.log("working..?: " + this.state.group_auth);
+            })
     }
 
     performGroupList = () => {
         axios.post('/api/dirlist/grouplist')
             .then(response => {
-                console.log(response);
-                console.log(response.data);
+                // console.log(response);
+                // console.log(response.data);
                 this.setState({
                     group_results: response.data
                 });
+                console.log("userdirectory page: group list");
             })
             .catch(error => {
                 console.log('Error fetching and parsing data', error);
@@ -61,7 +81,7 @@ class UserDirectory extends Component {
     }
 
     showArticleInDir = (now_dir_name) => {
-        console.log("wahta:" + now_dir_name);
+        // console.log("wahta:" + now_dir_name);
         //얘를 기준으로 생각하면 됨! 
         let now_dir = this.props.match.params.dir_name;
         if (now_dir != now_dir_name) {
@@ -91,9 +111,8 @@ class UserDirectory extends Component {
         console.log("doiing: " + index);
         this.props.dirRemoveRequest(deleteDirInput, index).then(() => {
             console.log("wonder: " + this.props.dirListData);
-
             this.props.dirListRequest(true);
-
+            console.log("user directory page: remove dir");
         });
     }
 
@@ -104,7 +123,7 @@ class UserDirectory extends Component {
                 if (this.props.postStatus.status === "SUCCESS") {
                     this.loadNewDir().then(
                         () => {
-                            console.log("성공");
+                            console.log("user directory page: dir insert");
                         }
                     );
                     // addToast('성공적으로 디렉토리가 추가됐습니다', {appearance: 'success'})
@@ -131,14 +150,16 @@ class UserDirectory extends Component {
                         <Col span={6}> <img src="../src/asset/img/close_folder.png" width="50" alt="Logo Thing main logo"></img>
                             <Link to="/GroupDirectory" id="header_a"><p> 공유 폴더 </p></Link></Col>
                     </Row>
-                    <GroupList changeDirAuth={this.changeDirAuth} options={this.state.group_results} />
-                    <div class="sidenav" background-color="#d2d2d4">
-                        <SampleWrite onPost={this.handlePost} />
-                        <SampleDirList data={this.props.dirListData} onRemove={this.handleRemove} />
+                    <SampleWrite onPost={this.handlePost} />
+                    <SampleDirList data={this.props.dirListData} onRemove={this.handleRemove} />
+                    {
+                        this.state.auth_waiting ? null :  <div className="matchdirart">
+                        <MatchResultList group_auth={this.state.auth_results} changeDirAuth={this.changeDirAuth} options={this.state.group_results} match_results={this.state.match_results} now_dir={this.state.now_dir} />
                     </div>
-                    <div class="matchdirart">
-                        <MatchResultList match_results={this.state.match_results} now_dir={this.state.now_dir} />
-                    </div>
+                    }
+                   
+
+
                 </Content>
             </Layout>
         );

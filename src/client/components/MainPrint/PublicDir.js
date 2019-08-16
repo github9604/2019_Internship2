@@ -13,7 +13,7 @@ class PublicDir extends Component {
                         return (
                             <div>
                                 <Link exact to={`/GroupDirectory/${result.dir_name}`} id="header_a">
-                                    <Card hoverable={true} style={{ width: 300, marginTop: 16 }} loading={false}>
+                                    <Card hoverable={true} key={i} style={{ width: 300, marginTop: 16 }} loading={false}>
                                         <Meta
                                             avatar={
                                                 <Icon type="file" />
