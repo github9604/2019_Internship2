@@ -82,7 +82,6 @@ class GroupDirectory extends Component {
                             }} id="header_a"><p> 공유 폴더 </p></Link></Col>
                     </Row>
                     <SampleGroupDirList data={this.state.grp_dirlists} />
-                    
                     <div class="matchdirart">
                         {
                             (this.state.loading_group)

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { ShortFeedResultList } from '../components/UserFeed';
-import { PublicDir } from '../components/MainPrint';
+import { SampleGroupDirList } from '../components';
 import { Layout, Spin, Icon } from 'antd';
 const { Content } = Layout;
 
@@ -40,7 +40,7 @@ class MainPage extends Component {
     }
 
     showOtherDirLists = () => {
-        axios.get('/api/showtodayfeed/otherdirlist')
+        axios.get('/api/dirlist/otherdirlist')
             .then((response) => {
                 console.log("Mainpage showotherdirlists");
                 // console.log("response data[0]: " + response.data[0].dir_name);
@@ -123,7 +123,7 @@ class MainPage extends Component {
                         {
                             (this.state.loading_public)
                                 ? <Spin dicidator={antIcon} />
-                                : <div> <PublicDir showDirLists={this.showOtherDirLists} dirlists={this.state.Otherdirlists} /> </div>
+                                :  <SampleGroupDirList data={this.state.Otherdirlists} />
                         }
 
                     </div>
