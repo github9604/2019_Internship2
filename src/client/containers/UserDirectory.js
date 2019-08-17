@@ -148,7 +148,12 @@ class UserDirectory extends Component {
                         <Col span={6}> <img src="../src/asset/img/mine_close_folder.png" width="50" alt="Logo Thing main logo"></img>
                             <Link to="/UserDirectory" id="header_a"><p> 내 폴더 </p></Link> </Col>
                         <Col span={6}> <img src="../src/asset/img/close_folder.png" width="50" alt="Logo Thing main logo"></img>
-                            <Link to="/GroupDirectory" id="header_a"><p> 공유 폴더 </p></Link></Col>
+                        <Link to={{
+                                pathname: `/GroupDirectory`,
+                                state: {
+                                    now_groupdir_id: 0
+                                }
+                            }} id="header_a"><p> 공유 폴더 </p></Link></Col>
                     </Row>
                     <SampleWrite onPost={this.handlePost} />
                     <SampleDirList data={this.props.dirListData} onRemove={this.handleRemove} />

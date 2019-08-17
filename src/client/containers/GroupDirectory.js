@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Layout } from 'antd';
 import { SampleGroupDirList } from '../components';
-import { MatchResultList } from '../components/UserDirectory';
+import { GroupDirMatch } from '../components/UserDirectory';
 const { Content } = Layout;
 import { Row, Col } from 'antd';
 
@@ -15,25 +15,29 @@ class GroupDirectory extends Component {
             match_results: [],
             grp_dirlists: [],
             now_dir: '',
-            loading_group: false
+            loading_group: true
         };
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.match.params.dir_name !== this.props.match.params.dir_name) {
-            console.log("Next: " + nextProps.match.params.dir_name);
-            console.log("Now: " + this.props.match.params.dir_name);
-            this.showArticleInDir(nextProps.match.params.dir_name);
+            // console.log("Next: " + nextProps.match.params.dir_name);
+            // console.log("Now: " + this.props.match.params.dir_name);
+            this.showArticleInDir(nextProps.location.state.now_groupdir_id);
         }
     }
 
     componentDidMount() {
+        // console.log("wow: " + this.props.match.params.dir_name);
+        console.log("now: " + this.props.location.state.now_groupdir_id);
+        // console.log("working..?" + now_groupdir_id);
         this.groupDirList();
-        this.showArticleInDir(this.props.match.params.dir_name);
+        if (this.props.location.state.now_groupdir_id != 0)
+            this.showArticleInDir(this.props.location.state.now_groupdir_id);
     }
 
     groupDirList = () => {
-        axios.get('/api/showtodayfeed/otherdirlist')
+        axios.get('/api/dirlist/otherdirlist')
             .then((response) => {
                 // console.log("working::" + response.data);
                 // console.log("response data[0]: " + response.data[0].dir_name);
@@ -45,18 +49,18 @@ class GroupDirectory extends Component {
                 console.log('error fetching and parsing data in show dirlists');
             })
     }
-    
-    showArticleInDir = (now_dir_name) => {
-        // console.log(sendDirName);
 
-        let now_dir = this.props.match.params.dir_name;
-        if (now_dir != now_dir_name) {
-            now_dir = now_dir_name;
+    showArticleInDir = (now_dir_id) => {
+        // console.log(sendDirName);
+        let now_dir = this.props.location.state.now_groupdir_id;
+        if (now_dir != now_dir_id) {
+            now_dir = now_dir_id;
         }
-        console.log(now_dir_name);
         axios.post('/api/matchDirArticle/grp', { now_dir })
             .then((response) => {
-                this.setState({ match_results: response.data, now_dir: now_dir, loading_group: true });
+                // console.log("why..?" + response.data);
+                // console.log("check" + this.props.match.params.dir_name);
+                this.setState({ match_results: response.data, now_dir: this.props.match.params.dir_name, loading_group: false });
             })
     }
 
@@ -65,25 +69,28 @@ class GroupDirectory extends Component {
             <Layout>
                 <Content>
                     <Row type="flex" justify="center" align="center">
-                    <Col span={6}> <img src="../src/asset/img/close_folder.png" width="50" alt="Logo Thing main logo"></img>
+                        <Col span={6}> <img src="../src/asset/img/close_folder.png" width="50" alt="Logo Thing main logo"></img>
                             <Link to="/AllDirectory" id="header_a"><p> 전체 폴더 </p></Link> </Col>
                         <Col span={6}> <img src="../src/asset/img/close_folder.png" width="50" alt="Logo Thing main logo"></img>
                             <Link to="/UserDirectory" id="header_a"><p> 내 폴더 </p></Link> </Col>
                         <Col span={6}> <img src="../src/asset/img/mine_close_folder.png" width="50" alt="Logo Thing main logo"></img>
-                            <Link to="/GroupDirectory" id="header_a"><p> 공유 폴더 </p></Link></Col>
+                            <Link to={{
+                                pathname: `/GroupDirectory`,
+                                state: {
+                                    now_groupdir_id: 0
+                                }
+                            }} id="header_a"><p> 공유 폴더 </p></Link></Col>
                     </Row>
-                    <div class="sidenav" background-color="#d2d2d4">
-                        <SampleGroupDirList data={this.state.grp_dirlists} />
-                    </div>
-                    {/*
+                    <SampleGroupDirList data={this.state.grp_dirlists} />
+                    
                     <div class="matchdirart">
                         {
                             (this.state.loading_group)
                                 ? <p> loading... </p>
-                                : <MatchResultList match_results={this.state.match_results} now_dir={this.state.now_dir} />
+                                : <GroupDirMatch match_results={this.state.match_results} now_dir={this.state.now_dir} />
                         }
 
-                    </div> */}
+                    </div>
                 </Content>
             </Layout>
         );

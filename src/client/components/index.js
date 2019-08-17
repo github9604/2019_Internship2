@@ -4,5 +4,6 @@ import SampleWrite from './SampleWrite';
 import SampleDirList from './SampleDirList';
 import SampleDir from './SampleDir';
 import SampleGroupDirList from './SampleGroupDirList';
+import SampleGroupDir from './SampleGroupDir';
 
-export {Authentication, FixedHeader, SampleWrite, SampleDirList, SampleGroupDirList, SampleDir};
+export {Authentication, FixedHeader, SampleWrite, SampleDirList, SampleGroupDirList, SampleDir, SampleGroupDir};

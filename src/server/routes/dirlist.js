@@ -1,6 +1,7 @@
 import express from 'express';
 import axios from 'axios';
 import Sequelize from 'sequelize';
+import { async } from 'q';
 
 const router = express.Router();
 const cors = require("cors");
@@ -87,7 +88,7 @@ const TableArticle = sequelize.define(
     },
     {
         timestamps: false,
-        tableName: 'tbl_group'
+        tableName: 'tbl_article'
     }
 );
 
@@ -120,17 +121,44 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/otherdirlist', function (req, res, next) {
-    let new_query = 'SELECT * FROM tbl_directory WHERE tbl_directory.share_group_id = :now_group AND NOT (tbl_directory.owner_id = :now_user)'
-    let values = {
-        now_group: req.session.group_id,
-        now_user: req.session.user_id
-    };
-    sequelize.query(new_query, { replacements: values, model: TableDirectory })
-        .then(tableDirectory => {
-            // console.log(JSON.stringify(tableDirectory));
-            res.json(tableDirectory);
-        })
+   let new_query = 'SELECT * FROM kt_intern.tbl_directory INNER JOIN tbl_dir_auth where tbl_directory.dir_id = tbl_dir_auth.dir_id AND NOT(tbl_directory.owner_id = :now_user) AND tbl_dir_auth.dir_auth = :now_auth';
+   let values = {
+       now_auth: req.session.group_id,
+       now_user: req.session.user_id
+   };
+   sequelize.query(new_query, { replacements: values, model: TableDirectory })
+   .then(result => res.send(result))
+//    sequelize.query(new_query, { replacements: values, model: TableDirectory })
+//         .then(result => {
+//             console.log("find dir_id" + result);
+//             let send_result = [];
+//             result.map((tmp, i) => {
+//                 send_result.push(TableArticle.findAll({
+//                     where: {dir_id: tmp.dir_id}
+//                 }).then(tmp => {
+//                     return tmp;
+//                 }))
+//             })
+//             return Promise.all(send_result)
+//             // result.map((tmp, i) => {
+//             //     TableArticle.findAll({
+//             //         where: {dir_id: tmp.dir_id}
+//             //     }).then((final) => console.log("after:" + final))
+//             // })
+//             // console.log("done: " + JSON.stringify(result));
+//             // console.log("working:" + result[0].dir_id);
+//         }).then(wow => res.send(wow))
 });
+    // let new_query = 'SELECT * FROM tbl_directory WHERE tbl_directory.share_group_id = :now_group AND NOT (tbl_directory.owner_id = :now_user)'
+    // let values = {
+    //     now_group: req.session.group_id,
+    //     now_user: req.session.user_id
+    // };
+    // sequelize.query(new_query, { replacements: values, model: TableDirectory })
+    //     .then(tableDirectory => {
+    //         // console.log(JSON.stringify(tableDirectory));
+    //         res.json(tableDirectory);
+    //     })
 
 router.post('/grouplist', (req, res, next) => {
     TableGroup.findAll()
@@ -138,7 +166,7 @@ router.post('/grouplist', (req, res, next) => {
             // console.log(JSON.stringify(TableGroup));
             let results = [{ value: 0, label: req.session.user_id }];
             TableGroup.map((result, i) => {
-                 results.push({ value: result.group_id, label: result.group_name });
+                results.push({ value: result.group_id, label: result.group_name });
                 // results.push({ value: result.group_id, text: result.group_name });
                 console.log(results);
             })
@@ -165,14 +193,14 @@ router.post('/insertDir', (req, res, next) => {
     };
     // console.log(inputData);
 
-    if(typeof req.session.user_id === 'undefined'){
+    if (typeof req.session.user_id === 'undefined') {
         return res.status(403).json({
             error: "NOT LOGGED IN",
             code: 1
         });
     }
 
-    if(req.body.insertDirinput === "" ){
+    if (req.body.insertDirinput === "") {
         return res.status(400).json({
             error: "EMPTY CONTENTS",
             code: 3
@@ -180,61 +208,63 @@ router.post('/insertDir', (req, res, next) => {
     }
 
     TableDirectory.findOne({
-        where: {dir_name: req.body.insertDirinput,
-        owner_id: req.session.user_id}
-    })
-    .then((response) => {
-        if(response){
-            return res.status(400).json({
-                error: " 동일한 이름의 디렉터리가 존재합니다",
-                code: 2
-            })
+        where: {
+            dir_name: req.body.insertDirinput,
+            owner_id: req.session.user_id
         }
-        TableDirectory.create(inputData)
-        .then(dirInput => {
-            const dirInputData = {
-                dir_id: dirInput.dir_id,
-                dir_auth: '0'
-            };
-
-            TableDirAuth.create(dirInputData)
-            .then(() => {return res.json({success: true});})
-        })
-        .catch(err => {
-            return res.send('error' + err)
-        })
     })
-    
+        .then((response) => {
+            if (response) {
+                return res.status(400).json({
+                    error: " 동일한 이름의 디렉터리가 존재합니다",
+                    code: 2
+                })
+            }
+            TableDirectory.create(inputData)
+                .then(dirInput => {
+                    const dirInputData = {
+                        dir_id: dirInput.dir_id,
+                        dir_auth: '0'
+                    };
+
+                    TableDirAuth.create(dirInputData)
+                        .then(() => { return res.json({ success: true }); })
+                })
+                .catch(err => {
+                    return res.send('error' + err)
+                })
+        })
+
 });
 
 router.delete('/delete', (req, res) => {
     const dltdirname = req.body.deleteDirInput;
     console.log(dltdirname);
     TableDirectory.findOne({
-        where: {dir_name: req.body.deleteDirInput, owner_id: req.session.user_id}
+        where: { dir_name: req.body.deleteDirInput, owner_id: req.session.user_id }
     })
-    .then(tableDirectory => {
-        if(!tableDirectory) {
-            return res.status(404).json({
-                error: "NO DIRECTORY",
-                code: 3
-            });
-        }
-        // let first_query = 'DELETE * FROM tbl_article INNER JOIN tbl_directory ON tbl_directory.dir_Id = tbl_article.dir_id WHERE tbl_directory.dir_name = :now_dir';
-        // let values = {
-        //    now_dir: req.body.deleteDirInput
-        // };
-        // sequelize.query(first_query, {replacements:values, model:TableArticle})
-        // .then(result => console.log(result));
+        .then(tableDirectory => {
+            if (!tableDirectory) {
+                return res.status(404).json({
+                    error: "NO DIRECTORY",
+                    code: 3
+                });
+            }
+            // let first_query = 'DELETE * FROM tbl_article INNER JOIN tbl_directory ON tbl_directory.dir_Id = tbl_article.dir_id WHERE tbl_directory.dir_name = :now_dir';
+            // let values = {
+            //    now_dir: req.body.deleteDirInput
+            // };
+            // sequelize.query(first_query, {replacements:values, model:TableArticle})
+            // .then(result => console.log(result));
 
-        TableDirectory.destroy({
-            where: {dir_name: req.body.deleteDirInput}
+            TableDirectory.destroy({
+                where: { dir_name: req.body.deleteDirInput }
+            })
+                .then(response => {
+                    res.json({ success: true });
+                })
+                .catch(err => console.log("error" + err));
         })
-        .then(response => {
-            res.json({success:true});
-        })
-        .catch(err => console.log("error" + err));
-    })
     // TableDirectory.findOne({
     //     where: {dir_name: req.body.deleteDirInput, owner_id: req.session.user_id}
     // })
@@ -268,11 +298,11 @@ router.delete('/delete', (req, res) => {
 router.post('/groupAuth', (req, res, next) => {
     let group_auth = req.body.group_auth;
     TableDirectory.findOne({
-        where: {owner_id: req.session.user_id, dir_name: req.body.now_dir},
+        where: { owner_id: req.session.user_id, dir_name: req.body.now_dir },
     }).then((response) => {
         let tmp = response.dir_id;
         TableDirAuth.destroy({
-            where: {dir_id: response.dir_id}
+            where: { dir_id: response.dir_id }
         }).then((response) => {
             console.log(tmp);
             console.log(group_auth);
@@ -293,15 +323,16 @@ router.post('/groupAuth', (req, res, next) => {
     })
 })
 
-router.post('/setuserdefault', function(req, res, next) {
+router.post('/setuserdefault', function (req, res, next) {
     console.log("why notbb");
     TableDirectory.findOne({
-        where: {owner_id: req.session.user_id, dir_name: req.body.now_dir_name}
+        where: { owner_id: req.session.user_id, dir_name: req.body.now_dir_name }
     }).then(response => {
         TableDirAuth.findAll({
-            where: {dir_id: response.dir_id}
+            where: { dir_id: response.dir_id }
         }).then((result) => res.json(result));
     });
 })
+
 
 export default router;

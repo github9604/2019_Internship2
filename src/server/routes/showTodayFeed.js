@@ -306,18 +306,7 @@ router.get('/short', function (req, res, next) {
         })
 });
 
-router.get('/otherdirlist', function (req, res, next) {
-    let new_query = 'SELECT * FROM tbl_directory WHERE tbl_directory.share_group_id = :now_group AND NOT (tbl_directory.owner_id = :now_user)'
-    let values = {
-        now_group: req.session.group_id,
-        now_user: req.session.user_id
-    };
-    sequelize.query(new_query, { replacements: values, model: TableDirectory })
-        .then(tableDirectory => {
-            // console.log(JSON.stringify(tableDirectory));
-            res.json(tableDirectory);
-        })
-});
+
 
 router.post('/dirarticlemap', function (req, res, next) {
     let dir_id;

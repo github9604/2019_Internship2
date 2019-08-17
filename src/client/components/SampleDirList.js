@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { SampleDir } from '../components';
-import { Row} from 'antd';
+import {Row} from 'antd';
 import PropTypes from 'prop-types';
 
 class SampleDirList extends Component {

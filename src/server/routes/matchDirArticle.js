@@ -102,29 +102,32 @@ const ArticleToDirectory = sequelize.define(
 
 router.post('/grp', function(req, res, next) {
     TableArticle.findAll({
-        where: {dir_id: req.body.now_dir}
-    })
-    .then(tableArticle => {
-       let arrayOfPromises = [];
-       tableArticle.map((result, i) => {
-           let base_url = 'https://cloud.feedly.com//v3/entries/' + result.post_urlid;
-           arrayOfPromises.push(
-               axios.get(base_url)
-               .then(response => response.data)
-               .catch(error => console.log(error))
-           );
-       });
-       Promise.all(arrayOfPromises).then(
-           function(values){
-               let tmp = [];
-               for(let i=0; i<values.length; i++){
-                   Array.prototype.push.apply(tmp, values[i]);
-               }
-               let sortedvalues = tmp;
-               res.json(sortedvalues);
-           }
-       );
-    })
+        where: {dir_id: req.body.now_dir.data.dir_id}
+    }).then((response) => res.send(response))
+    // TableArticle.findAll({
+    //     where: {dir_id: req.body.now_dir}
+    // })
+    // .then(tableArticle => {
+    //    let arrayOfPromises = [];
+    //    tableArticle.map((result, i) => {
+    //        let base_url = 'https://cloud.feedly.com//v3/entries/' + result.post_urlid;
+    //        arrayOfPromises.push(
+    //            axios.get(base_url)
+    //            .then(response => response.data)
+    //            .catch(error => console.log(error))
+    //        );
+    //    });
+    //    Promise.all(arrayOfPromises).then(
+    //        function(values){
+    //            let tmp = [];
+    //            for(let i=0; i<values.length; i++){
+    //                Array.prototype.push.apply(tmp, values[i]);
+    //            }
+    //            let sortedvalues = tmp;
+    //            res.json(sortedvalues);
+    //        }
+    //    );
+    // })
 })
 
 router.post('/mine', function(req, res, next) {

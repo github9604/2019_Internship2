@@ -1,35 +1,37 @@
 import React, { Component } from 'react';
-import { Skeleton, Switch, Card, Icon, Avatar } from 'antd';
-const { Meta } = Card;
-import { Link } from 'react-router-dom';
-import { Button } from 'antd';
+import {Row} from 'antd';
+import { SampleGroupDir } from '../components';
 import PropTypes from 'prop-types';
 
 class SampleGroupDirList extends Component {
     render() {
+        const mapToComponents = data => {
+            // console.log("????: " + data);
+            return data.map((result, i) => {
+                // console.log("::::: " + result);
+                return (
+                    <SampleGroupDir
+                        key={i}
+                        data={result}
+                        index={i}
+                    />
+                );
+            })
+        }
         return (
-            <div>
-                {
-                    this.props.data.map((result, i) => {
-                        return (
-                            <Card key={i} hoverable={true} style={{ width: 300, marginTop: 16 }} loading={false}>
-                                <Meta
-                                    avatar={
-                                        <Avatar src="../src/asset/img/folder.png"/>
-                                    }
-                                    title={result.dir_name}
-                                    description={result.owner_id}
-                                />
-                            </Card>
-                            // <a class="nav_a">
-                            //     <Link exact to={`/GroupDirectory/${result.dir_name}`}>{result.dir_name}</Link>
-                            // </a>
-                        )
-                    })
-                }
-            </div>
-        )
+            <Row type="flex" gutter={16}>
+                {mapToComponents(this.props.data)}
+            </Row>
+        );
     }
+}
+
+SampleGroupDirList.propTypes = {
+    data: PropTypes.array
+};
+
+SampleGroupDirList.defaultProps = {
+    data: []
 }
 
 export default SampleGroupDirList;
