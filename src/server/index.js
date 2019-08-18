@@ -34,6 +34,7 @@ app.use(function(req, res, next) {
   });
 
 app.use(express.static("dist"));
+
 app.use(cors({
     'allowedHeaders': ['sessionId', 'Content-Type'],
     'exposedHeaders': ['sessionId'],
@@ -41,14 +42,15 @@ app.use(cors({
     'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
     'preflightContinue': false
   }));
+
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use('/api', api);
 
-app.use('/', express.static(path.join(__dirname, './../public')));
+// app.use('/', express.static(path.join(__dirname, './../public')));
 
 app.get('*', function (request, response){
-    response.sendFile(path.resolve('public', 'index.html'));
+    response.sendFile(path.resolve('dist', 'index.html'));
 });
  
 app.listen(process.env.PORT || 7000, function(){
