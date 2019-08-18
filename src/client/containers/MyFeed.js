@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { UserFeedResultList } from '../components/UserFeed';
+import { UserFeedResultList, UserFeedList } from '../components/UserFeed';
 import { Select } from 'react-select';
 import { Layout } from 'antd';
 import { stringify } from 'querystring';
@@ -50,7 +50,7 @@ class MyFeed extends Component {
 
     showTodayFeed = (page, results) => {
         this.setState({ wholeloading: true });
-        axios.post('/api/showtodayfeed', { page, results})
+        axios.post('/api/showtodayfeed', { page, results })
             .then((response) => {
                 console.log("my feed page: showtodayfeed");
                 // console.log("response: " + response);
@@ -101,7 +101,7 @@ class MyFeed extends Component {
         let article_author = selectdir.article_author;
         let article_content = selectdir.article_content;
         let article_title = selectdir.article_title;
-        
+
         axios.post('/api/showTodayFeed/dirarticlemap', { dirId, articleId, article_originId, article_author, article_content, article_title })
             .then((response) => {
                 console.log("my feed page: add to directory");
@@ -117,18 +117,15 @@ class MyFeed extends Component {
         return (
             <Layout>
                 <Content>
-                    <div className="main-panel">
-                        <div className="content-wrapper">
-                            <div>
-                                <div> <UserFeedResultList addtoDirectory={this.addtoDirectory} showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists={this.state.dirlists} results={this.state.results} /> </div>
-                            </div>
-                            <div
-                                ref={loadingRef => (this.loadingRef = loadingRef)}
-                                style={loadingCSS}
-                            ></div>
-                            <span style={loadingTextCSS}>Loading...</span>
-                        </div>
+                    <div>
+                        <UserFeedList addtoDirectory={this.addtoDirectory} showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists={this.state.dirlists} results={this.state.results}/>
+                        {/* <div> <UserFeedResultList addtoDirectory={this.addtoDirectory} showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists={this.state.dirlists} results={this.state.results} /> </div> */}
                     </div>
+                    <div
+                        ref={loadingRef => (this.loadingRef = loadingRef)}
+                        style={loadingCSS}
+                    ></div>
+                    <span style={loadingTextCSS}>Loading...</span>
                 </Content>
             </Layout>
         );

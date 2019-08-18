@@ -23,12 +23,22 @@ class SearchPage extends Component {
     //     this.loadUserFeeds();
     // }
 
-    insertFeed = (insert_results) => {
+    insertFeed = (insert_results, btnColor, btnNumber) => {
+        // console.log("right..?" + insert_results);
+        // console.log(btnColor);
+        // console.log(btnNumber);
         axios.post('/api/urlsearch/insertFeed', { insert_results })
             .then((response) => {
                 console.log("searchpage insertfeed");
-                console.log("스크랩 여부: " + response.data.has_scrapped);
-                this.setState({ buttonStatus: response.data.has_scrapped });
+                // console.log("스크랩 여부: " + response.data.has_scrapped);
+                // console.log(this.state.buttonStatus);
+                if (btnColor == "0")
+                    this.state.buttonStatus[btnNumber] = "1";
+                else if (btnColor == "1")
+                    this.state.buttonStatus[btnNumber] = "0";
+                this.setState({buttonStatus: this.state.buttonStatus});
+                // console.log(this.state.buttonStatus);
+                // this.setState({ buttonStatus: response.data.has_scrapped });
             })
     }
 
@@ -41,7 +51,7 @@ class SearchPage extends Component {
                 // console.log(response);
                 // console.log("hello: " + response.data.whole);
                 console.log("bye : " + response.data.btn);
-                this.setState({ results: response.data.whole, buttonStatus: response.data.btn});
+                this.setState({ results: response.data.whole, buttonStatus: response.data.btn });
                 console.log("yes : " + this.state.buttonStatus);
                 // this.loadUserFeeds();
             })

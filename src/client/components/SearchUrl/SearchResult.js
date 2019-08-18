@@ -42,7 +42,7 @@ class SearchResult extends Component {
             description: this.props.description,
             topics: this.props.topics[0]
         }
-        this.props.insertFeed(insert_results);
+        this.props.insertFeed(insert_results, this.props.btnColor, this.props.btnNumber);
     }
     // state = {
     //     visible: false
@@ -70,7 +70,6 @@ class SearchResult extends Component {
                         description={this.props.description}
                     />
                 </Card>
-                <h1> {this.props.btnColor} </h1>
                 {
                     (this.props.btnColor === '1')
                     ? <Button type="primary" onClick={this.setData}> 이미 구독중 </Button>

@@ -10,7 +10,7 @@ const SearchResultList = (props) => {
                         <SearchResult
                             defaultFeed={props.defaultFeed}
                             insertFeed={props.insertFeed}
-                            key={i}
+                            btnNumber = {i}
                             feedId={result.feedId}
                             websiteTitle={result.websiteTitle}
                             website={result.website}
