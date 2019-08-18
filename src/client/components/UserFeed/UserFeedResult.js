@@ -48,6 +48,7 @@ class UserFeedResult extends Component {
   render() {
     // console.log("dirlists: " + this.props.dirlists)
     let dirs = this.props.dirlists;
+    
     // const friends = [
     //   {
     //     name: "Annie Cruz",

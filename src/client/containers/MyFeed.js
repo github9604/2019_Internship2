@@ -59,6 +59,7 @@ class MyFeed extends Component {
                     results: response.data,
                     wholeloading: false
                 });
+                console.log(response.data);
             })
             .catch(error => {
                 console.log('Error fetching and parsing data', error);

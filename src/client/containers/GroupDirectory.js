@@ -6,6 +6,8 @@ import { SampleGroupDirList } from '../components';
 import { GroupDirMatch } from '../components/UserDirectory';
 const { Content } = Layout;
 import { Row, Col } from 'antd';
+import { Tabs, Icon, Radio } from 'antd';
+const { TabPane } = Tabs;
 
 class GroupDirectory extends Component {
 
@@ -68,7 +70,7 @@ class GroupDirectory extends Component {
         return (
             <Layout>
                 <Content>
-                    <Row type="flex" justify="center" align="center">
+                    {/* <Row type="flex" justify="center" align="center">
                         <Col span={6}> <img src="../src/asset/img/close_folder.png" width="50" alt="Logo Thing main logo"></img>
                             <Link to="/AllDirectory" id="header_a"><p> 전체 폴더 </p></Link> </Col>
                         <Col span={6}> <img src="../src/asset/img/close_folder.png" width="50" alt="Logo Thing main logo"></img>
@@ -80,7 +82,53 @@ class GroupDirectory extends Component {
                                     now_groupdir_id: 0
                                 }
                             }} id="header_a"><p> 공유 폴더 </p></Link></Col>
-                    </Row>
+                    </Row> */}
+                    <Tabs defaultActiveKey="3">
+                        <TabPane
+                            tab={
+                                <Link to="/AllDirectory">
+                                <span>
+                                    <Icon type="apple" />
+                                    전체 디렉토리
+                                </span>
+                                </Link>
+                            }
+                            key="1"
+                        >
+                            전체 디렉토리
+                        </TabPane>
+                        <TabPane
+                            tab={
+                                <Link to="/UserDirectory">
+                                <span>
+                                    내 디렉토리
+                                </span>
+                                </Link>
+                               
+                            }
+                            key="2"
+                        >
+                            내 디렉토리
+                        </TabPane>
+                        <TabPane
+                            tab={
+                                <Link to={{
+                                    pathname: `/GroupDirectory`,
+                                    state: {
+                                        now_groupdir_id: 0
+                                    }
+                                }}>
+                                <span>
+                                    <Icon type="android" />
+                                    공유받은 디렉토리
+                                </span>
+                                </Link>
+                            }
+                            key="3"
+                        >
+                            공유받은 디렉토리
+                        </TabPane>
+                    </Tabs>
                     <SampleGroupDirList data={this.state.grp_dirlists} />
                     <div class="matchdirart">
                         {

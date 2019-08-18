@@ -78,9 +78,9 @@ router.post('/signin', (req, res) => {
                 console.log("express 로그인 성공");
                 req.session.user_id = req.body.user_id;
                 req.session.group_id = memberLogin.group_id;
-                res.cookie("group_id", memberLogin.group_id,{
-                    expires: new Date(Date.now() + 900000)
-                });
+                // res.cookie("group_id", memberLogin.group_id,{
+                //     expires: new Date(Date.now() + 900000)
+                // });
                 return res.json({
                     success: true
                 });

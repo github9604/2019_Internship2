@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MatchResult from './MatchResult';
 
 class GroupDirMatch extends Component {
 
@@ -9,11 +10,7 @@ class GroupDirMatch extends Component {
                 {
                     this.props.match_results.map((result, i) => {
                         return (
-                            <div>
-                                <h2>{result.article_title}</h2>
-                                <h3> {result.article_author} </h3>
-                                <h4> {result.article_content} </h4>
-                            </div>
+                            <MatchResult title={result.article_title} author={result.author} content={result.article_content}/>
                             // <MatchResult title={result.title} author={result.author}/>
                         )
                     })

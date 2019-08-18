@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button } from 'antd';
-import axios from 'axios';
 import "antd/dist/antd.css";
 import { Skeleton, Switch, Card, Icon, Avatar } from 'antd';
 const { Meta } = Card;
@@ -19,6 +18,19 @@ class SearchResult extends Component {
         window.open(this.props.website);
       }
 
+    setData = () => {
+        console.log("insert article to db btn clicked");
+        let insert_results = {
+            feedId: this.props.feedId,
+            iconUrl: this.props.iconUrl,
+            websiteTitle: this.props.websiteTitle,
+            description: this.props.description,
+            topics: this.props.topics[0]
+        }
+        this.props.insertFeed(insert_results, this.props.btnColor, this.props.btnNumber);
+    }
+
+    
     // setButton = () => {
     //     let defaultFeed = this.props.defaultFeed;
     //     for(let i=0; i<defaultFeed.length; i++){
@@ -32,18 +44,6 @@ class SearchResult extends Component {
     //         }
     //     }
     // }
-
-    setData = () => {
-        console.log("insert article to db btn clicked");
-        let insert_results = {
-            feedId: this.props.feedId,
-            iconUrl: this.props.iconUrl,
-            websiteTitle: this.props.websiteTitle,
-            description: this.props.description,
-            topics: this.props.topics[0]
-        }
-        this.props.insertFeed(insert_results, this.props.btnColor, this.props.btnNumber);
-    }
     // state = {
     //     visible: false
     // };
@@ -61,7 +61,7 @@ class SearchResult extends Component {
     render() {
         return (
             <div>
-                <Card hoverable={true} onClick={this.openWindow} style={{ width: 600, marginTop: 16 }} loading={false}>
+                <Card hoverable={true} onClick={this.openWindow} style={{ marginTop: 16 }} loading={false}>
                     <Meta
                         avatar={
                             <img className="right floated mini ui image" src={this.props.iconUrl} />
@@ -70,6 +70,7 @@ class SearchResult extends Component {
                         description={this.props.description}
                     />
                 </Card>
+                <br/>
                 {
                     (this.props.btnColor === '1')
                     ? <Button type="primary" onClick={this.setData}> 이미 구독중 </Button>

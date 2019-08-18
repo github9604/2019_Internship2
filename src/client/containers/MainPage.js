@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { ShortFeedResultList } from '../components/UserFeed';
 import { SampleGroupDirList } from '../components';
-import { Layout, Spin, Icon } from 'antd';
+import { Row, Col, Slider, Layout, Spin, Icon } from 'antd';
 const { Content } = Layout;
 
 class MainPage extends Component {
@@ -112,21 +112,23 @@ class MainPage extends Component {
         return (
             <Layout>
                 <Content>
-                    <div>
+                    <Row gutter={40} >
+                    <Col span={12} >
                         {
                             (this.state.loading_mine)
                                 ? <Spin dicidator={antIcon} />
-                                : <div> <ShortFeedResultList addtoDirectory={this.addtoDirectory} showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists={this.state.dirlists} results={this.state.short_feed_results} /> </div>
+                                : <div> <ShortFeedResultList className="left" addtoDirectory={this.addtoDirectory} showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists={this.state.dirlists} results={this.state.short_feed_results} /> </div>
                         }
-                    </div>
-                    <div>
+                    </Col>
+                    <Col span={12} >
                         {
                             (this.state.loading_public)
                                 ? <Spin dicidator={antIcon} />
-                                :  <SampleGroupDirList data={this.state.Otherdirlists} />
+                                :  <SampleGroupDirList className="right" data={this.state.Otherdirlists} />
                         }
 
-                    </div>
+                    </Col>
+                    </Row>
                 </Content>
             </Layout>
         );

@@ -21,9 +21,9 @@ app.use(session({
     key: 'kt',
     secret: '@#@$MYSIGN#@$#$',
     resave: false,
-    cookie: {
-        expires:  600000
-    },
+    // cookie: {
+    //     expires:  600000
+    // },
     saveUninitialized: true
 }));
 

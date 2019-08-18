@@ -54,9 +54,13 @@ router.use(cors());
 
 router.post('/', function (req, res, next) {
     let name = req.body.obj;
+    // console.log(req.body.obj);
+    // console.log(typeof(req.body.obj));
+    let wow = encodeURI(req.body.obj);
+    console.log(wow);
     let set_button = [];
     // console.log(name);
-    let base_url = 'http://cloud.feedly.com/v3/search/feeds?count=40&query=' + name;
+    let base_url = 'http://cloud.feedly.com/v3/search/feeds?locale=ko&count=40&query=' + wow;
     axios.get(base_url)
         .then((response) => {
             Promise.all(

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { SearchArea, SearchResultList } from '../components/SearchUrl';
+import { SearchArea, SearchResultList, OtherFeed } from '../components/SearchUrl';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { Layout } from 'antd';
-
-const { Header, Footer, Sider, Content } = Layout;
+const {  Content } = Layout;
 
 class SearchPage extends Component {
     constructor() {
@@ -15,7 +13,8 @@ class SearchPage extends Component {
             inputArticle: '',
             buttonStatus: [],
             user_feeds: [],
-            loading_result: ''
+            loading_result: '',
+            hideResult: false
         };
     }
 
@@ -36,29 +35,32 @@ class SearchPage extends Component {
                     this.state.buttonStatus[btnNumber] = "1";
                 else if (btnColor == "1")
                     this.state.buttonStatus[btnNumber] = "0";
-                this.setState({buttonStatus: this.state.buttonStatus});
+                this.setState({ buttonStatus: this.state.buttonStatus });
                 // console.log(this.state.buttonStatus);
                 // this.setState({ buttonStatus: response.data.has_scrapped });
             })
     }
 
     handleSubmit = (e) => {
-        e.preventDefault();
+        // console.log(e);
+        // e.preventDefault();
         let obj = this.state.searchTerm;
         axios.post('/api/urlsearch', { obj })
             .then((response) => {
                 console.log("searchpage handlesubmit");
-                // console.log(response);
+                console.log(response);
                 // console.log("hello: " + response.data.whole);
                 console.log("bye : " + response.data.btn);
-                this.setState({ results: response.data.whole, buttonStatus: response.data.btn });
+                this.setState({ results: response.data.whole, buttonStatus: response.data.btn, hideResult:false });
                 console.log("yes : " + this.state.buttonStatus);
                 // this.loadUserFeeds();
             })
     }
 
-    handleChange = (e) => {
-        this.setState({ searchTerm: e.target.value })
+    handleChange = (value) => {
+        this.setState({ searchTerm: value.target.value })
+        if(!value.target.value) this.setState({hideResult: true});
+        // console.log(value.target.value);
     }
 
     // componentDidMount() {
@@ -82,10 +84,15 @@ class SearchPage extends Component {
     render() {
         return (
             <Layout>
-                <Content>
-                    <div className="searchpage">
+                <Content className="searchpage">
+                    <div >
                         <SearchArea handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
-                        <SearchResultList btnSet={this.state.buttonStatus} insertFeed={this.insertFeed} results={this.state.results} />
+                        {
+                            this.state.hideResult ?
+                            <OtherFeed />
+                            : <SearchResultList btnSet={this.state.buttonStatus} insertFeed={this.insertFeed} results={this.state.results} />
+                        }
+                        
                     </div>
                 </Content>
             </Layout>

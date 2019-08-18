@@ -100,26 +100,6 @@ const TableDirectory = sequelize.define(
     }
 );
 
-const ArticleToDirectory = sequelize.define(
-    'ArticleToDirectory',
-    {
-        idx: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        post_urlid: {
-            type: Sequelize.TEXT
-        },
-        dir_name: {
-            type: Sequelize.STRING
-        }
-    },
-    {
-        timestamps: false,
-        tableName: 'article_to_directory'
-    }
-);
 
 const TableArticle = sequelize.define(
     'TableArticle',

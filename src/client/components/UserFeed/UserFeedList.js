@@ -17,7 +17,7 @@ class UserFeedList extends Component {
                     let originlink = result.canonicalUrl ? result.canonicalUrl : result.origin.htmlUrl;
                     // console.log(sum_content);
                     return (
-                        <UserFeed key={i} addtoDirectory={this.props.addtoDirectory} originlink={originlink} summary={sum_content} author={result.author} articleId = {result.id} dirlists = {this.props.dirlists} visualUrl = {result.visual} title={result.title} />
+                        <UserFeed key={i} addtoDirectory={this.props.addtoDirectory} originlink={originlink} summary={sum_content} author={result.author} articleId = {result.id} dirlists = {this.props.dirlists} visualUrl = {result.visual} title={result.title} time={result.published}/>
                     )
                    })
                }

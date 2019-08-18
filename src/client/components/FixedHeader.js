@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Layout } from 'antd';
-const { Header } = Layout;
+const { Header, Footer } = Layout;
 
 class FixedHeader extends Component {
 
@@ -40,28 +40,42 @@ class FixedHeader extends Component {
 
     return (
       <Layout>
-        <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
-          <div id="navbar-primary">
-            <div >
-              <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#navbar-primary-collapse">
-                <span className="sr-only">Toggle navigation</span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-              </button>
-            </div>
-            <div className="collapse navbar-collapse" id="navbar-primary-collapse">
-              <ul className="nav navbar-nav">
-                <li id="header_li" ><Link to="/searchpage" id="header_a"> 피드 추가 하기 </Link></li>
-                <li id="header_li" ><Link to="/MyFeed" id="header_a"> 오늘 피드 보기 </Link></li>
-                <li id="header_li" ><Link to="/MainPage" id="header_a"><img id="logo-navbar-middle" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/32877/logo-thing.png" width="200" alt="Logo Thing main logo" /></Link></li>
-                <li id="header_li" ><Link to="/AllDirectory" id="header_a"> 전체 디렉터리 </Link></li>
-                <li id="header_li" ><Link to="/login" id="header_a"> 로그아웃 </Link></li>
-              </ul>
-            </div>
-          </div>
-        </Header>
+        <header class="header">
+        <Link to="/MainPage" id="header_a">CSS Nav</Link>
+          <input class="menu-btn" type="checkbox" id="menu-btn" />
+          <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+          <ul class="menu">
+            <li id="header_li" ><Link to="/searchpage" id="header_a"> 피드 추가 하기 </Link></li>
+            <li id="header_li" ><Link to="/MyFeed" id="header_a"> 오늘 피드 보기 </Link></li>
+            <li id="header_li" ><Link to="/AllDirectory" id="header_a"> 전체 디렉터리 </Link></li>
+            <li id="header_li" ><Link to="/login" id="header_a"> 로그아웃 </Link></li>
+          </ul>
+        </header>
+        <Footer style={{ textAlign: 'center', bottom: "0" }}>Ant Design ©2018 Created by Ant UED</Footer>
       </Layout>
+      // <Layout>
+      //   <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+      //     <div id="navbar-primary">
+      //       <div >
+      //         <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#navbar-primary-collapse">
+      //           <span className="sr-only">Toggle navigation</span>
+      //           <span className="icon-bar"></span>
+      //           <span className="icon-bar"></span>
+      //           <span className="icon-bar"></span>
+      //         </button>
+      //       </div>
+      //       <div className="collapse navbar-collapse" id="navbar-primary-collapse">
+      //         <ul className="nav navbar-nav">
+      //           <li id="header_li" ><Link to="/searchpage" id="header_a"> 피드 추가 하기 </Link></li>
+      //           <li id="header_li" ><Link to="/MyFeed" id="header_a"> 오늘 피드 보기 </Link></li>
+      //           <li id="header_li" ><Link to="/MainPage" id="header_a"><img id="logo-navbar-middle" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/32877/logo-thing.png" width="200" alt="Logo Thing main logo" /></Link></li>
+      //           <li id="header_li" ><Link to="/AllDirectory" id="header_a"> 전체 디렉터리 </Link></li>
+      //           <li id="header_li" ><Link to="/login" id="header_a"> 로그아웃 </Link></li>
+      //         </ul>
+      //       </div>
+      //     </div>
+      //   </Header>
+      // </Layout>
       // <Layout>
       //   <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
       //     <div className="header nav-wrapper blue darken-1">

@@ -3,10 +3,12 @@ import { SampleWrite, SampleDirList } from '../components';
 import { UserDirectoryList, MatchResultList } from '../components/UserDirectory';
 import { Link } from 'react-router-dom';
 import { Layout, Row, Col } from 'antd';
+import { Tabs, Icon, Radio } from 'antd';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { dirPostRequest, dirListRequest, dirRemoveRequest, dirRemove } from '../actions/dirList';
 const { Header, Footer, Sider, Content } = Layout;
+const { TabPane } = Tabs;
 
 class UserDirectory extends Component {
 
@@ -28,7 +30,7 @@ class UserDirectory extends Component {
             // console.log("Now: " + this.props.match.params.dir_name);
             // this.performGroupList();
             this.showArticleInDir(nextProps.match.params.dir_name);
-            this.setState({auth_waiting: true});
+            this.setState({ auth_waiting: true });
             this.setDefault(nextProps.match.params.dir_name);
         }
     }
@@ -142,7 +144,7 @@ class UserDirectory extends Component {
         return (
             <Layout>
                 <Content>
-                    <Row type="flex" justify="center" align="center">
+                    {/* <Row type="flex" justify="center" align="center">
                         <Col span={6}> <img src="../src/asset/img/close_folder.png" width="50" alt="Logo Thing main logo"></img>
                             <Link to="/AllDirectory" id="header_a"><p> 전체 폴더 </p></Link> </Col>
                         <Col span={6}> <img src="../src/asset/img/mine_close_folder.png" width="50" alt="Logo Thing main logo"></img>
@@ -154,15 +156,63 @@ class UserDirectory extends Component {
                                     now_groupdir_id: 0
                                 }
                             }} id="header_a"><p> 공유 폴더 </p></Link></Col>
-                    </Row>
+                    </Row> */}
+
+                    <Tabs defaultActiveKey="2">
+                        <TabPane
+                            tab={
+                                <Link to="/AllDirectory">
+                                    <span>
+                                        <Icon type="apple" />
+                                        전체 디렉토리
+                                </span>
+                                </Link>
+                            }
+                            key="1"
+                        >
+                            전체 디렉토리
+                        </TabPane>
+                        <TabPane
+                            tab={
+                                <Link to="/UserDirectory">
+                                    <span>
+                                        내 디렉토리
+                                </span>
+                                </Link>
+
+                            }
+                            key="2"
+                        >
+                            내 디렉토리
+                        </TabPane>
+                        <TabPane
+                            tab={
+                                <Link to={{
+                                    pathname: `/GroupDirectory`,
+                                    state: {
+                                        now_groupdir_id: 0
+                                    }
+                                }}>
+                                    <span>
+                                        <Icon type="android" />
+                                        공유받은 디렉토리
+                                </span>
+                                </Link>
+                            }
+                            key="3"
+                        >
+                            공유받은 디렉토리
+                        </TabPane>
+                    </Tabs>
+
                     <SampleWrite onPost={this.handlePost} />
                     <SampleDirList data={this.props.dirListData} onRemove={this.handleRemove} />
                     {
-                        this.state.auth_waiting ? null :  <div className="matchdirart">
-                        <MatchResultList group_auth={this.state.auth_results} changeDirAuth={this.changeDirAuth} options={this.state.group_results} match_results={this.state.match_results} now_dir={this.state.now_dir} />
-                    </div>
+                        this.state.auth_waiting ? null : <div className="matchdirart">
+                            <MatchResultList group_auth={this.state.auth_results} changeDirAuth={this.changeDirAuth} options={this.state.group_results} match_results={this.state.match_results} now_dir={this.state.now_dir} />
+                        </div>
                     }
-                   
+
 
 
                 </Content>
