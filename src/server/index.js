@@ -51,6 +51,6 @@ app.get('*', function (request, response){
     response.sendFile(path.resolve('public', 'index.html'));
 });
  
-app.listen(7000, function(){
+app.listen(process.env.PORT || 7000, function(){
     console.log("Started listening on port", 7000);
 });
