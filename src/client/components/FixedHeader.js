@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Layout } from 'antd';
-const { Header, Footer } = Layout;
+const { Header} = Layout;
 
 class FixedHeader extends Component {
 
@@ -40,18 +40,17 @@ class FixedHeader extends Component {
 
     return (
       <Layout>
-        <header class="header">
-        <Link to="/MainPage" id="header_a">CSS Nav</Link>
-          <input class="menu-btn" type="checkbox" id="menu-btn" />
-          <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
-          <ul class="menu">
+        <header className="header">
+        <Link to="/MainPage" id="header_a">KT Directory</Link>
+          <input className="menu-btn" type="checkbox" id="menu-btn" />
+          <label className="menu-icon" for="menu-btn"><span className="navicon"></span></label>
+          <ul className="menu">
             <li id="header_li" ><Link to="/searchpage" id="header_a"> 피드 추가 하기 </Link></li>
             <li id="header_li" ><Link to="/MyFeed" id="header_a"> 오늘 피드 보기 </Link></li>
             <li id="header_li" ><Link to="/AllDirectory" id="header_a"> 전체 디렉터리 </Link></li>
             <li id="header_li" ><a onClick={this.props.onLogout}> 로그아웃 </a></li>
           </ul>
         </header>
-        <Footer style={{ textAlign: 'center', bottom: "0" }}>Ant Design ©2018 Created by Ant UED</Footer>
       </Layout>
       // <Layout>
       //   <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>

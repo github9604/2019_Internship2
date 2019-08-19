@@ -162,8 +162,8 @@ class UserDirectory extends Component {
                         <TabPane
                             tab={
                                 <Link to="/AllDirectory">
-                                    <span>
-                                        <Icon type="apple" />
+                                     <span className="tab_name">
+                                     <Icon type="folder" />
                                         전체 디렉토리
                                 </span>
                                 </Link>
@@ -175,7 +175,8 @@ class UserDirectory extends Component {
                         <TabPane
                             tab={
                                 <Link to="/UserDirectory">
-                                    <span>
+                                     <span className="tab_name">
+                                     <Icon type="folder-open" />
                                         내 디렉토리
                                 </span>
                                 </Link>
@@ -193,8 +194,8 @@ class UserDirectory extends Component {
                                         now_groupdir_id: 0
                                     }
                                 }}>
-                                    <span>
-                                        <Icon type="android" />
+                                    <span className="tab_name">
+                                    <Icon type="folder" />
                                         공유받은 디렉토리
                                 </span>
                                 </Link>

@@ -18,7 +18,7 @@ class UserDirectoryList extends Component {
 
     render() {
         return (
-            <div>
+            <Row type="flex" gutter={16}>
                 {
                     this.props.dirlists.map((result, i) => {
                         return (
@@ -34,7 +34,7 @@ class UserDirectoryList extends Component {
                         <p>dir 추가</p>
                     </Button>
                 </a>
-            </div>
+            </Row>
         );
     }
 }

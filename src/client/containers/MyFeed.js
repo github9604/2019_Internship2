@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { UserFeedResultList, UserFeedList } from '../components/UserFeed';
 import { Select } from 'react-select';
-import { Layout } from 'antd';
+import { Layout, Spin, Icon } from 'antd';
 import { stringify } from 'querystring';
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -114,10 +114,12 @@ class MyFeed extends Component {
             height: "100px",
             margin: "30px"
         };
+        const antIcon = <Icon type="loading" stype={{ fontSize: 50 }} spin />
         const loadingTextCSS = { display: this.state.wholeloading ? "block" : "none" };
         return (
             <Layout>
                 <Content>
+                    <h1><mark>Today's Feed</mark></h1>
                     <div>
                         <UserFeedList addtoDirectory={this.addtoDirectory} showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists={this.state.dirlists} results={this.state.results}/>
                         {/* <div> <UserFeedResultList addtoDirectory={this.addtoDirectory} showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists={this.state.dirlists} results={this.state.results} /> </div> */}
@@ -126,7 +128,7 @@ class MyFeed extends Component {
                         ref={loadingRef => (this.loadingRef = loadingRef)}
                         style={loadingCSS}
                     ></div>
-                    <span style={loadingTextCSS}>Loading...</span>
+                    <Spin dicidator={antIcon} />
                 </Content>
             </Layout>
         );

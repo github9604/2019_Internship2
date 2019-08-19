@@ -3,6 +3,8 @@ import FixedHeader from '../components/FixedHeader';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { getStatusRequest, logoutRequest } from '../actions/authentication';
+import { Layout } from 'antd';
+const { Footer } = Layout;
 
 class App extends Component {
     constructor() {
@@ -111,7 +113,6 @@ class App extends Component {
         let isAuth = re.test(this.props.location.pathname);
 
         return (
-            <div>
                 <div >
                     {isAuth ? undefined : <FixedHeader insertDirlist={this.insertDirlist}
                         dirlists={this.state.dirlist_results}
@@ -120,7 +121,6 @@ class App extends Component {
                     <script src="../src/asset/vendor/jquery/jquery.min.js"></script>
                     <script src="../src/asset/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
                 </div>
-            </div>
         );
     }
 }

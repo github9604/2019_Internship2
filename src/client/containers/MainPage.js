@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { ShortFeedResultList } from '../components/UserFeed';
 import { SampleGroupDirList } from '../components';
-import { Row, Col, Slider, Layout, Spin, Icon } from 'antd';
+import RepoList from '../components/GitRepo/RepoList';
+import SearchForm from '../components/GitRepo/SearchForm';
+import { Row, Col, Layout, Spin, Icon } from 'antd';
 const { Content } = Layout;
 
 class MainPage extends Component {
@@ -13,6 +15,8 @@ class MainPage extends Component {
             short_feed_results: [],
             dirlists: [],
             Otherdirlists: [],
+            repos: [],
+            loading: false,
             loading_mine: true,
             loading_public: true
         };
@@ -107,27 +111,54 @@ class MainPage extends Component {
             })
     }
 
+
+    performSearch = (query) => {
+        this.setState({loading:true});
+        axios.get(`https://api.github.com/search/repositories?q=${query}`)
+            .then(response => {
+                this.setState({
+                    query: query,
+                    repos: response.data.items,
+                    loading: false
+                });
+            })
+            .catch(error => {
+                console.log('Error fetching and parsing data', error);
+            });
+    }
+
     render() {
         const antIcon = <Icon type="loading" stype={{ fontSize: 50 }} spin />
         return (
             <Layout>
                 <Content>
                     <Row gutter={40} >
-                    <Col span={12} >
-                        {
-                            (this.state.loading_mine)
-                                ? <Spin dicidator={antIcon} />
-                                : <div> <ShortFeedResultList className="left" addtoDirectory={this.addtoDirectory} showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists={this.state.dirlists} results={this.state.short_feed_results} /> </div>
-                        }
-                    </Col>
-                    <Col span={12} >
-                        {
-                            (this.state.loading_public)
-                                ? <Spin dicidator={antIcon} />
-                                :  <SampleGroupDirList className="right" data={this.state.Otherdirlists} />
-                        }
-
-                    </Col>
+                        <Col span={12} >
+                        <h2><mark> Today Feed </mark></h2>
+                            {
+                                (this.state.loading_mine)
+                                    ? <Spin dicidator={antIcon} />
+                                    : <div> <ShortFeedResultList className="left" addtoDirectory={this.addtoDirectory} showTodayFeed={this.showTodayFeed} showDirLists={this.showDirLists} dirlists={this.state.dirlists} results={this.state.short_feed_results} /> </div>
+                            }
+                        </Col>
+                        <Col span={12} >
+                            <h2><mark> 공유된 Directory </mark></h2>
+                            {
+                                (this.state.loading_public)
+                                    ? <Spin dicidator={antIcon} />
+                                    : <SampleGroupDirList className="right" data={this.state.Otherdirlists} />
+                            }
+                            <br />
+                            <br />
+                            <br />
+                            <SearchForm onSearch={this.performSearch} />
+                            <br />
+                            {
+                                (this.state.loading)
+                                    ? <Spin dicidator={antIcon} />
+                                    : <div><h2>{this.state.query}</h2><RepoList data={this.state.repos} /></div>
+                            }
+                        </Col>
                     </Row>
                 </Content>
             </Layout>

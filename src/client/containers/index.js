@@ -9,5 +9,6 @@ import UserDirectory from './UserDirectory';
 import GroupDirectory from './GroupDirectory';
 import SampleFeed from './SampleFeed';
 import AllDirectory from './AllDirectory';
+import RepoSearch from './RepoSearch';
 
-export {AllDirectory, Login, Register, App, SearchPage, MyFeed, MyDirectory, MainPage, UserDirectory, GroupDirectory, SampleFeed};
+export {RepoSearch, AllDirectory, Login, Register, App, SearchPage, MyFeed, MyDirectory, MainPage, UserDirectory, GroupDirectory, SampleFeed};

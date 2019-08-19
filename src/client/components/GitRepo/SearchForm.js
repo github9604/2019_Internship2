@@ -18,14 +18,15 @@ export default class SearchForm extends Component {
   render() {  
     return (
       <form className="search-form" onSubmit={this.handleSubmit} >
-        <label className="is-hidden" htmlFor="search">Search</label>
+        {/* <label className="is-hidden" htmlFor="search">Github 검색</label> */}
+        <h2> <mark>Github 검색 </mark> </h2>
         <input type="search" 
                onChange={this.onSearchChange}
                name="search" 
                ref={(input) => this.query = input}
                placeholder="Search..." />
 
-      </form>      
+</form>      
     );
   }
 }

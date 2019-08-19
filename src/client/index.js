@@ -8,7 +8,7 @@ import thunk from 'redux-thunk';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'mdbreact/dist/css/mdb.css';
 
-import { AllDirectory, SampleFeed, Login, Register, MainPage, App, SearchPage, MyFeed, MyDirectory, UserDirectory, GroupDirectory } from '../client/containers';
+import {AllDirectory, SampleFeed, Login, Register, MainPage, App, SearchPage, MyFeed, MyDirectory, UserDirectory, GroupDirectory } from '../client/containers';
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
