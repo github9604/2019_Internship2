@@ -15,7 +15,7 @@ const store = createStore(reducers, applyMiddleware(thunk));
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <Route exact path="/" component={() => <Redirect to="/MainPage" />} />
+      <Route exact path="/" component={() => <Redirect to="/login" />} />
       <Route path="/" component={App} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import UserFeedResult from './UserFeedResult';
+import UserFeed from './UserFeed';
 
 const ShortFeedResultList = (props) => {
 
@@ -18,7 +18,7 @@ const ShortFeedResultList = (props) => {
                     let originlink = result.canonicalUrl ? result.canonicalUrl : result.origin.htmlUrl;
                     // console.log(sum_content);
                     return (
-                        <UserFeedResult addtoDirectory={props.addtoDirectory} originlink={originlink} summary={sum_content} author={result.author} articleId = {result.id} dirlists = {props.dirlists} visualUrl = {result.visual} title={result.title} />
+                        <UserFeed addtoDirectory={props.addtoDirectory} originlink={originlink} summary={sum_content} author={result.author} articleId = {result.id} dirlists = {props.dirlists} visualUrl = {result.visual} title={result.title} />
                     )
                 })
             }

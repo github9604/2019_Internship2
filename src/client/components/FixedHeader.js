@@ -48,7 +48,7 @@ class FixedHeader extends Component {
             <li id="header_li" ><Link to="/searchpage" id="header_a"> 피드 추가 하기 </Link></li>
             <li id="header_li" ><Link to="/MyFeed" id="header_a"> 오늘 피드 보기 </Link></li>
             <li id="header_li" ><Link to="/AllDirectory" id="header_a"> 전체 디렉터리 </Link></li>
-            <li id="header_li" ><Link to="/login" id="header_a"> 로그아웃 </Link></li>
+            <li id="header_li" ><a onClick={this.props.onLogout}> 로그아웃 </a></li>
           </ul>
         </header>
         <Footer style={{ textAlign: 'center', bottom: "0" }}>Ant Design ©2018 Created by Ant UED</Footer>

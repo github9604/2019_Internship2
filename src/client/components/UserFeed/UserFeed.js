@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Avatar, Button, Popover } from 'antd';
+import { Icon, Button, Popover } from 'antd';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
 import SelectSearch from 'react-select-search'
@@ -57,7 +57,7 @@ class UserFeed extends Component {
                 className="vertical-timeline-element--work"
                 date={ds}
                 iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-                icon={<Avatar src="../src/asset/img/folder.png" />}
+                icon={<Icon type="folder-open" />}
             >
                 <h3 onClick={this.openWindow} className="vertical-timeline-element-title">{this.props.title} </h3>
                 <br />
