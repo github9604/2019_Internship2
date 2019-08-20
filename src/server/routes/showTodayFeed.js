@@ -228,6 +228,14 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/feedlist', function (req, res, next) {
+
+    if(typeof req.session.user_id === 'undefined'){
+        return res.status(401).json({
+            error: "THERE IS NO LOGIN DATA",
+            code: 1
+        });
+    }
+
     TableFeed.findAll({
         where: { feed_reader_id: req.session.user_id },
         attributes: [
@@ -239,6 +247,14 @@ router.get('/feedlist', function (req, res, next) {
 });
 
 router.get('/short', function (req, res, next) {
+    
+    if(typeof req.session.user_id === 'undefined'){
+        return res.status(401).json({
+            error: "THERE IS NO LOGIN DATA",
+            code: 1
+        });
+    }
+    
     TableFeed.findAll({
         where: { feed_reader_id: req.session.user_id },
         attributes: [

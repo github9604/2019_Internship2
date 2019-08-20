@@ -1,7 +1,4 @@
-body {
-    font-family: "Lato", sans-serif;
-  }
-  
+ 
 body, html{
     height: 100%;
     background: rgb(240, 242, 245);
@@ -57,7 +54,6 @@ body, html{
   
   .register-title{
     text-align: left;
-    font-family: 'Noto Sans KR', "Roboto", sans-serif;
     font-size: 12px;
     font-style: extra bold;
     margin-bottom: 1px;
@@ -78,7 +74,7 @@ body, html{
 
   .form input {
     border-radius: 3px;
-    font-family: 'Noto Sans KR', "Roboto", sans-serif;
+    /* font-family: 'Noto Sans KR', "Roboto", sans-serif; */
     outline: 0;
     background: #f2f2f2;
     width: 100%;
@@ -94,7 +90,7 @@ body, html{
 
   .form button {
     border-radius: 3px;
-    font-family: 'Noto Sans KR', "Roboto", sans-serif;
+    /* font-family: 'Noto Sans KR', "Roboto", sans-serif; */
     text-transform: uppercase;
     outline: 0;
     background: #2B2D42;
@@ -140,7 +136,7 @@ body, html{
 
   .searchform input{
     border-radius: 3px;
-    font-family: 'Noto Sans KR', "Roboto", sans-serif;
+    /* font-family: 'Noto Sans KR', "Roboto", sans-serif; */
     outline: 0;
     background: #f2f2f2;
     width: 80%;
@@ -154,7 +150,7 @@ body, html{
   .searchform button{
     width: 20%;
     border-radius: 3px;
-    font-family: 'Noto Sans KR', "Roboto", sans-serif;
+    /* font-family: 'Noto Sans KR', "Roboto", sans-serif; */
     outline: 0;
     text-align: center;
   }
@@ -229,7 +225,6 @@ body, html{
   }
 
   .select-search-box::after {
-      font-family: fontawesome;
       content:"\f078";
       position: absolute;
       top: 0;
@@ -272,7 +267,7 @@ body, html{
       position: relative;
       z-index: 2;
       cursor: pointer;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
       line-height: 50px;
       box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
   }

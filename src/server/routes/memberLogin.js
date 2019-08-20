@@ -47,7 +47,7 @@ router.post('/logout', (req, res) => {
 });
 
 
-router.get('/getinfo', (req, res) => {
+router.get('/getInfo', (req, res) => {
     if(typeof req.session.user_id === "undefined"){
         return res.status(401).json({
             error: "THERE IS NO LOGIN DATA",
