@@ -23,8 +23,6 @@ const connection  = mysql.createConnection({
     port: '3306'
 });
 
-connection.connect();
-
 app.use(session({
     key: 'kt',
     secret: '@#@$MYSIGN#@$#$',
